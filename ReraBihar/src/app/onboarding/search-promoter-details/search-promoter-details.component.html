@@ -1,0 +1,306 @@
+<div class="main-body">
+    <div class="container">
+        <div class="proj_dtl_pag">
+            <div class="page-in-sec">
+                <div class="prmtr_pge_dv">
+                    <h5 class="mb-3">Promoter Profile</h5>
+                    <div class="promtr_card">
+                        <div class="promtr_card_in">
+                            <div class="profl_pict">
+                                <img src="assets/images/ppictr.png">
+                            </div>
+                            <div class="prom_crd_dtl">
+                                <h6><i class="fa fa-user" aria-hidden="true"></i> {{username}}</h6>
+                                <strong><i class="fa fa-tag" aria-hidden="true"></i> {{entitytypedesc}}</strong>
+                                <p><i class="fa fa-envelope" aria-hidden="true"></i> {{useremail}}</p>
+                                <p><i class="fa fa-phone" aria-hidden="true"></i> {{usermobile}}</p>
+<!--                                <p><i class="fa fa-map-marker" aria-hidden="true"></i> Vill Baijalpur Kesho P.O Sonpur P.S Sonpur, Saran, Bihar 841101 </p>-->
+                            </div>
+                        </div>
+                        <div class="personal_view_page inprompge">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5>Promoter Details</h5>
+                                </div>
+
+                                <!--<div class="col-12">
+                                    <div class="profl_pict">
+                                        <img src="assets/images/ppictr.png">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Your Application Number :</label>
+                                        <p>{{projectuid}}</p>
+                                    </div>
+                                </div>-->
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Promoter Type :</label>
+                                        <p>{{entitytypedesc}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid==1">
+                                    <div class="form-group">
+                                        <label>Full Name :</label>
+                                        <p>{{promotername}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid==1">
+                                    <div class="form-group">
+                                        <label>Gender :</label>
+                                        <p>{{gender}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid==1">
+                                    <div class="form-group">
+                                        <label>Father :</label>
+                                        <p>{{guardian}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Company Registration No. / Deed No. :</label>
+                                        <p>{{regno}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Name of contact person :</label>
+                                        <p>{{desname}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Secondary contact No. :</label>
+                                        <p>{{dessecondary}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Designation of contact person :</label>
+                                        <p>{{desg}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Telephone No. :</label>
+                                        <p>{{desmobile}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid==1">
+                                    <div class="form-group">
+                                        <label>Occupation :</label>
+                                        <p>{{occupation}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid==1">
+                                    <div class="form-group">
+                                        <label>Date of Birth :</label>
+                                        <p>{{dob}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid==1">
+                                    <div class="form-group">
+                                        <label>Brief Detail of Promoter :</label>
+                                        <p>{{brief}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Email ID :</label>
+                                        <p>{{useremail}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Total years of experience as Promoter :</label>
+                                        <p>{{exppromoter}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Total Years of Experience in Bihar :</label>
+                                        <p>{{expbihar}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Total Years of Experience in Other States :</label>
+                                        <p>{{expother}}</p>
+                                    </div>
+                                </div>
+                                <!--                                    </div>-->
+
+                                <div class="col-12" *ngIf="entitytypeid !==1">
+                                    <h5>Parent Company Details</h5>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid !==1">
+                                    <div class="form-group">
+                                        <label>Parent Company Name :</label>
+                                        <p>{{parcmp}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid !==1">
+                                    <div class="form-group">
+                                        <label>Registered Office Address Line 1 :</label>
+                                        <p>{{paraddr}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid !==1">
+                                    <div class="form-group">
+                                        <label>Registered Office Address Line 2 :</label>
+                                        <p>{{paraddr2}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-4" *ngIf="entitytypeid !==1">
+                                    <div class="form-group">
+                                        <label>State :</label>
+                                        <p>{{parstate}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="entitytypeid !==1">
+                                    <div class="form-group">
+                                        <label>District :</label>
+                                        <p>{{pardistrict}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-4" *ngIf="entitytypeid !==1">
+                                    <div class="form-group">
+                                        <label>Pin Code :</label>
+                                        <p>{{parpin}}</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4" *ngIf="entitytypeid !==1">
+                                    <div class="form-group">
+                                        <label>Website Address :</label>
+                                        <p>{{parwebsite}}</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12">
+                                    <h5>Company Details</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Registration/Shop/Establishment No. :</label>
+                                        <p>{{regno}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Date of Registration :</label>
+                                        <p>{{regdate}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="comcert !=='' ">
+                                    <div class="form-group">
+                                        <label>Registration Certificate Uploaded :</label>
+                                        <div class="planImg prmtr">
+                                            <a (click)="downloadCertificate(comcert)">
+                                                <img alt="Certificate" src="assets/images/certificate-icon.jpg">
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Address Line 1 :</label>
+                                        <p>{{addr1}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Address Line 2 :</label>
+                                        <p>{{addr2}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>State :</label>
+                                        <p>{{state}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>District :</label>
+                                        <p>{{district}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Pin Code :</label>
+                                        <p>{{pin}}</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Website Address :</label>
+                                        <p>{{website}}</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="src_list project_lsts mb-5" *ngFor="ongoingprojects.length>0">
+                                <h5>Ongoing Project</h5>
+                                <div class="row">
+                                    <div class="col-md-4 bg-white shadow-lg rounded-3 aos-init aos-animate" *ngFor="let project of ongoingprojects">
+                                        <div class="actuir_outr">
+                                            <span class="bg-white img_dv"><img src="assets/images/no-preview.png"></span>
+                                            <div class="actuir_dtl">
+                                                <strong>{{project.projectname}}</strong>
+                                                <p><strong>Type :</strong> {{project.projectfieldvalue}}</p>
+
+                                                <div class="d-flex justify-content-between">
+                                                    <button class="btn btn-info btn-sm mx-auto vw-mre" (click)="openProjects(project.projectuid)"><i class="fa fa-eye"></i>&nbsp; View
+                                                        Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 align-items-center">
+                                    <div class="col-sm-12 col-md-7">
+                                        <ngb-pagination (pageChange)="ongoingChange($event)" [pageSize]="limit" [collectionSize]="ongoingSize" class="d-flex justify-content-end" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="src_list project_lsts mb-5" *ngIf="completerojects.length>0">
+                                <h5>Completed Project</h5>
+                                <div class="row">
+                                    <div class="col-md-4 bg-white shadow-lg rounded-3 aos-init aos-animate" *ngFor="let project of completerojects">
+                                        <div class="actuir_outr">
+                                            <span class="bg-white img_dv"><img src="assets/images/no-preview.png"></span>
+                                            <div class="actuir_dtl">
+                                                <strong>{{project.projectname}}</strong>
+                                                <p><strong>Type :</strong> {{project.projectfieldvalue}}</p>
+
+                                                <div class="d-flex justify-content-between">
+                                                    <button class="btn btn-info btn-sm mx-auto vw-mre" (click)="openProjects(project.projectuid)"><i class="fa fa-eye"></i>&nbsp; View
+                                                        Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3 align-items-center">
+                                    <div class="col-sm-12 col-md-7">
+                                        <ngb-pagination (pageChange)="completeChange($event)" [pageSize]="limit" [collectionSize]="completeSize" class="d-flex justify-content-end" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+    </div>
+</div>
+<notifier-container></notifier-container>

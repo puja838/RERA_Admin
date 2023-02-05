@@ -1,0 +1,224 @@
+<div class="container mt-4 mb-4">
+    <div id="container_div" class="resp-tabs-container">
+        <div id="div1" class="resp-tabs-container_in">
+
+            <div class="gal_sec top">
+
+
+                <h3>Gallery</h3>
+                <div class="card card-folders">
+
+                    <!-- Folders Container -->
+                    <div class="card-body" id="foldersGroup" *ngIf="mainFolder">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active"><i class="fa fa-folder"></i>&nbsp; Album</li>
+                        </ol>
+                        <div id="main-folders" class="d-flex align-items-stretch flex-wrap" >
+                            <div class="image_div_lit">
+                                <button class="folder-container folder-container1" (click)="showImg(1)">
+                                    <div class="folder-icon">
+                                        <i class="fa fa-folder folder-icon-color"></i>
+                                    </div>
+                                    <div class="folder-name">Event</div>
+                                </button>
+                            </div>
+                            <div class="image_div_lit">
+                                <button class="folder-container folder-container2" (click)="showImg(2)">
+                                    <div class="folder-icon">
+                                        <i class="fa fa-folder folder-icon-color"></i>
+                                    </div>
+                                    <div class="folder-name">Workshop on Five Years of RERA Bihar</div>
+                                </button>
+                            </div>
+                            <div class="image_div_lit">
+                                <button class="folder-container folder-container3" (click)="showImg(3)">
+                                    <div class="folder-icon">
+                                        <i class="fa fa-folder folder-icon-color"></i>
+                                    </div>
+                                    <div class="folder-name">Bhagalpur Event</div>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End Folders Container -->
+                    <!-- Files Container -->
+                    <div *ngIf="eventImg" class="card-body" id="filesGroup1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="backToAlbum()" id="backToFolders1"><i
+                                    class="fa fa-angle-left"></i>&nbsp; Back to Album</a></li>
+
+                        </ol>
+                        <div class="gal_sec top">
+                            <section>
+                                <a class="gallery-demo img-fluid"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.56.51 PM.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.56.51 PM.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.56.52 PM.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.56.52 PM.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.56.59 PM.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.56.59 PM.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.57.31 PM.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2018-09-10 at 1.57.31 PM.jpeg"></a>
+                            </section>
+
+                        </div>
+                    </div>
+                    <div *ngIf="workshop" class="card-body" id="filesGroup2">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a (click)="backToAlbum()" href="javascript:void(0)" id="backToFolders2"><i
+                                    class="fa fa-angle-left"></i>&nbsp; Back to Album</a></li>
+
+                        </ol>
+                        <div class="gal_sec">
+                            <h4>Workshop on Five Years of RERA Bihar</h4>
+                            <section>
+                                <a class="gallery-demo img-fluid"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.53.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.53.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.56.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.56.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.57.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.57.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.59(1).jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.59(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.59.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.33.59.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.00(1).jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.00(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.00.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.00.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.01(1).jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.01(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.01.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.01.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.02.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.02.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.03.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.03.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.04.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.04.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.05.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.05.jpeg"></a>
+
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.06.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.06.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.08(1).jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.08(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.07.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.07.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.06(1).jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.06(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.07(1).jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.07(1).jpeg"></a>
+
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.08.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.08.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.09.jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.09.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.37(1).jpeg"><img
+                                        alt="" class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.37(1).jpeg"></a>
+                            </section>
+
+                        </div>
+                    </div>
+                    <div *ngIf="bhagalpurEvent" class="card-body" id="filesGroup3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a (click)="backToAlbum()" href="javascript:void(0)" id="backToFolders3"><i
+                                    class="fa fa-angle-left"></i>&nbsp; Back to Album</a></li>
+
+                        </ol>
+                        <div class="gal_sec">
+                            <h4>Bhagalpur Event</h4>
+                            <section>
+                                <a class="gallery-demo img-fluid"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.37.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.37.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.38(1).jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.38(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.38(2).jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.38(2).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.38.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.38.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.39(1).jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.39(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.39.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.39.jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.40(1).jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.40(1).jpeg"></a>
+                                <a class="gallery-demo img-fluid lazyload"
+                                   href="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.40.jpeg"><img
+                                        class="img-fluid rounded"
+                                        src="https://cmsapi.rerabiharonline.com/reracontent/img/WhatsApp Image 2022-09-14 at 10.34.40.jpeg"></a>
+                            </section>
+
+                        </div>
+                    </div>
+                    <!-- End Files Container -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

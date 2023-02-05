@@ -1,0 +1,343 @@
+<notifier-container></notifier-container>
+<div class="container-fluid pt-2">
+  <div class="page-header">
+    <h2>Profile Fields Group</h2>
+    <hr>
+  </div>
+  <div class="page-body">
+    <div class="top-actions" style="display: block ruby;">
+      <button class="float-end" mat-raised-button color="primary" (click)="openModal(0)">Create</button>
+    </div>
+    <div style="display: block;">
+      <div class="card mt-5 p-3">
+        <div class="text-center" *ngIf="listData.length === 0">
+          You have not create any group yet.
+        </div>
+        <mat-accordion>
+          <mat-expansion-panel hideToggle *ngFor="let obj of listData" (opened)="getFieldsByGroupId(obj.groupid)">
+            <mat-expansion-panel-header style="background: #19b319;">
+              <mat-panel-title style="color: white;">
+                {{obj.groupname}}
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div style="display: block ruby;padding-top: 10px;">
+              <button class="float-end" mat-raised-button color="primary" (click)="openAddModal(addFieldsModal)">Add</button>
+            </div>
+            <div class="table-responsive mt-4" style="height: 40vh;">
+              <table class="table table-sm table-bordered">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Field Type</th>
+                  <th>Field Name</th>
+                  <th>Field Width</th>
+                  <th>Font Size</th>
+                  <th>Required</th>
+                  <th>Parent Field Name</th>
+                  <th>Parent Field Value</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                <tr *ngFor="let obj1 of fieldListData; let i = index;" cdkDrag class="drag-row">
+                  <td>{{obj1.sequence}}</td>
+                  <td>{{obj1.fieldType}}</td>
+                  <td>
+                    <span *ngIf="obj1.fielddisplaydesc">{{obj1.fielddisplaydesc}}</span>
+                    <span *ngIf="obj1.groupname">{{obj1.groupname}}</span>
+                  </td>
+                  <td>{{obj1.fieldwidth}}</td>
+                  <td>{{obj1.fontsize}}</td>
+                  <td>{{obj1.isrequired == 1 ? 'Yes': 'No'}}</td>
+                  <td>{{obj1.parentfielddisplaydesc}}</td>
+                  <td>{{obj1.parentfieldvalue}}</td>
+                  <td>
+                    <button style="color: blue;" (click)="edit(editmodal, obj1, i)">
+                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </button>
+                    <button class="m-lg-1" style="color: red;" (click)="openDeleteModal(deleteModal, obj1.id, i)">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                  <div class="drag-custom-preview" *cdkDragPreview>{{obj1.fielddisplaydesc}}</div>
+                </tr>
+                <tr *ngIf="fieldListData.length === 0">
+                  <td colspan="3" class="text-center">No data found.</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">{{modalHeader}} Entity</h3>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="entityInput" class="form-label">Group Name:</label>
+        <input type="text" class="form-control" id="entityInput" placeholder="Entity Name" [(ngModel)]="name">
+        <span class="err-msg">{{errMsg}}</span>
+      </div>
+      <div class="mb-3">
+        <table class="table table-borderless">
+          <thead>
+          <tr>
+            <th>Seq.</th>
+            <th>Field Type</th>
+            <th>Field/Group</th>
+            <th>Field Width</th>
+            <th>Font Size</th>
+            <th>Required</th>
+            <th>Parent Field Name</th>
+            <th>Parent Field Value</th>
+            <th *ngIf="selectedFieldsArr.length > 1"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let obj of selectedFieldsArr; let i = index;">
+            <td>{{i + 1}}</td>
+            <td>
+              <select class="form-control" [(ngModel)]="obj.fieldType">
+                <option value="1">Field</option>
+                <option value="2">Field Group</option>
+              </select>
+            </td>
+            <td style="width: 250px;">
+              <div *ngIf="obj.fieldType === '1'">
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Fields'"
+                  [settings]="dropdownSettings"
+                  [data]="fieldsArr"
+                  [(ngModel)]="obj.fieldId"
+                >
+                </ng-multiselect-dropdown>
+              </div>
+              <select class="form-control" [(ngModel)]="obj.groupId" *ngIf="obj.fieldType === '2'">
+                <option *ngFor="let item of listData;" [value]="item.groupid">{{item.groupname}}</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="obj.fieldWidth">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="obj.fontSize">
+            </td>
+            <td>
+              <input type="checkbox" class="form-control" [(ngModel)]="obj.isRequired">
+            </td>
+            <td style="width: 200px;">
+              <select class="form-control" [(ngModel)]="obj.parentFieldId" (change)="onSelectParentField(obj)">
+                <option *ngFor="let obj of fieldsArr;" [value]="obj.fieldid">{{obj.fielddisplaydesc}}</option>
+              </select>
+            </td>
+            <td style="width: 200px;">
+              <mat-select class="form-control" [(ngModel)]="obj.parentFieldValue" multiple>
+                <mat-option *ngFor="let item of obj.parentOptions;" [value]="item">{{item}}</mat-option>
+              </mat-select>
+            </td>
+            <td *ngIf="selectedFieldsArr.length > 1">
+              <a (click)="removeField(i)">
+                <i class="fa fa-trash" style="color: red;font-size: 18px;" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div style="text-align: right;">
+          <button class="btn-success" (click)="addMoreField()">Add More</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Add'" (click)="saveData()">Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Update'" (click)="updateData()">Update
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addFieldsModal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <h3 class="modal-title">Add Fields</h3>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <table class="table table-borderless">
+          <thead>
+          <tr>
+            <th>Seq.</th>
+            <th>Field Type</th>
+            <th>Field/Group</th>
+            <th>Field Width</th>
+            <th>Font Size</th>
+            <th>Required</th>
+            <th>Parent Field Name</th>
+            <th>Parent Field Value</th>
+            <th *ngIf="selectedFieldsArr.length > 1"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let obj of selectedFieldsArr; let i = index;">
+            <td>{{i + 1}}</td>
+            <td>
+              <select class="form-control" [(ngModel)]="obj.fieldType">
+                <option value="1">Field</option>
+                <option value="2">Field Group</option>
+              </select>
+            </td>
+            <td style="width: 250px;">
+              <div *ngIf="obj.fieldType === '1'">
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Fields'"
+                  [settings]="dropdownSettings"
+                  [data]="fieldsArr"
+                  [(ngModel)]="obj.fieldId"
+                >
+                </ng-multiselect-dropdown>
+              </div>
+              <select class="form-control" [(ngModel)]="obj.groupId" *ngIf="obj.fieldType === '2'">
+                <option *ngFor="let item of listData;" [value]="item.groupid">{{item.groupname}}</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="obj.fieldWidth">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="obj.fontSize">
+            </td>
+            <td>
+              <input type="checkbox" class="form-control" [(ngModel)]="obj.isRequired">
+            </td>
+            <td style="width: 200px;">
+              <select class="form-control" [(ngModel)]="obj.parentFieldId" (change)="onSelectParentField(obj)">
+                <option *ngFor="let obj of fieldsArr;" [value]="obj.fieldid">{{obj.fielddisplaydesc}}</option>
+              </select>
+            </td>
+            <td style="width: 200px;">
+              <mat-select class="form-control" [(ngModel)]="obj.parentFieldValue" multiple>
+                <mat-option *ngFor="let item of obj.parentOptions;" [value]="item">{{item}}</mat-option>
+              </mat-select>
+            </td>
+            <td *ngIf="selectedFieldsArr.length > 1">
+              <a (click)="removeField(i)">
+                <i class="fa fa-trash" style="color: red;font-size: 18px;" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div style="text-align: right;">
+          <button class="btn-success" (click)="addMoreField()">Add More</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="addFieldData()">Save</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal>
+  <div class="modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <div class="icon-box">
+          <i class="material-icons">&#xE5CD;</i>
+        </div>
+        <h4 class="modal-title w-100">Are you sure?</h4>
+        <!--        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteData()">Delete</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<!-- Update Modal -->
+<ng-template #editmodal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <h3 class="modal-title">Update</h3>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label>Field Type:</label>
+        <select class="form-control" [(ngModel)]="fieldType">
+          <option value="field">Field</option>
+          <option value="group">Field Group</option>
+        </select>
+      </div>
+      <div class="mb-3" *ngIf="fieldType === 'field'">
+        <select class="form-control" [(ngModel)]="fieldId">
+          <option value="">Select Field</option>
+          <option *ngFor="let item of fieldsArr;" [value]="item.fieldid">{{item.fielddisplaydesc}} ({{item.fielddesc}})</option>
+        </select>
+      </div>
+      <div class="mb-3" *ngIf="fieldType === 'group'">
+        <select class="form-control" [(ngModel)]="fieldgroupid">
+          <option value="">Select Group</option>
+          <option *ngFor="let item of listData;" [value]="item.groupid">{{item.groupname}}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="isRequired">
+          <label>Required:</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label>Field Width:</label>
+        <input class="form-control" type="number" [(ngModel)]="width">
+      </div>
+
+      <div class="mb-3">
+        <label>Field Size:</label>
+        <input class="form-control" type="number" [(ngModel)]="size">
+      </div>
+
+      <div class="mb-3">
+        <label>Parent Field Value:</label>
+        <select class="form-control" [(ngModel)]="parentFieldId" (change)="onSelectParentFieldEdit()">
+          <option value="">Select Field</option>
+          <option *ngFor="let item of fieldsArr;" [value]="item.fieldid">{{item.fielddisplaydesc}} ({{item.fielddesc}})</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label>Parent Field Value:</label>
+        <mat-select class="form-control" [(ngModel)]="parentValue" multiple>
+          <mat-option *ngFor="let d of parentOptions" [value]="d">{{d}}</mat-option>
+        </mat-select>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="updateData()">Update
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,44 @@
+.uplod_list{z-index: 9;background: #fff; border-radius: 4px;margin-top: 2px;width: 100%;}
+.uplod_list ol{padding: 0 18px 10px; display: flex; flex-wrap: wrap;justify-content: flex-start;margin-bottom: 0;}
+.uplod_list ol li {padding: 0;margin: 10px 0px 5px 0px;position: relative;width: 20%;}
+.uplod_list ol li .cross-ico{color: #f00; cursor: pointer;position: absolute;top: -7px;}
+.uplod_list h6{margin:0px; font-size: 14px; padding: 6px 14px; background: #eee;}
+.uplod_list_in{position: relative;}
+.clz_ol {position: absolute;right: 0;top: 0;background:#28a745;color: #fff;padding: 6px 10px;cursor: pointer;letter-spacing: 1px;}
+.uplod_list ol li i.fa.fa-file-image-o {font-size: 30px;}
+.uplod_list ol li img {height: 30px;width: 30px;}
+
+
+
+
+.sign_dv {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.undrtakes .sign_dv p {
+    margin: 5px 0;
+}
+.prom_sign img {
+    display: block;
+    margin: 0 auto;
+}
+.prom_sign {
+    text-align: center;
+}
+.prom_sign .form-control {
+    width: 250px;
+    margin: 20px 0 10px;
+}
+.button_dv.lms_dv{margin-top: 20px;}
+.button_dv.lms_dv button {
+    margin-left: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.button_dv.lms_dv button svg{
+    margin-right: 5px;
+}

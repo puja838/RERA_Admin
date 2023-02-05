@@ -1,0 +1,104 @@
+<mat-drawer-container class="main-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+    <div style="width: 230px;background-color: #f2f3f5;height: 100vh;">
+      <div class="img-container text-center">
+        <img src="assets/images/rera-logo.png" height="80">
+        <hr>
+      </div>
+
+      <div class="offcanvas-body px-0">
+        <ng-material-multilevel-menu
+          [configuration]='config'
+          [items]='appitems'
+          (selectedItem)="selectedItem($event)">
+        </ng-material-multilevel-menu>
+        <!--<ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+
+
+          <li class="nav-item" (click)="goTo('/mst/business-unit-type')" style="border-top: 1px solid lightgray;">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Business Unit Type</span>
+            </a>
+          </li>
+          <li class="nav-item" (click)="goTo('/mst/business-unit')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Business Unit</span>
+            </a>
+          </li>
+          <li class="nav-item" (click)="goTo('/mst/workflow')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Workflow</span>
+            </a>
+          </li>
+          <li class="nav-item" (click)="goTo('/mst/workflow-step')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Workflow Steps</span>
+            </a>
+          </li>
+          <li class="nav-item" (click)="goTo('/mst/step-works')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Step Works</span>
+            </a>
+          </li>
+          <li class="nav-item" (click)="goTo('/mst/workflow-step-works')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Workflow Steps</span>
+            </a>
+          </li>
+          &lt;!&ndash;<li class="nav-item" (click)="goTo('/mst/workflow-step-role')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Workflow Step Role </span>
+            </a>
+          </li>&ndash;&gt;
+          <li class="nav-item" (click)="goTo('/mst/workflow-steps-role-user')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Workflow Step Role User</span>
+            </a>
+          </li>
+          <li class="nav-item" (click)="goTo('/mst/workflow-steps-role-user-checklist')">
+            <a class="nav-link text-truncate">
+              <i class="fa fa-sitemap" aria-hidden="true"></i>
+              <span class="ms-1 d-none d-sm-inline">Workflow Step Role User Checklist</span>
+            </a>
+          </li>
+        </ul>-->
+      </div>
+    </div>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <nav class="navbar navbar-dark bg-primary">
+      <div style="display: block;width: 100%;">
+        <div class="row">
+          <div class="col-6">
+            <button type="button" class="menu-btn" mat-button (click)="drawer.toggle()">
+              <i class="fa fa-bars" aria-hidden="true" style="font-size: 22px;"></i>
+            </button>
+          </div>
+          <div class="col-6 text-right">
+            <div style="background: none; border: none;color: white;">
+              <strong>{{userName}}</strong>
+              <button style="background: none; border: none;color: white;margin-left: 10px;" (click)="logOut()">
+                <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 20px;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</mat-drawer-container>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-scale-pulse" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

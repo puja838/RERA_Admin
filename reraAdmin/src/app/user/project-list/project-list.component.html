@@ -1,0 +1,135 @@
+<div class="main-body">
+  <div class="promot_regs">
+    <div class="container">
+      <div class="prom_reg_in">
+        <h3>{{rolename}}</h3>
+        <div class="prom_reg_frm">
+          <div class="scru_level">
+            <!-- <div class="row">
+              <div class="col-4">
+                <button type="button" class="btn btn-primary col-12" (click)="getDetails(1)">Project Registration <span>
+                    ({{regcount}})</span></button>
+              </div>
+              <div class="col-4">
+                <button type="button" class="btn btn-success col-12" (click)="getDetails(2)">Project Extension
+                  <span>({{extcount}})</span></button>
+              </div>
+              <div class="col-4">
+                <button type="button" class="btn btn-danger col-12" (click)="getDetails(3)">Agent
+                  <span>({{agentcount}})</span></button>
+              </div>
+            </div> -->
+
+            <div class="tabletab mar-top-15">
+              <mat-tab-group (selectedTabChange)="onTabChange($event)">
+                <mat-tab label="Assigned to me">
+                  <ng-template mat-tab-label>
+                    Assigned to me &nbsp;
+                  </ng-template>
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                      <tr>
+                        <th align="left" valign="middle">Sr No.</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype===3">Application No</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype===3">Project Name</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype===3">Promoter Name</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype!==3">User No</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype!==3">Agent Name</th>
+                        <th align="left" valign="middle">Application Status</th>
+                        <th align="left" valign="middle">Date of Submission</th>
+                        <th align="left" valign="middle">Days submitted</th>
+                        <th align="left" valign="middle">Current Stage</th>
+                      </tr>
+                      <tr *ngFor="let l of listData;let i = index;" [ngStyle]="{'color':l.fontColor}">
+                        <td align="left" valign="middle">{{i + 1}}</td>
+                        <td align="left" valign="middle" [hidden]="workflowtype===3">{{l.projectuid}}</td>
+                        <td align="left" valign="middle" [hidden]="workflowtype!==3">{{l.userno}}</td>
+                        <td align="left" valign="middle" [hidden]="workflowtype===3"><a class="blue"
+                            (click)="openProject(l.uniqueprojectid,i)">{{l.projectfieldvalue}}</a>
+                        </td>
+                        <td align="left" valign="middle" [hidden]="workflowtype!==3"><a class="blue"
+                            (click)="openAgent(l.agentid,i)">{{l.username}}</a>
+                        </td>
+                        <td align="left" valign="middle" [hidden]="workflowtype===3">{{l.username}}</td>
+                        <td align="left" valign="middle">{{l.statusName}}</td>
+                        <td align="left" valign="middle">{{l.submitiontime | date:'dd/MM/yyyy'}}</td>
+                        <td align="left" valign="middle">{{l.daysSubmit}}</td>
+                        <td align="left" valign="middle">{{l.roledesc}} - {{l.workflowusername}}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </mat-tab>
+                <mat-tab label="Other Applications">
+                  <ng-template mat-tab-label>
+                    Other Applications &nbsp;
+                  </ng-template>
+                  <div class="row mt-2 mb-2">
+                    <label class="col-sm-2" style="padding-top: 1%;"><strong>Application Status</strong></label>
+                    <select class="col-sm-4 custom-select font-13 form-control" [(ngModel)]="selectStatus"
+                      (change)="onOthersChange()">
+                      <option *ngFor="let b of statusType" [value]="b.isapproved">{{b.statusName}}</option>
+                    </select>
+                  </div>
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                      <tr>
+                        <th align="left" valign="middle">Sr No.</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype===3">Application No</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype===3">Project Name</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype===3">Promoter Name</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype!==3">User No</th>
+                        <th align="left" valign="middle" [hidden]="workflowtype!==3">Agent Name</th>
+                        <th align="left" valign="middle">Application Status</th>
+                        <th align="left" valign="middle">Date of Submission</th>
+                        <th align="left" valign="middle">Days submitted</th>
+                        <th align="left" valign="middle">Current Stage</th>
+                      </tr>
+                      <tr *ngFor="let l of listData;let i = index;" [ngStyle]="{'color':l.fontColor}">
+                        <td align="left" valign="middle">{{i + 1}}</td>
+                        <td align="left" valign="middle" [hidden]="workflowtype===3">{{l.projectuid}}</td>
+                        <td align="left" valign="middle" [hidden]="workflowtype!==3">{{l.userno}}</td>
+                        <td align="left" valign="middle" [hidden]="workflowtype===3"><a class="blue"
+                            (click)="openProject(l.uniqueprojectid,i)">{{l.projectfieldvalue}}</a>
+                        </td>
+                        <td align="left" valign="middle" [hidden]="workflowtype!==3"><a class="blue"
+                            (click)="openAgent(l.agentid,i)">{{l.username}}</a>
+                        </td>
+                        <td align="left" valign="middle" [hidden]="workflowtype===3">{{l.username}}</td>
+                        <td align="left" valign="middle">{{l.statusName}}</td>
+                        <td align="left" valign="middle">{{l.submitiontime | date:'dd/MM/yyyy'}}</td>
+                        <td align="left" valign="middle">{{l.daysSubmit}}</td>
+                        <td align="left" valign="middle">{{l.roledesc}} - {{l.workflowusername}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #modal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <button type="button" class="btn-close" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="mb-3">
+        <label class="form-label">Rejection Comment:</label>
+        <textarea type="text" class="form-control" [(ngModel)]="rejection"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</ng-template>
+
+
+<notifier-container></notifier-container>

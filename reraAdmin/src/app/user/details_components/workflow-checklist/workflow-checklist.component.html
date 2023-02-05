@@ -1,0 +1,1224 @@
+<notifier-container></notifier-container>
+<div class="main-body">
+  <div class="promot_regs preview_list">
+    <div class="container">
+      <div class="prom_reg_in">
+        <div class="appl_no">
+          <!-- <p>NAME- Project Application Registration Scrutiny Checklist</p> -->
+        </div>
+        <h3 class="header">Approval of Submitted Project</h3>
+        <div class="app_hdng">
+          <h2 class="offset-md-4 col-sm-4 userheader">Welcome {{username}}</h2>
+          <p><strong>Project Name</strong> : &nbsp; {{projectname}}</p>
+          <p><strong>Promoter Name</strong> : &nbsp; {{promotername}}</p>
+          <p><strong>Application No.</strong> : &nbsp; {{applicationno}}</p>
+          <p><strong>Date of Submission</strong> : &nbsp; {{submitiontime | date:'dd/MM/yyyy'}}</p>
+          <!--<p><strong>Application Approval Stage</strong> : &nbsp; {{username}}</p>
+          <p><strong>Role </strong> : &nbsp; {{rolename}}</p>-->
+        </div>
+        <div *ngIf="stepworkid == 1" class="prom_reg_frm checklist">
+          <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="View Promoter Profile">
+              <app-profile-view [userID]="promotorid"></app-profile-view>
+            </mat-tab>
+            <mat-tab label="View Application">
+              <app-project-details [projectId]="projectId" [userId]="promotorid" [entitytypeid]="entitytypeid"></app-project-details>
+            </mat-tab>
+            <mat-tab label="Project Ranking">
+              PROJECT RANKING DETAILS
+            </mat-tab>
+            <mat-tab class="" *ngFor="let step of tabs; let stepPos = index" label="{{step.tabname}}"
+                     [disabled]="false">
+              <div class="ckeckview tabletab" *ngFor="let tab of tabdetails; let i = index">
+                <h5>{{tab.groupname}}</h5>
+                <div *ngIf="!tab.isnested">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                      <tr>
+                        <th align="left" valign="middle">SL No.</th>
+                        <th align="left" valign="middle">Check List Item</th>
+                        <th align="left" valign="middle">Information Provided by Promoter</th>
+                        <th align="left" valign="middle">Verified by System</th>
+                        <th align="left" valign="middle">System verification Result</th>
+                        <!--<th align="left" valign="middle" *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                          Attachment
+                        </th>-->
+                        <th align="left" valign="middle" *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                          Observation
+                        </th>
+                        <th align="left" valign="middle">{{rolename}} Comment Yes/No</th>
+                        <th align="left" valign="middle">{{rolename}} Observation</th>
+                        <!--                      <th align="left" valign="middle">{{rolename}} Attachment</th>-->
+                      </tr>
+                      <tr *ngFor="let tabval of tab.details; let j = index">
+                        <td align="left" valign="middle">{{j + 1}}</td>
+                        <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                        <td align="left" *ngIf="tabval.showIcon == false" valign="middle">{{tabval.projectfieldvalue}}
+                        </td>
+                        <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                            (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                            title="View Uploaded File"><i
+                          class="fa fa-eye"></i></a></td>
+                        <td align="left" valign="middle">
+                          {{tabval.systemchecked}}
+                        </td>
+                        <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                          {{tabval.systemcheckedresult}}
+                        </td>
+                        <!--<td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+
+                          <a class="blue" (click)="openAttachment(tab1.filepath)">{{tab1.filedesc}}</a>
+                        </td>-->
+                        <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                          <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                        </td>
+                        <td align="left" valign="middle">
+                          <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                            <mat-radio-button value="1">Yes</mat-radio-button>
+                            <mat-radio-button value="0">No</mat-radio-button>
+                          </mat-radio-group>
+
+                        </td>
+                        <td align="left" valign="middle">
+                          <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                        </td>
+                        <!--<td align="left" valign="middle"><input class="form-control" type="file" id="file{{i}}"
+                                                                style="padding-bottom: 37px;"
+                                                                (change)="uploadFile($event,i,'c',j)"/></td>-->
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div *ngIf="tab.isnested">
+                  <div class="ckeckview tabletab" *ngFor="let group of tab.details; let i = index">
+                    <h5>{{group.groupposition + 1}}</h5>
+                    <div class="table-responsive">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                        <tr>
+                          <th align="left" valign="middle">SL No.</th>
+                          <th align="left" valign="middle">Check List Item</th>
+                          <th align="left" valign="middle">Information Provided by Promoter</th>
+                          <th align="left" valign="middle">Verified by System</th>
+                          <th align="left" valign="middle">System verification Result</th>
+                          <!--<th align="left" valign="middle" *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                            Attachment
+                          </th>-->
+                          <th align="left" valign="middle"
+                              *ngFor="let tab1 of group.details[0].olddata;">{{tab1.rolename}}
+                            Observation
+                          </th>
+                          <th align="left" valign="middle">{{rolename}} Comment Yes/No</th>
+                          <th align="left" valign="middle">{{rolename}} Observation</th>
+                          <!--                      <th align="left" valign="middle">{{rolename}} Attachment</th>-->
+                        </tr>
+                        <tr *ngFor="let tabval of group.details; let j = index">
+                          <td align="left" valign="middle">{{j + 1}}</td>
+                          <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                          <td align="left" *ngIf="tabval.showIcon == false" valign="middle">{{tabval.projectfieldvalue}}
+                          </td>
+                          <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                              (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                              title="View Uploaded File"><i
+                            class="fa fa-eye"></i></a></td>
+                          <td align="left" valign="middle">
+                            {{tabval.systemchecked}}
+                          </td>
+                          <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                            {{tabval.systemcheckedresult}}
+                          </td>
+                          <!--<td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+
+                            <a class="blue" (click)="openAttachment(tab1.filepath)">{{tab1.filedesc}}</a>
+                          </td>-->
+                          <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                            <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                          </td>
+                          <td align="left" valign="middle">
+                            <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                              <mat-radio-button value="1">Yes</mat-radio-button>
+                              <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
+
+                          </td>
+                          <td align="left" valign="middle">
+                            <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                          </td>
+                          <!--<td align="left" valign="middle"><input class="form-control" type="file" id="file{{i}}"
+                                                                  style="padding-bottom: 37px;"
+                                                                  (change)="uploadFile($event,i,'c',j)"/></td>-->
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group button_dv pprov_btndv"
+                   style="margin: 12px;">
+                <button type="submit" class="btn btn-success" (click)="saveDetails()"><i class="fa fa-floppy-o"
+                                                                                         aria-hidden="true"></i> Save
+                </button>
+              </div>
+              <!--<div class="form-group button_dv pprov_btndv" *ngIf="selectedTabIndex-1 == tabs.length && roletype !='2'">
+                <div class="form-group col-sm-3">
+                  <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid">
+                    <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-3">
+                  <button type="button" class="btn btn-primary radius-0 btn-block font-13"
+                          (click)="changeStep(nextstepid)">
+                    Send
+                  </button>
+                </div>
+              </div>
+              <div class="row " *ngIf="roletype=='2' && selectedTabIndex-1 == tabs.length ">
+                <div class="col-sm-5">
+                  <mat-radio-group [(ngModel)]="queryRadiobtn" (change)="radioChangeDetails()">
+                    &lt;!&ndash;                    <mat-radio-button value="1">Promoter for clarification</mat-radio-button> &nbsp;&ndash;&gt;
+                    <mat-radio-button value="2">Further scrutiny</mat-radio-button> &nbsp;
+                    <mat-radio-button value="3">Approval</mat-radio-button> &nbsp;
+                  </mat-radio-group>
+                </div>
+                <div class="form-group col-sm-2" *ngIf="queryRadiobtn==2">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid">
+                    &lt;!&ndash;                      <option> Further scutny</option>&ndash;&gt;
+                    <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                  </select>
+
+                </div>
+
+                <div class="form-group col-sm-2" *ngIf="queryRadiobtn==3">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepid">
+                    &lt;!&ndash;                      <option> Approval</option>&ndash;&gt;
+                    <option *ngFor="let b of steps" [value]="b.id">{{b.stepname}}</option>
+                  </select>
+
+                </div>
+
+                <div class="col-sm-2" *ngIf="queryRadiobtn==2 ">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                          (click)="onStepChangeWithUserDetails()">
+                    Send
+                  </button>
+                </div>
+                <div class="col-sm-2" *ngIf="queryRadiobtn==3">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="changeStep(stepid)">
+                    Send
+                  </button>
+                </div>
+                <div class="col-sm-2" *ngIf="queryRadiobtn==1">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="goToPromoter()">
+                    Send
+                  </button>
+                </div>
+              </div>-->
+            </mat-tab>
+            <mat-tab label="Submit">
+              <div class="form-group row mar-left-right-0" *ngFor="let ques of questions">
+                <label class="col-sm-6 col-md-6 col-form-label">{{ques.question}}</label>
+                <div class="col-sm-6 col-md-6">
+                  <textarea class="form-control" [(ngModel)]="ques.answer"></textarea>
+                </div>
+              </div>
+              <!--              <button (click)="">Click</button>-->
+              <div class="form-group button_dv pprov_btndv">
+                <div class="form-group col-sm-3">
+                  <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid" (change)="onStateChange()">
+                    <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-3" *ngIf="stepusers.length>1">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid"
+                          (change)="onUserChange($event)">
+                    <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                  </select>
+
+                </div>
+                <div class="col-sm-3">
+                  <button type="button" class="btn btn-primary radius-0 btn-block font-13"
+                          (click)="submitAnswerAndChangeStep(nextstepid)">
+                    Send
+                  </button>
+                </div>
+              </div>
+              <!--<div class="row " *ngIf="roletype=='2'">
+                <div class="col-sm-5">
+                  <mat-radio-group [(ngModel)]="queryRadiobtn" (change)="radioChangeDetails()">
+                    &lt;!&ndash;                    <mat-radio-button value="1">Promoter for clarification</mat-radio-button> &nbsp;&ndash;&gt;
+                    <mat-radio-button value="2">Further scrutiny</mat-radio-button> &nbsp;
+                    <mat-radio-button value="3">Approval</mat-radio-button> &nbsp;
+                  </mat-radio-group>
+                </div>
+                <div class="form-group col-sm-2" *ngIf="queryRadiobtn==2">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid">
+                    &lt;!&ndash;                      <option> Further scutny</option>&ndash;&gt;
+                    <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                  </select>
+
+                </div>
+
+                <div class="form-group col-sm-2" *ngIf="queryRadiobtn==3">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepid">
+                    &lt;!&ndash;                      <option> Approval</option>&ndash;&gt;
+                    <option *ngFor="let b of steps" [value]="b.id">{{b.stepname}}</option>
+                  </select>
+
+                </div>
+
+                <div class="col-sm-2" *ngIf="queryRadiobtn==2 ">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                          (click)="onStepChangeWithUserDetails()">
+                    Send
+                  </button>
+                </div>
+                <div class="col-sm-2" *ngIf="queryRadiobtn==3">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="changeStep(stepid)">
+                    Send
+                  </button>
+                </div>
+                <div class="col-sm-2" *ngIf="queryRadiobtn==1">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="goToPromoter()">
+                    Send
+                  </button>
+                </div>
+              </div>-->
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+        <div *ngIf="stepworkid == 2" class="prom_reg_frm">
+          <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex1" (selectedTabChange)="onTabChange1($event)">
+            <mat-tab label="View Promoter Profile">
+              <app-profile-view [userID]="promotorid"></app-profile-view>
+            </mat-tab>
+            <mat-tab label="View Application">
+              <app-project-details [projectId]="projectId"></app-project-details>
+            </mat-tab>
+            <mat-tab label="Project Ranking">
+              PROJECT RANKING DETAILS
+            </mat-tab>
+            <mat-tab *ngFor="let step of tabs; let stepPos = index" label="{{step.tabname}}"
+                     [disabled]="false">
+              <div class="ckeckview tabletab" *ngFor="let tab of tabdetails; let i = index">
+                <h5>{{tab.groupname}}</h5>
+                <div *ngIf="!tab.isnested">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                      <tr>
+                        <th align="left" valign="middle">Sr No.</th>
+                        <th align="left" valign="middle">Check List Item</th>
+                        <th align="left" valign="middle">Information Provided by Promoter</th>
+                        <th align="left" valign="middle">Verified by System</th>
+                        <th align="left" valign="middle">System verification Result</th>
+                        <th align="left" valign="middle"
+                            *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                          Observation
+                        </th>
+                        <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Comment Yes/No</th>
+                        <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Observation</th>
+                      </tr>
+                      <tr *ngFor="let tabval of tab.details; let j = index">
+                        <td align="left" valign="middle">{{j + 1}}</td>
+                        <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                        <td align="left" *ngIf="tabval.showIcon == false"
+                            valign="middle">{{tabval.projectfieldvalue}}
+                        </td>
+                        <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                            (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                            title="View Uploaded File"><i
+                          class="fa fa-eye"></i></a></td>
+                        <td align="left" valign="middle">
+                          {{tabval.systemchecked}}
+                        </td>
+                        <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                          {{tabval.systemcheckedresult}}
+                        </td>
+                        <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                          <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                        </td>
+                        <td align="left" valign="middle" *ngIf="roletype == 4">
+                          <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                            <mat-radio-button value="1">Yes</mat-radio-button>
+                            <mat-radio-button value="0">No</mat-radio-button>
+                          </mat-radio-group>
+
+                        </td>
+                        <td align="left" valign="middle" *ngIf="roletype == 4">
+                          <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div *ngIf="tab.isnested">
+                  <div class="ckeckview tabletab" *ngFor="let group of tab.details; let i = index">
+                    <h5>{{group.groupposition + 1}}</h5>
+                    <div class="table-responsive">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                        <tr>
+                          <th align="left" valign="middle">Sr No.</th>
+                          <th align="left" valign="middle">Check List Item</th>
+                          <th align="left" valign="middle">Information Provided by Promoter</th>
+                          <th align="left" valign="middle">Verified by System</th>
+                          <th align="left" valign="middle">System verification Result</th>
+                          <th align="left" valign="middle"
+                              *ngFor="let tab1 of group.details[0].olddata;">{{tab1.rolename}}
+                            Observation
+                          </th>
+                          <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Comment Yes/No</th>
+                          <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Observation</th>
+                        </tr>
+                        <tr *ngFor="let tabval of group.details; let j = index">
+                          <td align="left" valign="middle">{{j + 1}}</td>
+                          <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                          <td align="left" *ngIf="tabval.showIcon == false"
+                              valign="middle">{{tabval.projectfieldvalue}}
+                          </td>
+                          <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                              (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                              title="View Uploaded File"><i
+                            class="fa fa-eye"></i></a></td>
+                          <td align="left" valign="middle">
+                            {{tabval.systemchecked}}
+                          </td>
+                          <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                            {{tabval.systemcheckedresult}}
+                          </td>
+                          <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                            <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                          </td>
+                          <td align="left" valign="middle" *ngIf="roletype == 4">
+                            <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                              <mat-radio-button value="1">Yes</mat-radio-button>
+                              <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
+
+                          </td>
+                          <td align="left" valign="middle" *ngIf="roletype == 4">
+                            <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="false">
+                <div class="form-group button_dv pprov_btndv" *ngIf="selectedTabIndex+1 < tabs.length"
+                     style="margin: 12px;">
+                  <button type="submit" class="btn btn-success" (click)="saveDetails()"><i class="fa fa-floppy-o"
+                                                                                           aria-hidden="true"></i>
+                    Save
+                  </button>
+                  <!--                        <button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right" aria-hidden="true"></i> Next </button>-->
+                </div>
+                <div class="form-group button_dv pprov_btndv" *ngIf="selectedTabIndex+1 == tabs.length">
+                  <div class="form-group col-sm-3">
+                    <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid">
+                      <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-3">
+                    <button type="button" class="btn btn-primary radius-0 btn-block font-13"
+                            (click)="changeStep(nextstepid)">
+                      Send
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <!--<mat-tab label="Checklist Details">
+              <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex"
+                             (selectedTabChange)="onTabChange($event)">
+                <mat-tab class="" *ngFor="let step of tabs; let stepPos = index" label="{{step.tabname}}"
+                         [disabled]="false">
+                  <div class="ckeckview tabletab" *ngFor="let tab of tabdetails; let i = index">
+                    <h5>{{tab.groupname}}</h5>
+                    <div *ngIf="!tab.isnested">
+                      <div class="table-responsive">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                          <tr>
+                            <th align="left" valign="middle">Sr No.</th>
+                            <th align="left" valign="middle">Check List Item</th>
+                            <th align="left" valign="middle">Information Provided by Promoter</th>
+                            <th align="left" valign="middle">Verified by System</th>
+                            <th align="left" valign="middle">System verification Result</th>
+                            <th align="left" valign="middle"
+                                *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                              Observation
+                            </th>
+                            <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Comment Yes/No</th>
+                            <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Observation</th>
+                          </tr>
+                          <tr *ngFor="let tabval of tab.details; let j = index">
+                            <td align="left" valign="middle">{{j + 1}}</td>
+                            <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                            <td align="left" *ngIf="tabval.showIcon == false"
+                                valign="middle">{{tabval.projectfieldvalue}}
+                            </td>
+                            <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                                (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                                title="View Uploaded File"><i
+                              class="fa fa-eye"></i></a></td>
+                            <td align="left" valign="middle">
+                              {{tabval.systemchecked}}
+                            </td>
+                            <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                              {{tabval.systemcheckedresult}}
+                            </td>
+                            <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                              <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                            </td>
+                            <td align="left" valign="middle" *ngIf="roletype == 4">
+                              <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                                <mat-radio-button value="1">Yes</mat-radio-button>
+                                <mat-radio-button value="0">No</mat-radio-button>
+                              </mat-radio-group>
+
+                            </td>
+                            <td align="left" valign="middle" *ngIf="roletype == 4">
+                              <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div *ngIf="tab.isnested">
+                      <div class="ckeckview tabletab" *ngFor="let group of tab.details; let i = index">
+                        <h5>{{group.groupposition + 1}}</h5>
+                        <div class="table-responsive">
+                          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                            <tr>
+                              <th align="left" valign="middle">Sr No.</th>
+                              <th align="left" valign="middle">Check List Item</th>
+                              <th align="left" valign="middle">Information Provided by Promoter</th>
+                              <th align="left" valign="middle">Verified by System</th>
+                              <th align="left" valign="middle">System verification Result</th>
+                              <th align="left" valign="middle"
+                                  *ngFor="let tab1 of group.details[0].olddata;">{{tab1.rolename}}
+                                Observation
+                              </th>
+                              <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Comment Yes/No</th>
+                              <th align="left" valign="middle" *ngIf="roletype == 4">{{rolename}} Observation</th>
+                            </tr>
+                            <tr *ngFor="let tabval of group.details; let j = index">
+                              <td align="left" valign="middle">{{j + 1}}</td>
+                              <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                              <td align="left" *ngIf="tabval.showIcon == false"
+                                  valign="middle">{{tabval.projectfieldvalue}}
+                              </td>
+                              <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                                  (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                                  title="View Uploaded File"><i
+                                class="fa fa-eye"></i></a></td>
+                              <td align="left" valign="middle">
+                                {{tabval.systemchecked}}
+                              </td>
+                              <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                                {{tabval.systemcheckedresult}}
+                              </td>
+                              <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                                <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                              </td>
+                              <td align="left" valign="middle" *ngIf="roletype == 4">
+                                <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                                  <mat-radio-button value="1">Yes</mat-radio-button>
+                                  <mat-radio-button value="0">No</mat-radio-button>
+                                </mat-radio-group>
+
+                              </td>
+                              <td align="left" valign="middle" *ngIf="roletype == 4">
+                                <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="false">
+                    <div class="form-group button_dv pprov_btndv" *ngIf="selectedTabIndex+1 < tabs.length"
+                         style="margin: 12px;">
+                      <button type="submit" class="btn btn-success" (click)="saveDetails()"><i class="fa fa-floppy-o"
+                                                                                               aria-hidden="true"></i>
+                        Save
+                      </button>
+                      &lt;!&ndash;                        <button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right" aria-hidden="true"></i> Next </button>&ndash;&gt;
+                    </div>
+                    <div class="form-group button_dv pprov_btndv" *ngIf="selectedTabIndex+1 == tabs.length">
+                      <div class="form-group col-sm-3">
+                        <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid">
+                          <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary radius-0 btn-block font-13"
+                                (click)="changeStep(nextstepid)">
+                          Send
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-tab>-->
+            <mat-tab label="Queries And Submission" [disabled]="disabledQuery" *ngIf="stepseqno===SCRUTINY2_STEP_SEQ">
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  Internal Note
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           class="table  table-striped table-hover">
+                      <tr>
+                        <th align="left" valign="middle" width="15%">SL No.</th>
+                        <th align="left" valign="middle" width="85%">Remarks</th>
+                      </tr>
+                      <tr *ngFor="let note of notes;let i=index;">
+                        <td align="left" valign="middle">{{i + 1}}.</td>
+                        <td align="left" valign="middle" width="85%">{{note.notes}}.</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="form-group row mar-left-right-0">
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" placeholder="Write Internal Note"
+                                [(ngModel)]="internalNote"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2" (click)="insertinternalnotes()">Add
+                      Notes
+                    </button>
+                  </div>
+                  <!--<div class="form-inline">
+                    <div class="form-group col-sm-10 col-md-10">
+                      <textarea class="form-control"  placeholder="Write Internal Note"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2">Add Remarks</button>
+                  </div>-->
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  Queries Raised
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="tabletab qreye" >
+                    <div class="table-responsive">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                             class="table  table-striped table-hover">
+                        <tr>
+                          <th align="left" valign="middle">SL No.</th>
+                          <th align="left" valign="middle">Query to Promoter</th>
+                          <th align="left" valign="middle">Raised By</th>
+                          <th align="left" valign="middle">Time Given to Respond (Days)</th>
+                          <th align="left" valign="middle">Additional Document Asked</th>
+                          <th align="left" valign="middle">Accepted</th>
+                          <th align="left" valign="middle">Comments of HOR</th>
+                          <th align="left" valign="middle"></th>
+
+
+                          <!-- <th align="left" valign="middle" *ngIf="roletype=='2'">Valid Query ?</th>
+                          <th align="left" valign="middle" *ngIf="roletype=='2'">Approve ?</th>-->
+                        </tr>
+                        <tr *ngFor="let q of queryanswerdetails;let j=index;">
+                          <td align="middle" valign="middle">{{j + 1}}</td>
+                          <td align="middle" valign="middle">{{q.query}}</td>
+                          <td align="middle" valign="middle"> {{q.username}} </td>
+                          <td align="middle" valign="middle">{{q.permissibletime}}</td>
+                          <td align="middle" valign="middle">{{q.comments}} </td>
+                          <td align="middle" valign="middle">{{q.accepted}} </td>
+                          <td align="middle" valign="middle">{{q.answer}} </td>
+                          <td *ngIf=" q.isvalidquery ===0 " align="center" valign="middle"><i
+                            class="fa fa-times text-danger"></i></td>
+                        </tr>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-body pad-lft-rgt-10">
+                  <mat-checkbox [(ngModel)]="raiseQuery"><span class="query-label">Do you want to raise a query ?</span>
+                  </mat-checkbox>
+
+                  <div class="tabletab qreye" [hidden]="!raiseQuery">
+                    <div class="table-responsive">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                             class="table  table-striped table-hover">
+                        <tr>
+                          <th align="left" valign="middle" width="5%">SL No.</th>
+                          <th align="left" valign="middle" width="35%">Query To Promoter</th>
+                          <th align="left" valign="middle" width="15%">Document Required</th>
+                          <th align="left" valign="middle" width="25%">Document Name if Yes</th>
+                          <th align="left" valign="middle" width="20%">Time to Respond (Days)</th>
+                          <th align="left" valign="middle" width="5%"></th>
+                        </tr>
+                        <tr *ngFor="let query of queries;let i=index;">
+                          <td align="left" valign="middle">{{i + 1}}.</td>
+                          <td align="left" valign="middle" width="35%"><textarea [(ngModel)]="query.query"
+                                                                                 [disabled]="hasValidQueryValue && roletype=='4'"></textarea>
+                          </td>
+                          <td align="label" valign="middle">
+                            <div class="sle_ppr ">
+                              <mat-radio-group [(ngModel)]="query.docsrequired">
+                                <mat-radio-button value="1">Yes</mat-radio-button>&nbsp;&nbsp;
+                                <mat-radio-button value="0">No</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                          </td>
+                          <td align="center" valign="middle" width="25%"><input class="form-control" type="text"
+                                                                                [(ngModel)]="query.docs"
+                                                                                [readOnly]="hasValidQueryValue && roletype=='4'"/>
+                          </td>
+                          <!--<td align="left" valign="middle" width="10%"><input class="form-control" type="file" id="file{{i}}"
+                                                                              style="padding-bottom: 37px;" (change)="uploadFile($event,i,'q')"/></td>-->
+                          <td align="center" valign="middle" width="15%"><input class="form-control" type="text"
+                                                                                [readOnly]="hasValidQueryValue && roletype=='4'"
+                                                                                [(ngModel)]="query.time"
+                                                                                placeholder=""/>
+                          </td>
+                          <td align="center" valign="middle" class="pad-top-19"><a class="font-18"
+                                                                                   [hidden]="hasValidQueryValue && roletype=='4'"
+                                                                                   (click)="deleteQuery(i)"><i
+                            class="fa fa-times text-danger"></i></a></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <button class="btn btn-primary pull-right radius-0 font-13 mb-2" *ngIf="!canApprove"
+                            [disabled]="hasValidQueryValue && roletype=='4'"
+                            (click)="addMoreQuery()"><i
+                      class="fa fa-plus" aria-hidden="true "></i> Add More
+                    </button>
+                    <div class="clear"></div>
+
+                    <!--<div class="row ">
+                      <div class="col-sm-5" *ngIf="roletype=='2' && !canApprove && !isRejected">
+                        <mat-radio-group [(ngModel)]="queryRadiobtn" (change)="radioChange()">
+                          &lt;!&ndash;                      <mat-radio-button value="1">Promoter for clarification</mat-radio-button> &nbsp;&ndash;&gt;
+                          <mat-radio-button value="2"><span *ngIf="!hasValidQueryValue">Further scrutiny</span><span
+                            *ngIf="hasValidQueryValue">Send Approve Query</span></mat-radio-button> &nbsp;
+                          <mat-radio-button value="3">Approval</mat-radio-button> &nbsp;
+                        </mat-radio-group>
+                      </div>
+                      <div class="form-group col-sm-2" *ngIf="queryRadiobtn==2">
+                        <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid">
+                          &lt;!&ndash;                      <option> Further scutny</option>&ndash;&gt;
+                          <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                        </select>
+
+                      </div>
+
+                      <div class="form-group col-sm-2" *ngIf="queryRadiobtn==3">
+                        <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepid">
+                          &lt;!&ndash;                      <option> Approval</option>&ndash;&gt;
+                          <option *ngFor="let b of steps" [value]="b.id">{{b.stepname}}</option>
+                        </select>
+
+                      </div>
+
+                      <div class="col-sm-2" *ngIf="queryRadiobtn==2 ">
+                        <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                                (click)="onStepChangeWithUser()">
+                          Send
+                        </button>
+                      </div>
+                      <div class="col-sm-2" *ngIf="queryRadiobtn==3">
+                        <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                                (click)="onStepChange()">
+                          Send
+                        </button>
+                      </div>
+                      &lt;!&ndash;                  <div class="col-sm-2" *ngIf="queryRadiobtn==1">&ndash;&gt;
+                      &lt;!&ndash;                    <button type="button" class="btn btn-primary btn-block radius-0 font-13"&ndash;&gt;
+                      &lt;!&ndash;                            (click)="goToPromoterQuery()">&ndash;&gt;
+                      &lt;!&ndash;                      Send&ndash;&gt;
+                      &lt;!&ndash;                    </button>&ndash;&gt;
+                      &lt;!&ndash;                  </div>&ndash;&gt;
+                      <div class="col-sm-6" *ngIf="roletype=='3' ">
+                        <mat-radio-group [(ngModel)]="queryChairRadiobtn" (change)="radioChangeChair()">
+                          <mat-radio-button value="1">Approve Application</mat-radio-button> &nbsp;
+                          <mat-radio-button value="2">Reject Application</mat-radio-button> &nbsp;
+                          <mat-radio-button value="3">Send for further verification</mat-radio-button> &nbsp;
+                        </mat-radio-group>
+                      </div>
+                      <div class="form-group col-sm-4" *ngIf="changeRole">
+                        <select class="custom-select radius-0 font-13 form-control" *ngIf="roletype!='4'"
+                                [(ngModel)]="stepid">
+                          <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                        </select>
+                        <select class="custom-select radius-0 font-13 form-control"
+                                *ngIf="roletype=='4' && !hasValidQueryValue" [(ngModel)]="stepid">
+                          <option *ngFor="let b of steps" [value]="b.id">{{b.stepname}}</option>
+                        </select>
+                        &lt;!&ndash;<mat-radio-group [(ngModel)]="scrutinyRadiobtn">
+                          <mat-radio-button value="1">Promoter for clarification</mat-radio-button> &nbsp;
+                        </mat-radio-group>&ndash;&gt;
+                      </div>
+                      <div class="col-sm-2" *ngIf="changeRole">
+                        <ng-template [ngIf]=" hasValidQueryValue" [ngIfElse]="elseBlock">
+                          <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                                  (click)="goToPromoterQuery()">
+                            Send to Promoter
+                          </button>
+                        </ng-template>
+                        <ng-template #elseBlock>
+                          <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                                  (click)="onStepChange()">
+                            Send
+                          </button>
+                        </ng-template>
+                      </div>
+
+                      <div class="form-group col-sm-4"
+                           *ngIf="queryChairRadiobtn == '1' || queryChairRadiobtn == '2' || canApprove|| isRejected ">
+                    <textarea class="form-control" [(ngModel)]="approvalComment" [maxLength]="1000"
+                              placeholder="Enter Comment (max 1000 characters)"></textarea>
+                      </div>
+                      <div class="form-group col-sm-4"
+                           *ngIf=" canApprove && roletype=='2' ">
+                    <textarea class="form-control" [(ngModel)]="regno" [maxLength]="100"
+                              placeholder="Enter Registration No (max 100 characters)"></textarea>
+                      </div>
+                      <div class="col-sm-2" *ngIf="queryChairRadiobtn == '1' || queryChairRadiobtn == '2' ">
+                        <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="approval()">
+                          Send
+                        </button>
+                      </div>
+
+                      <div class="col-sm-2" *ngIf="canApprove || isRejected">
+                        <button type="button" class="btn btn-success btn-block radius-0 font-13"
+                                (click)="approval()">
+                          <span *ngIf="canApprove && roletype=='5'">Issue Certificate</span>
+                          <span *ngIf="canApprove && roletype=='2'">Send to Secretary</span>
+                          <span *ngIf="isRejected">Publish Reject</span>
+                        </button>
+                      </div>
+                    </div>-->
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <mat-radio-group [(ngModel)]="workflowbutton" (change)="moveStepChange()">
+
+                        <mat-radio-button value="1">Send to next step</mat-radio-button> &nbsp;
+                        <mat-radio-button value="2" *ngIf="currentstepusers.length>1">Send to user</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="form-group col-sm-3" *ngIf="workflowbutton === '2'">
+                      <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="currentstepuserid"
+                              (change)="onCurrentUserChange($event)">
+                        <option *ngFor="let b of currentstepusers" [value]="b.userid">{{b.username}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2" *ngIf="workflowbutton === '2'">
+                      <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                              (click)="onCurrentStepUserChange()">
+                        Send
+                      </button>
+                    </div>
+                    <div class="form-group col-sm-3" *ngIf="workflowbutton === '1'">
+                      <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid"
+                              (change)="onStateChange()">
+                        <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-sm-3" *ngIf="stepusers.length>1 && workflowbutton === '1'">
+                      <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid"
+                              (change)="onUserChange($event)">
+                        <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2" *ngIf="workflowbutton === '1'">
+                      <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                              (click)="onStepChange()">
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </mat-tab>
+            <mat-tab label="Notes And Queries" [disabled]="disabledQuery" *ngIf="stepseqno===INTERN_STEP_SEQ">
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  Internal Note / Observation on the File
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           class="table  table-striped table-hover">
+                      <tr>
+                        <th align="left" valign="middle" width="15%">SL No.</th>
+                        <th align="left" valign="middle" width="85%">Remarks</th>
+                      </tr>
+                      <tr *ngFor="let note of notes;let i=index;">
+                        <td align="left" valign="middle">{{i + 1}}.</td>
+                        <td align="left" valign="middle" width="85%">{{note.notes}}.</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="form-group row mar-left-right-0">
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" placeholder="Write Internal Note"
+                                [(ngModel)]="internalNote"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2" (click)="insertinternalnotes()">Add
+                      Notes
+                    </button>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-sm-3" >
+                      <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid"
+                              (change)="onStateChange()">
+                        <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-sm-3" *ngIf="stepusers.length>1 ">
+                      <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid"
+                              (change)="onUserChange($event)">
+                        <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2">
+                      <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                              (click)="onStepChange()">
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                  <!--<div class="form-inline">
+                    <div class="form-group col-sm-10 col-md-10">
+                      <textarea class="form-control"  placeholder="Write Internal Note"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2">Add Remarks</button>
+                  </div>-->
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Queries Raised">
+              <div class="tab-header" *ngFor="let query of querydetails;let i=index;">
+                <h5>{{query.roledesc}}</h5>
+                <div class="tabletab qreye" *ngFor="let q of query.details;let j=index;">
+                  <div class="table-responsive">
+                    <ul>
+                      <li>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                               class="table  table-striped table-hover">
+                          <tr>
+                            <th align="left" valign="middle">SL No.</th>
+                            <th align="left" valign="middle">Query Details</th>
+                            <th align="left" valign="middle">Document Required</th>
+                            <!--                            <th align="left" valign="middle">Attachment</th>-->
+                            <th align="left" valign="middle">Comments</th>
+                            <th align="left" valign="middle">Time to Respond (Days)</th>
+
+                            <!-- <th align="left" valign="middle" *ngIf="roletype=='2'">Valid Query ?</th>
+                            <th align="left" valign="middle" *ngIf="roletype=='2'">Approve ?</th>-->
+                          </tr>
+                          <tr>
+                            <td align="left" valign="middle">{{j + 1}}</td>
+                            <td align="left" valign="middle">{{q.query}} <br><span class="blue">{{q.dateofquery |
+                              date:'medium'}}<br></span>
+                              <span *ngIf="roletype !=='1'"><strong>{{q.username}} </strong> ({{q.roledesc}})</span>
+                            </td>
+                            <td align="label" valign="middle"> {{q.docrequired}} </td>
+                            <!--<td align="left" valign="middle"><a class="ved_eye" href="images/pan-card.jpg"
+                                                                target="_blank" title="View Uploaded File"><i
+                              class="fa fa-eye"></i></a></td>-->
+                            <td align="left" valign="middle">{{q.comments}} </td>
+                            <td align="left" valign="middle">{{q.permissibletime}}</td>
+                            <!-- <td *ngIf="roletype=='2'&& q.isvalidquery ===0 " align="center" valign="middle"><a
+                              (click)="invalidateQuery(q,1)"><i
+                              class="fa fa-check text-success"></i></a></td> -->
+                            <!-- <td *ngIf="roletype=='2'&& q.isvalidquery ===1 " align="center" valign="middle"></td>
+                            <td *ngIf="roletype=='2'&& q.queryresolved ===0 " align="center" valign="middle"><a
+                              (click)="workflowStepResolvedQuery(q,1)"><i
+                              class="fa fa-check text-success"></i></a></td> -->
+                          </tr>
+                        </table>
+                        <h5 class="com_ac_tncy">Comment against Query <span class="ac_rj">Comment Accept/Reject</span>
+                        </h5>
+                        <ul *ngFor="let c of q.details;">
+                          <li>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                   class="table  table-striped table-hover">
+
+                              <tr>
+                                <td align="left" valign="middle" width="8%">&nbsp;</td>
+                                <td align="left" valign="middle" width="35%">
+                                  <div class="reply_an">
+                                    <strong *ngIf="c.type==1">{{c.roledesc}}'s Answer :</strong> <span *ngIf="c.type==1"
+                                                                                                       class="black">{{c.dateofanswer | date:'medium'}}</span>
+                                    <strong *ngIf="c.type!=1">{{c.roledesc}}'s Comment : </strong><span
+                                    *ngIf="c.type!=1" class="black">{{c.dateofanswer | date:'medium'}}</span><br>
+                                    <span><strong *ngIf="c.type!=1">{{c.username}} </strong> ({{c.roledesc}})</span>
+                                    <p>{{c.answer}}</p>
+                                  </div>
+                                </td>
+                                <td align="label" valign="middle" width="12%">&nbsp;</td>
+                                <td [hidden]="c.filepath == null || c.filepath == '' " align="left" valign="middle"
+                                    width="20%"><a class="black"
+                                                   (click)="openAttachment(c.filepath)"><i
+                                  class="fa fa-file-image-o"
+                                  aria-hidden="true"></i> {{c.filedesc}}</a>
+                                </td>
+                                <td align="left" valign="middle" width="10%"></td>
+                                <td *ngIf="roletype=='2'" align="left" valign="middle" width="10%"></td>
+                              </tr>
+                            </table>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="qeyy">
+
+                          <div class="textDetails">
+                            <label *ngIf="roletype==1" class=" font-16">Enter Answer </label>
+                            <label *ngIf="roletype !=1" class=" font-16">Enter Comment </label>
+
+                            <textarea type="text" [(ngModel)]="q.usercomments" class="form-control"
+                                      placeholder="Enter details (max 1000 characters)"></textarea>
+                          </div>
+                          <div class="fileUpload" *ngIf="menutype == 1">
+                            <label>&nbsp;</label>
+                            <input class="form-control" type="file" (change)="uploadFile($event,i,'q',j)">
+                          </div>
+                          <div class="submitBtn" *ngIf="menutype == 1">
+                            <label>&nbsp;</label>
+                            <button type="button" class="btn btn-primary radius-0 font-13" (click)="addComment(i,j,q)">
+                              Submit
+                            </button>
+                          </div>
+                        </div>
+                        <div class="row commentBtm">
+                          <div class="col-sm-3 submitBtn" *ngIf="roletype=='2'">
+                          </div>
+                          <div class="col-sm-3 submitBtn" *ngIf="roletype=='2' && q.isvalidquery ===0">
+                            <button *ngIf="menutype == 1" type="button" class="btn btn-primary radius-0 font-13"
+                                    (click)="invalidateQuery(q,1)">
+                              Valid Query
+                            </button>
+                          </div>
+                          <div class="col-sm-3 submitBtn" *ngIf="roletype=='2' && q.queryresolved ===0">
+                            <button *ngIf="menutype == 1" type="button" class="btn btn-success radius-0 font-13"
+                                    (click)="workflowStepResolvedQuery(q,1)">
+                              Approve
+                            </button>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="blank-msg" *ngIf="querydetails.length ===0">
+                No query found till now for this project
+              </div>
+              <br class="clear">
+              <div class="form-group button_dv pprov_btndv" *ngIf="roletype == '1'">
+                <!--                <button type="submit" class="btn btn-success" onclick="window.location.href='legal-intern.html'"><i class="fa fa-floppy-o" aria-hidden="true"></i>  Send to legal intern </button>-->
+                <!-- <button *ngFor="let b of nextSteps" type="button" class="btn btn-primary"
+                        (click)="moveWorkflow(b.id)">
+                  <i
+                    class="fa fa-arrow-right" aria-hidden="true"></i> {{b.stepname}}</button> -->
+                <!--                    <label class="form-label nextStepsLebel"> Send to</label>-->
+                <!--                <div class="form-group col-sm-3">-->
+                <!--                  <select class="custom-select nextSteps radius-0 font-13" [(ngModel)]="stepid">-->
+                <!--                    <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>-->
+                <!--                  </select>-->
+
+                <!--                </div>-->
+                <div class="col-sm-3">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                          (click)="moveWorkflow(stepid)">
+                    Send
+                  </button>
+                </div>
+              </div>
+            </mat-tab>
+            <!--<mat-tab label="Raise a query" [disabled]="disabledQuery">
+              <div class="tabletab qreye">
+                <div class="table-responsive">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                         class="table  table-striped table-hover">
+                    <tr>
+                      <th align="left" valign="middle" width="5%">SL No.</th>
+                      <th align="left" valign="middle" width="35%">Query Details</th>
+                      <th align="left" valign="middle" width="15%">Document Required</th>
+                      <th align="left" valign="middle" width="25%">Comments</th>
+                      <th align="left" valign="middle" width="20%">Time to Respond (Days)</th>
+                      <th align="left" valign="middle" width="5%"></th>
+                    </tr>
+                    <tr *ngFor="let query of queries;let i=index;">
+                      <td align="left" valign="middle">{{i + 1}}.</td>
+                      <td align="left" valign="middle" width="35%"><textarea [(ngModel)]="query.query" [disabled]="hasValidQueryValue && roletype=='4'"></textarea></td>
+                      <td align="label" valign="middle">
+                        <div class="sle_ppr ">
+                          <mat-radio-group [(ngModel)]="query.docsrequired">
+                            <mat-radio-button value="1">Yes</mat-radio-button>&nbsp;&nbsp;
+                            <mat-radio-button value="0">No</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                      </td>
+                      <td align="center" valign="middle" width="25%"><input class="form-control" type="text"
+                                                                            [(ngModel)]="query.docs" [readOnly]="hasValidQueryValue && roletype=='4'" /></td>
+                      &lt;!&ndash;<td align="left" valign="middle" width="10%"><input class="form-control" type="file" id="file{{i}}"
+                                                                          style="padding-bottom: 37px;" (change)="uploadFile($event,i,'q')"/></td>&ndash;&gt;
+                      <td align="center" valign="middle" width="15%"><input class="form-control" type="text" [readOnly]="hasValidQueryValue && roletype=='4'"
+                                                                            [(ngModel)]="query.time" placeholder=""/>
+                      </td>
+                      <td align="center" valign="middle" class="pad-top-19"><a class="font-18" [hidden]="hasValidQueryValue && roletype=='4'"
+                                                                               (click)="deleteQuery(i)"><i
+                        class="fa fa-times text-danger"></i></a></td>
+                    </tr>
+                  </table>
+                </div>
+                <button class="btn btn-primary pull-right radius-0 font-13 mb-2" *ngIf="!canApprove" [disabled]="hasValidQueryValue && roletype=='4'"
+                        (click)="addMoreQuery()"><i
+                  class="fa fa-plus" aria-hidden="true "></i> Add More
+                </button>
+                <div class="clear"></div>
+
+                <div class="row ">
+                  <div class="col-sm-5" *ngIf="roletype=='2' && !canApprove && !isRejected">
+                    <mat-radio-group [(ngModel)]="queryRadiobtn" (change)="radioChange()">
+                      &lt;!&ndash;                      <mat-radio-button value="1">Promoter for clarification</mat-radio-button> &nbsp;&ndash;&gt;
+                      <mat-radio-button value="2"><span *ngIf="!hasValidQueryValue">Further scrutiny</span><span *ngIf="hasValidQueryValue">Send Approve Query</span></mat-radio-button> &nbsp;
+                      <mat-radio-button value="3">Approval</mat-radio-button> &nbsp;
+                    </mat-radio-group>
+                  </div>
+                  <div class="form-group col-sm-2" *ngIf="queryRadiobtn==2">
+                    <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid">
+                      &lt;!&ndash;                      <option> Further scutny</option>&ndash;&gt;
+                      <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                    </select>
+
+                  </div>
+
+                  <div class="form-group col-sm-2" *ngIf="queryRadiobtn==3">
+                    <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepid">
+                      &lt;!&ndash;                      <option> Approval</option>&ndash;&gt;
+                      <option *ngFor="let b of steps" [value]="b.id">{{b.stepname}}</option>
+                    </select>
+
+                  </div>
+
+                  <div class="col-sm-2" *ngIf="queryRadiobtn==2 ">
+                    <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                            (click)="onStepChangeWithUser()">
+                      Send
+                    </button>
+                  </div>
+                  <div class="col-sm-2" *ngIf="queryRadiobtn==3">
+                    <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="onStepChange()">
+                      Send
+                    </button>
+                  </div>
+                  &lt;!&ndash;                  <div class="col-sm-2" *ngIf="queryRadiobtn==1">&ndash;&gt;
+                  &lt;!&ndash;                    <button type="button" class="btn btn-primary btn-block radius-0 font-13"&ndash;&gt;
+                  &lt;!&ndash;                            (click)="goToPromoterQuery()">&ndash;&gt;
+                  &lt;!&ndash;                      Send&ndash;&gt;
+                  &lt;!&ndash;                    </button>&ndash;&gt;
+                  &lt;!&ndash;                  </div>&ndash;&gt;
+                  <div class="col-sm-6" *ngIf="roletype=='3' ">
+                    <mat-radio-group [(ngModel)]="queryChairRadiobtn" (change)="radioChangeChair()">
+                      <mat-radio-button value="1">Approve Application</mat-radio-button> &nbsp;
+                      <mat-radio-button value="2">Reject Application</mat-radio-button> &nbsp;
+                      <mat-radio-button value="3">Send for further verification</mat-radio-button> &nbsp;
+                    </mat-radio-group>
+                  </div>
+                  <div class="form-group col-sm-4" *ngIf="changeRole">
+                    <select class="custom-select radius-0 font-13 form-control" *ngIf="roletype!='4'"
+                            [(ngModel)]="stepid">
+                      <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                    </select>
+                    <select class="custom-select radius-0 font-13 form-control"
+                            *ngIf="roletype=='4' && !hasValidQueryValue" [(ngModel)]="stepid">
+                      <option *ngFor="let b of steps" [value]="b.id">{{b.stepname}}</option>
+                    </select>
+                    &lt;!&ndash;<mat-radio-group [(ngModel)]="scrutinyRadiobtn">
+                      <mat-radio-button value="1">Promoter for clarification</mat-radio-button> &nbsp;
+                    </mat-radio-group>&ndash;&gt;
+                  </div>
+                  <div class="col-sm-2" *ngIf="changeRole">
+                    <ng-template [ngIf]=" hasValidQueryValue" [ngIfElse]="elseBlock">
+                      <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                              (click)="goToPromoterQuery()">
+                        Send to Promoter
+                      </button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                      <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="onStepChange()">
+                        Send
+                      </button>
+                    </ng-template>
+                  </div>
+
+                  <div class="form-group col-sm-4"
+                       *ngIf="queryChairRadiobtn == '1' || queryChairRadiobtn == '2' || canApprove|| isRejected ">
+                    <textarea class="form-control" [(ngModel)]="approvalComment" [maxLength]="1000"
+                              placeholder="Enter Comment (max 1000 characters)"></textarea>
+                  </div>
+                  <div class="form-group col-sm-4"
+                       *ngIf=" canApprove && roletype=='2' ">
+                    <textarea class="form-control" [(ngModel)]="regno" [maxLength]="100"
+                              placeholder="Enter Registration No (max 100 characters)"></textarea>
+                  </div>
+                  <div class="col-sm-2" *ngIf="queryChairRadiobtn == '1' || queryChairRadiobtn == '2' ">
+                    <button type="button" class="btn btn-primary btn-block radius-0 font-13" (click)="approval()">
+                      Send
+                    </button>
+                  </div>
+
+                  <div class="col-sm-2" *ngIf="canApprove || isRejected">
+                    <button type="button" class="btn btn-success btn-block radius-0 font-13"
+                            (click)="approval()">
+                      <span *ngIf="canApprove && roletype=='5'">Issue Certificate</span>
+                      <span *ngIf="canApprove && roletype=='2'">Send to Secretary</span>
+                      <span *ngIf="isRejected">Publish Reject</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>-->
+            <!--<mat-tab label="Action Trail" *ngIf="roletype!=1">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                     class="table  table-striped table-hover">
+                <tr>
+                  <th align="left" valign="middle">SL No.</th>
+                  <th align="left" valign="middle">Step</th>
+                  <th align="left" valign="middle">Date</th>
+                </tr>
+                <tr *ngFor="let history of stephistory;let i=index">
+                  <td align="left" valign="middle">{{i + 1}}</td>
+                  <td align="left" valign="middle">{{history.fromstep}} &ndash;&gt; {{history.tostep}}</td>
+                  <td align="left" valign="middle">{{history.dateoftransfer | date:'medium'}}</td>
+                </tr>
+              </table>
+            </mat-tab>-->
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<ng-template #modal>-->
+<!--  <div class=" modal-content ">-->
+<!--    <div class="modal-header">-->
+<!--      <button type="button" class="btn-close" (click)="closeModal()">X</button>-->
+<!--    </div>-->
+<!--    <div class="modal-body">-->
+
+<!--      <div class="mb-3">-->
+<!--        <label class="form-label">Enter Comment:</label>-->
+<!--        <textarea type="text" class="form-control" [(ngModel)]="approvalComment"></textarea>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="modal-footer">-->
+<!--      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>-->
+<!--      <button type="button" class="btn btn-primary" (click)="approval()">Send-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</ng-template>-->

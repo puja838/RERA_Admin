@@ -1,0 +1,187 @@
+<div class="main-body">
+    <div class="container">
+        <div class="page-in-sec">
+            <div class="resp-tabs-container_in">
+                <h4 class="mb-3">Search List</h4>
+                <div class="search_head">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12">
+                            <div class="src_clke">
+                                <strong>Search By</strong>
+                                <ul id="row1">
+                                    <li *ngFor="let val of notselected;let i=index;"
+                                        (click)="select(val,i)">{{val}}</li>
+                                </ul>
+
+                                <ul id="row2">
+                                    <li *ngFor="let val of selected;let i=index;" (click)="deselect(val,i)">{{val}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="fil_tr">
+                                <button class="filtr_btn" (click)="openFilter()">
+                                    <img src="assets/images/filter.png">
+                                </button>
+
+                                <div class="filtersec_dv">
+
+                                    <span class="filter_close" (click)="closeFilter()"><i class="fa fa-times-circle"
+                                                                                          aria-hidden="true"></i></span>
+                                    <div class="filt_opn_dv">
+                                        <h5 class="text-center mb-3">Search by Filter</h5>
+                                        <div class="filt_fild">
+
+                                            <select class="form-control" [(ngModel)]="stateSelected" [disabled]="true">
+                                                <option *ngFor="let state of states;"
+                                                        [value]="state.id">{{state.statename}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="filt_fild">
+                                            <select class="form-control" [(ngModel)]="distSelected" >
+                                                <option *ngFor="let dist of districts;"
+                                                        [value]="dist.cityname">{{dist.cityname}}</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="filt_fild">
+
+                                            <input class="form-control" [(ngModel)]="pincode" type="text" placeholder="Enter Pin Code">
+                                        </div>
+                                        <div class="filt_fild">
+
+                                            <select class="form-control" [(ngModel)]="catSelected">
+                                                <option *ngFor="let cat of categories;"
+                                                        [value]="cat">{{cat}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="filt_fild">
+                                            <h4>Carpet Area of Unit (Sq.Meter)</h4>
+                                            <ngx-slider [(value)]="carpetMinValue" [(highValue)]="carpetHighValue"
+                                                        [options]="currentOptions"></ngx-slider>
+                                        </div>
+                                        <p>&nbsp;</p>
+                                        <!--<div class="filt_fild">
+                                            <h4>Unit Cost (Rs.)</h4>
+                                            <ngx-slider [(value)]="costMinValue" [(highValue)]="costHighValue"
+                                                        [options]="costCurrentOptions"></ngx-slider>
+                                        </div>-->
+                                        <div class="btn_filtr">
+                                            <button class="btn btn-primary" (click)="apply()">Apply</button>
+                                            <button class="btn btn-secondary" (click)="reset()">Reset</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="src_list project_lsts mb-5" *ngIf="projects.length>0">
+                    <h4>Project</h4>
+                    <div class="row">
+                        <div class="col-md-4 bg-white shadow-lg rounded-3 aos-init aos-animate pad-bot-20"
+                             *ngFor="let project of projects">
+                            <div class="actuir_outr">
+                                <span class="bg-white img_dv"><img
+                                        src="assets/images/no-preview.png"></span>
+                                <div class="actuir_dtl">
+                                    <strong>{{project.projectname}}</strong>
+                                    <p><strong>Type :</strong> {{project.projectfieldvalue}}</p>
+
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-info btn-sm mx-auto vw-mre"
+                                                (click)="openProjects(project.projectuid)"><i class="fa fa-eye"></i>&nbsp; View
+                                            Details
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 align-items-center">
+                        <div class="col-sm-12 col-md-7">
+                            <ngb-pagination (pageChange)="onProjectPageChange($event)" [pageSize]="limit" [collectionSize]="projectSize" class="d-flex justify-content-end" [(page)]="projectPage" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+                <div class="src_list promoter_lsts mb-5" *ngIf="promoters.length>0">
+                    <h4>Promoter</h4>
+                    <div class="row">
+                        <div class="col-md-4 bg-white shadow-lg rounded-3 aos-init aos-animate pad-bot-20"
+                             *ngFor="let prom of promoters">
+                            <div class="actuir_outr">
+                                <span class="bg-white img_dv"><img src="assets/images/no-image-pp.png"></span>
+                                <div class="actuir_dtl">
+                                    <strong>{{prom.username}}</strong>
+                                    <p><strong>Email :</strong> {{prom.useremail}}</p>
+                                    <p><strong>Contact No. :</strong> {{prom.usermobile}}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-info btn-sm mx-auto vw-mre"
+                                                (click)="openPromoter(prom.userno)"><i class="fa fa-eye"></i>&nbsp; View
+                                            Details
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 align-items-center">
+                        <div class="col-sm-12 col-md-7">
+                            <ngb-pagination (pageChange)="onPromoterPageChange($event)" [pageSize]="limit" [collectionSize]="promoterSize" class="d-flex justify-content-end" [(page)]="promoterPage" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="src_list agent_lsts mb-5">
+                    <h4>Agent</h4>
+                    <div class="row">
+                        <div class="col-md-4 bg-white shadow-lg rounded-3 aos-init aos-animate">
+                            <div class="actuir_outr">
+                                <span class="bg-white img_dv"><img src="../../../assets/images/no-image-pp.png"></span>
+                                <div class="actuir_dtl">
+                                    <strong>SHITAL BUILDTECH</strong>
+                                    <p><strong>Email :</strong> ahitalbuildtech@gmail.com</p>
+                                    <p><strong>Contact No. :</strong> 9876543210</p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-info btn-sm mx-auto vw-mre" onclick="window.location.href='agent-profile.html'"><i class="fa fa-eye"></i>&nbsp; View
+                                            Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 bg-white shadow-lg rounded-3 aos-init aos-animate">
+                            <div class="actuir_outr">
+                                <span class="bg-white img_dv"><img src="../../../assets/images/no-image-pp.png"></span>
+                                <div class="actuir_dtl">
+                                    <strong>AALIYAS HOME PVT LTD</strong>
+                                    <p><strong>Email :</strong> aaliyas@gmail.com</p>
+                                    <p><strong>Contact No. :</strong> 9876543210</p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-info btn-sm mx-auto vw-mre"><i class="fa fa-eye"></i>&nbsp; View
+                                            Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 bg-white shadow-lg rounded-3 aos-init aos-animate">
+                            <div class="actuir_outr">
+                                <span class="bg-white img_dv"><img src="../../../assets/images/no-image-pp.png"></span>
+                                <div class="actuir_dtl">
+                                    <strong>HISI INFRATECH PVT.LTD</strong>
+                                    <p><strong>Email :</strong> hisi@gmail.com</p>
+                                    <p><strong>Contact No. :</strong> 9876543210</p>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-info btn-sm mx-auto vw-mre"><i class="fa fa-eye"></i>&nbsp; View
+                                            Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

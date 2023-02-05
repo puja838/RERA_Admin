@@ -1,0 +1,42 @@
+<section class="login-block">
+    <img src="assets/images/Web-login-img.png"/>
+    <div class="container">
+        <div class="row ">
+            <div class="col login-sec">
+        <div class="log-hdr">
+            <strong>Login</strong>
+            <img src="assets/images/login-logo.png"/>
+        </div>
+                <form class="login-form">
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="userName" name="userName" class="form-control"
+                            placeholder="User Name" (keyup)="userNameFun()">
+                    <span class="span_error">{{userNameErr}}</span>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="input-group">
+                            <input [type]="hide ? 'password' : 'text'" [(ngModel)]="userPassword" name="userPassword"
+                                class="form-control" placeholder="Password" (keyup)="passwordFun()">
+                            <div class="input-group-append">
+                                <span class="input-group-text" (click)="passfun()">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <span class="span_error">{{userPasswordErr}}</span>
+                    </div>
+                    <div class="form-group">
+                        <span class="span_error">{{loginErr}}</span>
+                    </div>
+                    <div class="form-check">
+                        <button type="submit" class="btn btn-success log_bt" (click)="onSubmit()">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+

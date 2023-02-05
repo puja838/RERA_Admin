@@ -1,0 +1,95 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <app-dashboard-header [linkName]="linkName" [dashboardURL]="workflowtype===AGENT_TYPE ? 'agent-dashboard' : 'project-dashboard'"></app-dashboard-header>
+            <div class="prom_reg_in">
+                <div class="prom_reg_frm stageIIIpage">
+                    <div class="dev_tabl dev_wrk prev_tabl mb-3 p-0">
+
+                        <div class="personal_view_page stage_dv mt-3">
+                            <h5>Query from RERA</h5>
+                            <p class="mt-0 mb-3" style="text-align: center;">{{query}}</p>
+                            <div class="table-responsive">
+                                <h5>Response History</h5>
+                                <table class="table  table-hover" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                    <tbody><tr>
+                                        <th width="5%" valign="middle" align="left">SL No.</th>
+                                        <th width="12%" valign="middle" align="left">Response submitted</th>
+                                        <th width="12%" valign="middle" align="left">Date submitted on</th>
+                                        <th width="12%" valign="middle" align="left">RERA Remarks </th>
+                                    </tr>
+                                    <tr *ngFor="let answer of promanswer;let i=index;">
+                                        <td valign="middle" align="left">{{i+1}}</td>
+                                        <td valign="middle" align="left">{{answer.answer}}</td>
+                                        <td valign="middle" align="left">{{answer.dateofanswer | date:'dd-MM-yyyy'}}</td>
+                                        <td valign="middle" align="left">{{answer.comments}}</td>
+                                    </tr>
+
+
+                                    </tbody></table>
+
+                            </div>
+                            <div>
+                                <h5>Enter your Response</h5>
+
+                                <div class="prom_inr pb-0" *ngFor="let resp of response;let i=index;">
+                                    <div class="prom_inr_com form-group d-flex align-items-center">
+                                        <label>Supporting Document Required by RERA : {{docs}}</label>
+
+                                    </div>
+                                    <div class="prom_inr_com form-group ">
+                                        <label>Upload Document</label>
+                                        <input class="form-control " type="file" placeholder=""
+                                               accept="image/jpeg,image/png,application/pdf,image/x-eps"
+                                               (change)="uploadFile($event,i)">
+                                    </div>
+                                    <div class="prom_inr_com form-group ">
+                                        <label>Enter your Response</label>
+                                        <input class="form-control " [maxLength]="1000" type="text" placeholder="Max 1000 characters" [(ngModel)]="resp.answer">
+                                    </div>
+                                    <div class="close_d cursor-pointer" (click)="remove(i)">
+                                        <i class="fa fa fa-times"></i>
+                                    </div>
+
+                                </div>
+                                <div class="prom_inr_com form-group">
+                                    <button class="btn btn-primary text-white" (click)="addMore()">Add More</button>
+                                </div>
+                                <div id="div_show201" class="hide">
+                                    <div class="table-responsive">
+                                        <table class="table  table-hover" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tbody><tr>
+                                                <th width="5%" valign="middle" align="left">SL No.</th>
+                                                <th width="20%" valign="middle" align="left">Document Name</th>
+                                                <th width="20%" valign="middle" align="left">Purpose</th>
+                                                <th width="20%" valign="middle" align="left">Attach Document</th>
+                                            </tr>
+                                            <tr>
+                                                <td valign="middle" align="left">1</td>
+                                                <td valign="middle" align="left"><input class="form-control w-100" type="text" placeholder="Enter "></td>
+                                                <td valign="middle" align="left"><input class="form-control w-100" type="text" placeholder="Enter "></td>
+                                                <td valign="middle" align="left"><input class="form-control w-100" type="file" placeholder="Enter "
+                                                                                        accept="image/jpeg,image/png,application/pdf,image/x-eps"></td>
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                    <div class="text_rght"><button class="btn btn-warning text-white me-auto"><i class="fa fa-plus " aria-hidden="true "></i> Attach More Document</button>
+                                    </div></div>
+                            </div>
+                            <div class="btn_dv text-center">
+                                <button type="submit" class="btn btn-primary text-white" (click)="close()">Close</button>
+                                &nbsp;&nbsp;<button class="btn btn-primary text-white"(click)="save()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

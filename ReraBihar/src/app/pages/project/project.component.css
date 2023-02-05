@@ -1,0 +1,9 @@
+.uplod_list{z-index: 9;background: #fff; border-radius: 4px;margin-top: 2px;width: 100%;}
+.uplod_list ol{padding: 0 18px 10px; display: flex; flex-wrap: wrap;justify-content: flex-start;margin-bottom: 0;}
+.uplod_list ol li {padding: 0;margin: 10px 0px 5px 0px;position: relative;width: 20%;}
+.uplod_list ol li .cross-ico{color: #f00; cursor: pointer;position: absolute;top: -7px;}
+.uplod_list h6{margin:0px; font-size: 14px; padding: 6px 14px; background: #eee;}
+.uplod_list_in{position: relative;}
+.clz_ol {position: absolute;right: 0;top: 0;background:#28a745;color: #fff;padding: 6px 10px;cursor: pointer;letter-spacing: 1px;}
+.uplod_list ol li i.fa.fa-file-image-o {font-size: 30px;}
+.uplod_list ol li img {height: 30px;width: 30px;}

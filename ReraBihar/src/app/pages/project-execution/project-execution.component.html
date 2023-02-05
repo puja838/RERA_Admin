@@ -1,0 +1,190 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <div class="profl_pgese">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/pages/project-dashboard">{{'Dashboard' | translate}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{'QPR' | translate}}</li>
+                    </ol>
+                </nav>
+                <strong>{{'Welcome' | translate}}: {{name}}</strong>
+                <a class="logout_btn"(click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+            </div>
+
+            <div class="prom_reg_in">
+                <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex">
+                    <mat-tab label="QPR Status">
+                        <div class="resp-tabs-container hor_1">
+                            <div>
+                                <div class="dev_tabl dev_wrk prev_tabl mb-3 p-0">
+                                    <div class="personal_view_page stage_dv">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5>{{'Project Details' | translate}}</h5>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Project Registration No.' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.projectuid}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Project Name' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.projectName}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Project Address' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.projectAddress}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Name of Promoter' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.promoterName}}</p>
+                                                </div>
+                                            </div>
+
+                                            <!--<div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Name of Co-promoter : </label>
+                                                    <p>{{projectDetails.copromoterName}}</p>
+                                                </div>
+                                            </div>-->
+
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Project Registration is valid up to' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.validatyenddate}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Starting date of Project' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.projectStartDate}} </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Type of Project' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.projectType}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>{{'Period of validity' | translate}} : &nbsp; </label>
+                                                    <p>{{projectDetails.periodOfValidityDate}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 text-right">
+                                                <button class="btn btn-dark" (click)="goToProjectDetails()">{{'View Project Details' | translate}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="qpr_subm_f"><h5>{{'QPR Submitted' | translate}}</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tr>
+                                                <th width="6%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="20%" valign="top" align="left">{{'Registration No' | translate}}</th>
+                                                <th width="20%" valign="top" align="left">{{'Project Name' | translate}}</th>
+                                                <th width="15%" valign="top" align="left">{{'Promoter Name' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'Quarter Date' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Submitted Date' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Delay in Days' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">&nbsp;</th>
+
+                                            </tr>
+                                            <tr *ngFor="let obj of submittedQuoterList; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{obj.registrationno}}</td>
+                                                <td valign="top" align="left">{{obj.projectName}}</td>
+                                                <td valign="top" align="left">{{obj.promoterName}}</td>
+                                                <td valign="top" align="left">{{obj.quoterName}}</td>
+                                                <td valign="top" align="left">{{obj.submitteddate}}</td>
+                                                <td valign="top"
+                                                    align="left">{{obj.delayedDays <= 0 ? 'No' : obj.delayedDays}}</td>
+                                                <td valign="top" align="center">
+                                                    <a (click)="goToProjectExecutionDtl(obj)"
+                                                                                   class="text-dark">
+                                                        <svg enable-background="new 0 0 32 32" height="32px" id="svg2" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                                                            <g id="background">
+                                                                <rect fill="none" height="32" width="32"/>
+                                                            </g>
+                                                            <g id="view">
+                                                                <circle cx="16" cy="16" r="6"/>
+                                                                <path d="M16,6C6,6,0,15.938,0,15.938S6,26,16,26s16-10,16-10S26,6,16,6z M16,24c-8.75,0-13.5-8-13.5-8S7.25,8,16,8s13.5,8,13.5,8   S24.75,24,16,24z"/>
+                                                            </g>
+                                                        </svg>
+                                                </a></td>
+                                            </tr>
+                                            <tr *ngIf="submittedQuoterList.length === 0">
+                                                <td class="text-center" colspan="7">
+                                                    {{'No data found.' | translate}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="qpr_subm_f mt-5"><h5>{{'QPR Pending' | translate}} </h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tr>
+                                                <th width="6%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="20%" valign="top" align="left">{{'Registration No' | translate}}</th>
+                                                <th width="20%" valign="top" align="left">{{'Project Name' | translate}}</th>
+                                                <th width="15%" valign="top" align="left">{{'Promoter Name' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'Quarter Date' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Due date' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Delay in Days' | translate}}</th>
+                                                <th valign="top" align="center">&nbsp;</th>
+                                            </tr>
+                                            <tr *ngFor="let obj of pendingQuoterList; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{obj.registrationno}}</td>
+                                                <td valign="top" align="left">{{obj.projectName}}</td>
+                                                <td valign="top" align="left">{{obj.promoterName}}</td>
+                                                <td valign="top" align="left">{{obj.quoterName}}</td>
+                                                <td valign="top" align="left">{{obj.quoterenddate}}</td>
+                                                <td valign="top"
+                                                    align="left">{{obj.delayedDays <= 0 ? 'No' : obj.delayedDays}}</td>
+                                                <td valign="top" align="center">
+                                                    <a class="text-dark" (click)="goToProjectExecutionDtl(obj)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                             fill="currentColor" class="bi bi-pencil-square"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                            <path fill-rule="evenodd"
+                                                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                        </svg>
+                                                    </a></td>
+                                            </tr>
+                                            <tr *ngIf="pendingQuoterList.length === 0">
+                                                <td class="text-center" colspan="8">
+                                                    {{'No data found.' | translate}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Baseline Plan">
+                        <app-post-approve-update-project [projectId]="projectId" [isComplete]="isComplete" [projectuid]="projectuid" [viewMod]="true"></app-post-approve-update-project>
+                    </mat-tab>
+                    <mat-tab label="Progress Chart">
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

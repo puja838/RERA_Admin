@@ -1,0 +1,33 @@
+<table class="table table-bordered table-striped">
+    <tbody>
+
+
+    <tr *ngFor="let obj of notificationList;let i = index;">
+        <td valign="middle" align="left">{{i+1}}</td>
+        <td valign="middle" align="left">
+            <a class="alert-hover" style="font-size: 13px;" (click)="goToDetails(obj)">
+                {{obj.content}}
+            </a></td>
+    </tr>
+
+    </tbody>
+    <tbody *ngIf="notificationList.length === 0">
+    <tr>
+        <td colspan="2" class="text-center">
+            {{'No data found' | translate}}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!--<div id="app">
+    <ul class="page">
+        <li class="page__btn" (click)="onBtnClick('prev')"><span class="material-icons">chevron_left</span>
+        </li>
+        <li class="page__numbers" *ngFor="let page of getPageList()"
+            [ngClass]="currentPage == page?'active': ''"
+            (click)="onPageClick(page)">{{page}}</li>
+        <li class="page__btn" (click)="onBtnClick('next')"><span class="material-icons">chevron_right</span>
+        </li>
+    </ul>
+</div>-->

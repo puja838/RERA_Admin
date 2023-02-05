@@ -1,0 +1,37 @@
+<div class="main-body">
+    <div class="container">
+        
+        <div class="page-in-sec">
+            <div class="row">
+            <div class="col-md-12">
+            <div id="container_div" class="resp-tabs-container">
+                <div id="div2" class="resp-tabs-container_in" style="display: block;">
+                    <h3>What’s New</h3>
+                    
+                    <div class="table-responsive what_new">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr *ngFor="let obj of newItems;">
+                                  <td align="left" valign="middle" width="12%">{{obj.approvaltime}}</td>
+                                  <td align="left" valign="middle" width="21%">
+                                      {{obj.isapproved === 3 ? 'Registration Approved' : 'Application Rejected'}}
+                                  </td>
+                                  <td align="left" valign="middle" width="67%"><a>Promoters Name : {{obj.promoterName}}, Projects Name {{obj.projectName}}</a></td>
+                                </tr>
+                              </tbody>
+                          </table>
+                          
+                    </div>
+                </div>
+                
+                
+                
+                
+              </div>
+
+        </div>
+    </div>
+</div></div>
+
+
+</div>

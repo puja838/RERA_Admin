@@ -1,0 +1,504 @@
+<div class="main-body">
+    <div class="promot_regs">
+      <div class="container">
+        <div class="prom_reg_in">
+<!--          <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">-->
+            <div *ngFor="let step of stepListShow; let stepPos = index"> <!-- [disabled]="!(selectedTabIndex === stepPos)"  -->
+              <div>
+                <div class="resp-tabs-container hor_1 mb-3">
+  <!--                <h5 class="mt-2 step-name-heading">{{step}}</h5>-->
+                  <div class="personal_view_page">
+                    <div class="row">
+                      <div *ngFor="let obj of this.formDetails[step];let i = index;" class="mainparentCheck"
+                           [ngClass]="obj.groupid != null ? 'col-12' : 'col-' + (obj.fieldwidth == 3 ? '4' : obj.fieldwidth)">
+  
+                        <!-- If group field -->
+                        <div *ngIf="obj.groupid != null">
+                          <div *ngFor="let field of obj.fielddetails; let j = index;" class="row border-group">
+                            <div *ngIf="step === 'Track Record of the Promoter' && obj.groupid === 16" class="col-12">
+                              <h5>{{numberInWords(j+1)}} Project</h5>
+                            </div>
+                            <div *ngFor="let key of obj.fielddetailskeys[j]; let l = index;" class="parentCheck"
+                                 [ngClass]="[field[key] !== undefined && field[key][0].fieldgroupid !== null && field[key][0].fielddetailskeys[0].length > 1 ? 'col-12' : 'col-' + (field[key][0].fieldwidth == 3 || field[key][0].fieldwidth == 2 ? '4' : field[key][0].fieldwidth), field[key][0].fieldwidth ? 'col-' + (field[key][0].fieldwidth == 3 || field[key][0].fieldwidth == 2 ? '4' : field[key][0].fieldwidth) : 'col-4']">
+  
+                              <div *ngIf="field[key] !== undefined && field[key][0].fieldgroupid === null">
+                                <!-- For Text -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 1
+                                 && field[key][0].fielddisplaydesc.toLowerCase().indexOf('otp') <= -1
+                                  && field[key][0].fielddisplaydesc.toLowerCase().indexOf('verification code') <= -1">
+                                  <label [id]="'label_' + field[key][0].fielddesc + '_' + j" *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}} : &nbsp;</label>
+                                  <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                  <!--<input class="form-control" type="text" [disabled]="isDisabled"
+                                         (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                         placeholder="Enter {{field[key][0].fielddisplaydesc}}"
+                                         [(ngModel)]="field[key][0].fieldvalue" 
+                                         [attr.data-fieldID]="field[key][0].fieldid" [attr.data-stepID]="obj.stepid"
+                                         [id]="field[key][0].fielddesc + '_' + j"/>
+                                  <span style="color: red;">{{field[key][0].validErr}}</span>-->
+                                  <p>{{field[key][0].fieldvalue}}</p>
+                                </div>
+  
+                                <!-- For Combo -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 2">
+                                  <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}}  : &nbsp;</label>
+                                  <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                 <!-- <select class="form-control" [(ngModel)]="field[key][0].fieldvalue" [disabled]="isDisabled"
+                                          (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                          [id]="field[key][0].fielddesc + '_' + j + '_' + i + '_' + l"
+                                          (change)="onRadioButtonChange(obj, step, field[key][0], 'group', j)">
+                                    <option *ngFor="let d of field[key][0].controlvalue.split('|')"
+                                            [value]="d">{{d}}</option>
+                                  </select>-->
+                                  <p>{{field[key][0].fieldvalue}}</p>
+                                </div>
+  
+                                <!-- For Radio -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 3">
+                                  <label style="display: block;" *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}}  : &nbsp;</label>
+                                  <!--<div class="form-check form-check-inline"
+                                       *ngFor="let d of field[key][0].controlvalue.split('|')">
+                                    <input class="form-check-input" type="radio" name="{{i}}{{j}}{{l}}" value="{{d}}"
+                                           [(ngModel)]="field[key][0].fieldvalue" [disabled]="isDisabled"
+                                           (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                           (change)="onRadioButtonChange(obj, step, field[key][0], 'group', j)">
+                                    <label class="form-check-label">{{d}}</label>
+                                  </div>-->
+                                  <p>{{field[key][0].fieldvalue}}</p>
+                                </div>
+  
+                                <!-- For Checkbox -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 4">
+                                  <div class="form-check form-check-inline">
+                                   <!-- <input class="form-check-input" type="checkbox" [(ngModel)]="field[key][0].fieldvalue" [disabled]="isDisabled"
+                                           (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)">
+                                    <label class="form-check-label">{{field[key][0].fielddisplaydesc}}</label>-->
+                                    <p>{{field[key][0].fieldvalue}}</p>
+                                  </div>
+                                </div>
+  
+                                <!-- For Date -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 5">
+                                  <label>{{field[key][0].fielddisplaydesc}}  : &nbsp;</label>
+                                  <!--<input class="form-control" type="date" [(ngModel)]="field[key][0].fieldvalue" [disabled]="isDisabled"
+                                         (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                         [id]="field[key][0].fielddesc + '_' + j"/>-->
+                                  <p>{{field[key][0].fieldvalue}}</p>
+                                </div>
+  
+                                <!-- For File -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 6">
+                                  <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}}  : &nbsp;
+                                  </label>
+                                  <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                  <!--<input class="form-control" type="file" [disabled]="isDisabled"
+                                         accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                         (change)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                         [id]="field[key][0].fielddesc + '_' + j"/>
+                                  <span
+                                    style="display: block;font-size: 13px;color: #555;">{{field[key][0].fieldvalue}}</span>-->
+                                  <p><a class="anker-hover" (click)="viewFile(field[key][0].fieldvalue)">{{field[key][0].fieldvalue}}</a></p>
+                                </div>
+  
+                                <!-- For Button -->
+                                <!--<div class="form-group" style="display: inline; margin-right: 10px;"
+                                     *ngIf="field[key][0].controltype == 7 && obj.fielddetails.length > 1 && field[key][0].fielddisplaydesc.toLowerCase().indexOf('add more') > -1">
+                                  <button class="btn btn-danger" style="margin-bottom: 10px;" [disabled]="isDisabled"
+                                          *ngIf="field[key][0].fielddisplaydesc.toLowerCase().indexOf('add more') > -1  && obj.fielddetails.length > 1"
+                                          [ngStyle]="{'margin-top': (obj.fielddetailskeys[j].length - 1) % 3 !== 0 ? '24px' : 'unset'}"
+                                          (click)="removeItemBtn(obj, j)">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                  </button>
+                                </div>
+                                <div class="form-group" style="display: inline"
+                                     *ngIf="field[key][0].controltype == 7 && obj.fielddetails.length >= 1 && obj.fielddetails.length == (j + 1)">
+                                  <button *ngIf="field[key][0].fielddisplaydesc.toLowerCase().indexOf('add more') > -1" class="btn btn-warning" style="margin-bottom: 10px;"
+                                          [ngStyle]="{'margin-top': (obj.fielddetailskeys[j].length - 1) % 3 !== 0 ? '24px' : 'unset'}" [disabled]="isDisabled"
+                                          (click)="addMoreBtn(obj, j)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    {{field[key][0].fielddisplaydesc}}
+                                  </button>
+                                </div>
+                                <div class="form-group" *ngIf="field[key][0].controltype == 7 && field[key][0].fielddisplaydesc.toLowerCase().indexOf('add more') <= -1">
+                                  <label [id]="'label_'+field[key][0].fielddesc+'_'+j" style="display: block;">&nbsp;</label>
+                                  <button *ngIf="field[key][0].fielddisplaydesc.toLowerCase().indexOf('add more') <= -1" [id]="field[key][0].fielddesc + '_' + j"
+                                          (click)="onButtonClick(step, field[key][0].fielddesc, obj.groupid, j)"  [disabled]="isDisabled"
+                                          class="btn" [ngClass]="field[key][0].fielddisplaydesc.toLowerCase().indexOf('verify') > -1 || field[key][0].fielddisplaydesc.toLowerCase().indexOf('resend') > -1 ? 'btn-info' : 'btn-primary'" style="margin-bottom: 10px;">
+                                    <i *ngIf="field[key][0].fielddisplaydesc.toLowerCase().indexOf('verify') > -1" class="fa fa-check"></i>
+                                    {{field[key][0].fielddisplaydesc}}
+                                  </button>
+                                </div>-->
+  
+                                <!-- For Heading -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 8">
+                                  <h5>{{field[key][0].fielddisplaydesc}}</h5>
+                                </div>
+  
+                                <div *ngIf="field[key][0].controltype == 13">
+                                  <hr>
+                                </div>
+  
+                                <!-- For Textarea -->
+                                <div class="form-group" *ngIf="field[key][0].controltype == 9">
+                                  <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}}  : &nbsp;</label>
+                                  <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                  <!--<textarea class="form-control" type="text" [(ngModel)]="field[key][0].fieldvalue" [disabled]="isDisabled"
+                                            placeholder="Enter {{field[key][0].fielddisplaydesc}}"
+                                            (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                            [id]="field[key][0].fielddesc + '_' + j"></textarea>-->
+                                  <p>{{field[key][0].fieldvalue}}</p>
+                                </div>
+                                <!-- ******************************************* End ******************************************* -->
+                              </div>
+  
+                              <div *ngIf="field[key][0].fieldgroupid !== null">
+                                <div *ngFor="let field2 of field[key][0].fielddetails; let c = index;" class="sub-group-margin row">
+                                  <div *ngFor="let key1 of field[key][0].fielddetailskeys[c]; let k = index;" [ngClass]=" field[key][0].fielddetailskeys[c].length === 1 ? 'col-12' : 'col-' + field2[key1][0].fieldwidth">
+                                    <!-- For Text -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 1
+                                     && field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('otp') <= -1
+                                      && field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('verification code') <= -1">
+                                      <label [id]="'label_'+field2[key1][0].fielddesc + '_' + j + '_' + c" *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;</label>
+                                      <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                      <!--<input class="form-control" type="text" [disabled]="isDisabled"
+                                             (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                             placeholder="Enter {{field2[key1][0].fielddisplaydesc}}"
+                                             [(ngModel)]="field2[key1][0].fieldvalue"
+                                             [attr.data-fieldID]="field2[key1][0].fieldid" [attr.data-stepID]="obj.stepid"
+                                             [id]="field2[key1][0].fielddesc + '_' + j + '_' + c"/>
+                                      <span style="color: red;">{{field2[key1][0].validErr}}</span>-->
+                                      <p>{{field2[key1][0].fieldvalue}}</p>
+                                            
+                                      <a *ngIf="field[key][0].fielddetailskeys[c].length == 1 && (field[key][0].fielddetails.length - 1) == c" class="multi-textbox" (click)="addMoreBtn(field[key][0], c)">
+                                        <i class="fa fa-plus-square " aria-hidden="true "></i>
+                                      </a>
+                                      <a *ngIf="field[key][0].fielddetailskeys[c].length == 1 && field[key][0].fielddetails.length > 1 && (field[key][0].fielddetails.length - 1) > c" class="multi-textbox" (click)="removeItemBtn(obj, j, field[key][0], c)">
+                                        <i class="fa fa-minus-square" aria-hidden="true "></i>
+                                      </a>
+                                    </div>
+  
+                                    <!-- For Combo -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 2">
+                                      <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;</label>
+                                      <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                      <!--<select class="form-control" [(ngModel)]="field2[key1][0].fieldvalue" [disabled]="isDisabled"
+                                              (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                              [id]="field2[key1][0].fielddesc + '_' + j" (change)="onRadioButtonChange(obj, step, field2[key1][0], 'group')">
+                                        <option *ngFor="let d of field2[key1][0].controlvalue.split('|')"
+                                                [value]="d">{{d}}</option>
+                                      </select>-->
+                                      <p>{{field2[key1][0].fieldvalue}}</p>
+                                    </div>
+  
+                                    <!-- For Radio -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 3">
+                                      <label style="display: block;" *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}}  : &nbsp;</label>
+                                      <!--<div class="form-check form-check-inline"
+                                           *ngFor="let d of field2[key1][0].controlvalue.split('|')">
+                                        <input class="form-check-input" type="radio" name="{{i}}{{j}}{{k}}" value="{{d}}" [disabled]="isDisabled"
+                                               [(ngModel)]="field2[key1][0].fieldvalue"
+                                               (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                               (change)="onRadioButtonChange(obj, step, field2[key1][0], 'group')">
+                                        <label class="form-check-label">{{d}}</label>
+
+                                      </div>-->
+                                      <p>{{field2[key1][0].fieldvalue}}</p>
+                                    </div>
+  
+                                    <!-- For Checkbox -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 4">
+                                      <div class="form-check form-check-inline">
+                                        <!--<input class="form-check-input" type="checkbox" [(ngModel)]="field2[key1][0].fieldvalue" [disabled]="isDisabled"
+                                               (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)">
+                                        <label class="form-check-label">{{field2[key1][0].fielddisplaydesc}}</label>-->
+                                        <p>{{field2[key1][0].fieldvalue}}</p>
+                                      </div>
+                                    </div>
+  
+                                    <!-- For Date -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 5">
+                                      <label>{{field2[key1][0].fielddisplaydesc}} : &nbsp;
+                                        <!--<span *ngIf="field2[key1][0].isrequired == 1"
+                                                                                      style="color: #f00;">*</span>-->
+                                      </label>
+                                      <!--<input class="form-control" type="date" [(ngModel)]="field2[key1][0].fieldvalue" [disabled]="isDisabled"
+                                             (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                             [id]="field2[key1][0].fielddesc + '_' + j"/>-->
+                                      <p>{{field2[key1][0].fieldvalue}}</p>
+                                    </div>
+  
+                                    <!-- For File -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 6">
+                                      <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;
+                                        <!--<span *ngIf="field2[key1][0].isrequired == 1" style="color: #f00;">*</span>-->
+                                      </label>
+                                      <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                      <!--<input class="form-control" type="file" [disabled]="isDisabled"
+                                             accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                             (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                             [id]="field2[key1][0].fielddesc + '_' + j"/>
+                                      <span
+                                        style="display: block;font-size: 13px;color: #555;">{{field2[key1][0].fieldvalue}}</span>-->
+                                      <p><a class="anker-hover" (click)="viewFile(field2[key1][0].fieldvalue)">{{field2[key1][0].fieldvalue}}</a></p>
+                                    </div>
+  
+                                    <!-- For Button -->
+                                    <!--<div class="form-group" style="display: inline; margin-right: 10px;"
+                                         *ngIf="field2[key1][0].controltype == 7 && field[key][0].fielddetails.length > 1">
+                                      <button class="btn btn-danger" style="margin-bottom: 10px;" [disabled]="isDisabled"
+                                              *ngIf="field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('add more') > -1"
+                                              [ngStyle]="{'margin-top': ((field[key][0].fielddetailskeys[c].length - 1) % 3) !== 0 ? '24px' : 'unset'}"
+                                              (click)="removeItemBtn(obj, j, field[key][0], c)">
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                      </button>
+                                    </div>
+                                    <div class="form-group" style="display: inline"
+                                         *ngIf="field2[key1][0].controltype == 7 && field[key][0].fielddetails.length >= 1 && field[key][0].fielddetails.length == (c + 1)">
+                                      <button class="btn btn-warning" style="margin-bottom: 10px;" [disabled]="isDisabled"
+                                              *ngIf="field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('add more') > -1"
+                                              [ngStyle]="{'margin-top': ((field[key][0].fielddetailskeys[c].length - 1) % 3) !== 0 ? '24px' : 'unset'}"
+                                              (click)="addMoreBtn(field[key][0], c)">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                        {{field2[key1][0].fielddisplaydesc}}
+                                      </button>
+                                      <button class="btn" [ngClass]="field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('verify') > -1 || field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('resend') > -1 ? 'btn-info' : 'btn-primary'" style="margin-bottom: 10px;margin-top: 24px;"
+                                              *ngIf="field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('add more') <= -1" [disabled]="isDisabled"
+                                              [id]="field2[key1][0].fielddesc + '_' + j + '_' + c">
+                                        <i *ngIf="field2[key1][0].fielddisplaydesc.toLowerCase().indexOf('verify') > -1" class="fa fa-check"></i>
+                                        {{field2[key1][0].fielddisplaydesc}}
+                                      </button>
+                                    </div>-->
+  
+                                    <!-- For Heading -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 8">
+                                      <h5>{{field2[key1][0].fielddisplaydesc}}</h5>
+                                    </div>
+  
+                                    <div *ngIf="field2[key1][0].controltype == 13">
+                                      <hr>
+                                    </div>
+  
+                                    <!-- For Textarea -->
+                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 9">
+                                      <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;
+                                        <!--<span
+                                        *ngIf="field2[key1][0].isrequired == 1" style="color: #f00;">*</span>-->
+                                      </label>
+                                      <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                      <!--<textarea class="form-control" type="text" [(ngModel)]="field2[key1][0].fieldvalue" [disabled]="isDisabled"
+                                                placeholder="Enter {{field2[key1][0].fielddisplaydesc}}"
+                                                (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                [id]="field2[key1][0].fielddesc + '_' + j + '_' + c"></textarea>-->
+                                      <p>{{field2[key1][0].fieldvalue}}</p>
+                                    </div>
+                                    <!-- ******************************************* End ******************************************* -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+  
+                        </div>
+  
+                        <!-- If single field -->
+                        <div>
+                          <div *ngIf="obj.groupid == null" style="padding-left: 15px;" class="single">
+  
+                            <!-- For Text -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 1
+                             && obj.fielddetails.fielddisplaydesc.toLowerCase().indexOf('otp') <= -1
+                              && obj.fielddetails.fielddisplaydesc.toLowerCase().indexOf('verification code') <= -1">
+                              <label [id]="'label_' + obj.fielddetails.fielddesc" *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;
+                                <!--<span
+                                *ngIf="obj.isrequired == 1" style="color: #f00;"></span>-->
+                              </label>
+                              <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                              <!--<input class="form-control" type="text" (focusout)="onBlurElement(obj)" [disabled]="isDisabled"
+                                     placeholder="Enter {{obj.fielddetails.fielddisplaydesc}}"
+                                     [(ngModel)]="obj.fielddetails.fieldvalue" [id]="obj.fielddetails.fielddesc"
+                                     [attr.data-fieldID]="obj.fielddetails.fieldid" [attr.data-stepID]="obj.stepid"
+                                     (keydown)="validationValue($event, obj)"
+                              />
+                              <span style="color: red;">{{obj.validErr}}</span>-->
+                              <p>{{obj.fielddetails.fieldvalue}}</p>
+                            </div>
+  
+                            <!-- For Combo -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 2">
+                              <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;
+                                <!--<span
+                                *ngIf="obj.isrequired == 1" style="color: #f00;">*</span>-->
+                              </label>
+                              <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                              <!--<select class="form-control" [(ngModel)]="obj.fielddetails.fieldvalue" [disabled]="isDisabled"
+                                      (focusout)="onBlurElement(obj)" [id]="obj.fielddetails.fielddesc"
+                                      (change)="onRadioButtonChange(obj, step)">
+                                <option *ngFor="let d of obj.fielddetails.controlvalue.split('|')"
+                                        [value]="d">{{d}}</option>
+                              </select>-->
+                              <p>{{obj.fielddetails.fieldvalue}}</p>
+                            </div>
+  
+                            <!-- For Radio -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 3">
+                              <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;
+                                <!--<span
+                                *ngIf="obj.isrequired == 1" style="color: #f00;">*</span>-->
+                              </label>
+                              <!--<div class="form-check form-check-inline"
+                                   *ngFor="let d of obj.fielddetails.controlvalue.split('|')">
+                                <input class="form-check-input" type="radio" name="{{i}}" value="{{d}}" [disabled]="isDisabled"
+                                       (focusout)="onBlurElement(obj)"
+                                       [(ngModel)]="obj.fielddetails.fieldvalue"
+                                       (change)="onRadioButtonChange(obj, step)">
+                                <label class="form-check-label">{{d}}</label>
+                              </div>-->
+                              <p>{{obj.fielddetails.fieldvalue}}</p>
+                            </div>
+                            <!-- For Radio -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 12">
+                              <label >{{obj.fielddetails.fielddisplaydesc}} : &nbsp;
+                                <!--<span
+                                *ngIf="obj.isrequired == 1" style="color: #f00;">:</span>-->
+                              </label>
+                              <!--<div class="form-check form-check-inline"
+                                   *ngFor="let d of obj.fielddetails.controlvalue.split('|')">
+                                <input class="form-check-input" type="radio" name="{{i}}" value="{{d}}" [disabled]="isDisabled"
+                                       (focusout)="onBlurElement(obj)"
+                                       [(ngModel)]="obj.fielddetails.fieldvalue"
+                                       (change)="onRadioButtonChange(obj, step)">
+                                <label class="form-check-label">{{d}}</label>
+                              </div>-->
+                              <p>{{obj.fielddetails.fieldvalue1}} ({{obj.fielddetails.fieldvalue}}) </p>
+
+                              <!--<span
+                                *ngIf="obj.isrequired == 1 && obj.islabelshow == 0" style="color: #f00;">*</span>-->
+<!--                              <div class="form-group">-->
+                                <!--<input class="form-control" type="text" (focusout)="onBlurElement(obj)" [disabled]="isDisabled"
+                                       placeholder="Enter Name"
+                                       [(ngModel)]="obj.fielddetails.fieldvalue1" [id]="obj.fielddetails.fielddesc"/>-->
+
+<!--                              </div>-->
+                            </div>
+  
+                            <!-- For Checkbox -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 4">
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" [(ngModel)]="obj.fielddetails.fieldvalue" [disabled]="isDisabled">
+                                <label class="form-check-label">{{obj.fielddetails.fielddisplaydesc}}</label>
+                              </div>
+                            </div>
+  
+                            <!-- For Date -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 5">
+                              <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;
+                                <!--<span
+                                *ngIf="obj.isrequired == 1" style="color: #f00;">*</span>-->
+                              </label>
+                              <!--<input class="form-control" type="date" [(ngModel)]="obj.fielddetails.fieldvalue" [disabled]="isDisabled"
+                                     (focusout)="onBlurElement(obj)" [id]="obj.fielddetails.fielddesc"/>-->
+                              <p>{{obj.fielddetails.fieldvalue}}</p>
+                            </div>
+  
+                            <!-- For File -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 6">
+                              <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;
+                                <!--<span
+                                *ngIf="obj.isrequired == 1" style="color: #f00;">*</span>-->
+                              </label>
+<!--                              <label *ngIf="obj.islabelshow == 0">&nbsp;</label>-->
+                              <!--<input class="form-control" type="file" [disabled]="isDisabled"
+                                     accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                     (focusout)="onBlurElement(obj, 0, $event)" [id]="obj.fielddetails.fielddesc"/>
+                              <span
+                                style="display: block;font-size: 13px;color: #555;">{{obj.fielddetails.fieldvalue}}</span>-->
+                              <p><a class="anker-hover" (click)="viewFile(obj.fielddetails.fieldvalue)">{{obj.fielddetails.fieldvalue}}</a></p>
+                            </div>
+  
+                            <!-- For Button -->
+                            <!--<div class="form-group" *ngIf="obj.fielddetails.controltype == 7" >
+                              <label [id]="'label_'+obj.fielddetails.fielddesc" style="display: block;">&nbsp;</label>
+                              <button class="btn" (click)="onButtonClick(step, obj.fielddetails.fielddesc)" 
+                                      [id]="obj.fielddetails.fielddesc" [disabled]="isDisabled"
+                                      [ngClass]="obj.fielddetails.fielddisplaydesc.toLowerCase().indexOf('verify') > -1 || obj.fielddetails.fielddisplaydesc.toLowerCase().indexOf('resend') > -1 ? 'btn-info' : 'btn-primary'">
+                                <i *ngIf="obj.fielddetails.fielddisplaydesc.toLowerCase().indexOf('verify') > -1" class="fa fa-check"></i>
+                                {{obj.fielddetails.fielddisplaydesc}}
+                              </button>
+                            </div>-->
+  
+                            <!-- For Heading -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 8">
+                              <h5 [ngClass]="obj.customclass">{{obj.fielddetails.fielddisplaydesc}}</h5>
+                            </div>
+  
+                            <!-- For Horizontal Line -->
+                            <div *ngIf="obj.fielddetails.controltype == 13">
+                              <hr>
+                            </div>
+  
+                            <!-- For Textarea -->
+                            <div class="form-group" *ngIf="obj.fielddetails.controltype == 9">
+                              <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}}
+                                <!--<span
+                                *ngIf="obj.isrequired == 1" style="color: #f00;">*</span>-->
+                              </label>
+                              <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                              <!--<textarea class="form-control" type="text" [disabled]="isDisabled"
+                                        placeholder="Enter {{obj.fielddetails.fielddisplaydesc}}"
+                                        [(ngModel)]="obj.fielddetails.fieldvalue"
+                                        (focusout)="onBlurElement(obj)" [id]="obj.fielddetails.fielddesc"></textarea>-->
+                              <p>{{obj.fielddetails.fieldvalue}}</p>
+                            </div>
+  
+                            <!-- ******************************************* End ******************************************* -->
+  
+                          </div>
+                        </div>
+  
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="form-group button_dv mb-2 mr-2 button-action-group">
+                    <button class="btn btn-primary" *ngIf="stepPos>0" (click)="goToPrevious()">
+                      <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
+                    </button>
+                    <button class="btn btn-success" [disabled]="isDisabled" *ngIf="stepPos < (stepListShow.length - 1) && page !== 'signup'">
+                      <i class="fa fa-floppy-o" aria-hidden="true" ></i>Save
+                    </button>
+                    <button class="btn btn-primary" (click)="goToNext(this.formDetails[step])" *ngIf="stepPos < (stepListShow.length - 1) && page !== 'signup'">
+                      <i class="fa fa-arrow-right" aria-hidden="true"></i> Next
+                    </button>
+                    <button class="btn btn-success" [disabled]="isDisabled" *ngIf="stepPos == (stepListShow.length - 1) || page === 'signup'">
+                      Submit
+                    </button>
+                  </div>-->
+                </div>
+              </div>
+            </div>
+<!--          </mat-tab-group>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <ng-template #confirmSubmitModal>
+    <div class=" modal-content ">
+      <div class="modal-header">
+        <button type="button" class="btn-close" >X</button>
+      </div>
+      <div class="modal-body">
+  
+        <div class="mb-3">
+          <p class="form-group"> 
+            <span style="color: red;">** </span>
+            After clicking on the confirm button, you are no longer able to change or edit your profile.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary">Close</button>
+        <button type="button" class="btn btn-primary">Confirm
+        </button>
+      </div>
+    </div>
+  </ng-template> -->
+  
+  

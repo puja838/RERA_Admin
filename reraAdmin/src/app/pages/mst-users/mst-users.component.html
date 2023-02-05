@@ -1,0 +1,188 @@
+<notifier-container></notifier-container>
+<div class="container-fluid pt-2">
+  <div class="page-header">
+    <h2>Users</h2>
+    <hr>
+  </div>
+  <div class="page-body">
+    <div class="top-actions" style="display: block ruby;">
+      <button class="float-end" mat-raised-button color="primary" (click)="openModal(0)">Add Field</button>
+    </div>
+    <div style="display: block;">
+      <div class="card mt-5 p-3">
+        <div class="table-responsive" style="height: 70vh;overflow: auto;">
+          <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Roles Description</th>
+              
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let obj of listData; let i = index;">
+              <td>{{i + 1}}</td>
+              <td>{{obj.username}}</td>
+              <td>{{obj.roledesc}}</td>
+              
+              
+              <td>
+                <button style="color: blue;" (click)="edit(obj, i)">
+                    
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button class="m-lg-1" style="color: red;" (click)="openDeleteModal(deleteModal, obj.userid, i)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="listData.length === 0">
+              <td colspan="7" class="text-center">No data found.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">{{modalHeader}} Field</h3>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body" *ngIf="modalHeader == 'Add'">
+      <div class="mb-3" >
+        <label class="form-label">Username:</label>
+        <input type="text" class="form-control"  [(ngModel)]="userName" >
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Password:</label>
+        <input type="password" class="form-control" [(ngModel)]="password">
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Email:</label>
+        <input type="text" class="form-control"  [(ngModel)]="email" >
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Mobile:</label>
+        <input type="text" class="form-control"  [(ngModel)]="mobile" >
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">User Login Type:</label>
+        <select class="form-control" [(ngModel)]="userLoginType">
+          <option value="1">PRM</option>
+          <option value="2">CGM</option>
+          <option value="3">Both</option>
+        </select>
+      </div>
+      <div class="mb-3" *ngIf="userLoginType!='1'">
+        <label class="form-label">Support Group:</label>
+        <select class="form-control" [(ngModel)]="SptgrpSelected">
+          <option value="" selected>Select</option>
+          <option value="432">Allottee</option>
+          <option value="433">Scrutiny Officer</option>
+          <option value="436">Court Master</option>
+          <option value="438">Legal Interns</option>
+          <option value="439">Operator - H/Bench</option>
+          <option value="442">Single Bench</option>
+          <option value="443">In charge Legal Cell</option>
+        </select>
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Roles:</label>
+        <select class="form-control" name="roles" [(ngModel)]="roles">
+          <option value="" selected>Select</option>
+          <option *ngFor="let item of rolelistData" [ngValue]="item.roleid">{{item.roledesc}}</option>
+        </select>
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Address:</label>
+        <textarea type="textarea" class="form-control"  [(ngModel)]="address" ></textarea>
+      </div>
+
+      <span class="err-msg">{{errMsg}}</span>
+    </div>
+    <div class="modal-body" *ngIf="modalHeader == 'Update'">
+      <div class="mb-3" >
+
+          <label class="form-label">Username:</label>
+          <input type="text" class="form-control"  [(ngModel)]="userEdit.username" >
+        
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Email:</label>
+        <input type="text" class="form-control"  [(ngModel)]="userEdit.useremail" >
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Mobile:</label>
+        <input type="text" class="form-control"  [(ngModel)]="userEdit.usermobile" >
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">User Login Type:</label>
+        <select class="form-control" [(ngModel)]="userEdit.userLoginType">
+          <option value="1">PRM</option>
+          <option value="2">CGM</option>
+          <option value="3">Both</option>
+        </select>
+      </div>
+      <div class="mb-3" *ngIf="userEdit.userLoginType!='1'">
+        <label class="form-label">Support Group:</label>
+        <select class="form-control" [(ngModel)]="userEdit.SptgrpSelected">
+          <option value="" selected>Select</option>
+          <option value="432">Allottee</option>
+          <option value="433">Scrutiny Officer</option>
+          <option value="436">Court Master</option>
+          <option value="438">Legal Interns</option>
+          <option value="439">Operator - H/Bench</option>
+          <option value="442">Single Bench</option>
+          <option value="443">In charge Legal Cell</option>
+        </select>
+      </div>
+      <div class="mb-3"  >
+          <label class="form-label">Roles:</label>
+        <select class="form-control" name="roles" [(ngModel)]="userEdit.roleid">
+          <option value="" selected>Select</option>
+          <option *ngFor="let item of rolelistData" [ngValue]="item.roleid">{{item.roledesc}}</option>
+        </select>
+        
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Address:</label>
+        <textarea type="textarea" class="form-control"  [(ngModel)]="userEdit.address" ></textarea>
+      </div>
+      <span class="err-msg">{{errMsg}}</span>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Add'" (click)="saveData()">Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Update'" (click)="updateData()">Update
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal>
+  <div class="modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <div class="icon-box">
+          <i class="material-icons">&#xE5CD;</i>
+        </div>
+        <h4 class="modal-title w-100">Are you sure?</h4>
+               <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteData()">Delete</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

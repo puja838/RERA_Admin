@@ -1,0 +1,81 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <app-dashboard-header [linkName]="linkName" [dashboardURL]="workflowtype===3 ? 'agent-dashboard' : 'project-dashboard'"></app-dashboard-header>
+            <div class="prom_reg_in">
+                <div class="prom_reg_frm stageIIIpage">
+                    <h3 class="text-left mt-2">Queries from RERA</h3>
+
+                    <div class="row" *ngIf="entityid=='1'">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary col-12" (click)="getDetails(1)">Project
+                                Registration
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-success col-12" (click)="getDetails(2)">Project
+                                Extension
+                            </button>
+                        </div>
+                    </div>
+                    <div class="personal_view_page stage_dv mar-top-15">
+
+                        <div class="qpr_subm_f">
+                            <div class="table-responsive">
+                                <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                       border="0">
+                                    <tr>
+                                        <th width="6%" valign="top" align="left">SL No.</th>
+                                        <th width="20%" valign="top" align="left">Application No.</th>
+                                        <th width="20%" valign="top" align="left">Application Type</th>
+                                        <th width="20%" valign="top" align="left" *ngIf="workflowtype !==3">Project
+                                            Name
+                                        </th>
+                                        <th width="15%" valign="top" align="left">Number of Queries</th>
+                                        <th width="12%" valign="top" align="left">Due Date</th>
+                                        <th width="10%" valign="top" align="left">Days Remaining</th>
+                                        <th width="10%" valign="top" align="left">Edit/View</th>
+                                    </tr>
+                                    <tr *ngFor="let proj of projects;let i=index;">
+                                        <td valign="top" align="left">{{i + 1}}</td>
+                                        <td valign="top" align="left">{{proj.projectuid}}</td>
+                                        <td valign="top" align="left">Registration Application</td>
+                                        <td valign="top" align="left"
+                                            *ngIf="workflowtype !==3">{{proj.projectfieldvalue}}</td>
+                                        <td valign="top" align="left">{{proj.total}}</td>
+                                        <td valign="top" align="left"></td>
+                                        <td valign="top" align="left"></td>
+                                        <td valign="top" align="center" *ngIf="workflowtype !==3"><a
+                                                (click)=openProject(proj.uniqueprojectid,proj.extensionid)
+                                                class="text-dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                            </svg>
+                                        </a></td>
+                                        <td valign="top" align="center" *ngIf="workflowtype ===3"><a
+                                                (click)=openProject(proj.agentid)
+                                                class="text-dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                            </svg>
+                                        </a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

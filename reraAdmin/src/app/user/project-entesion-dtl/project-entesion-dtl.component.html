@@ -1,0 +1,376 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+
+            <div class="prom_reg_in">
+                <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex"
+                               (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="{{'Extension Information'}}">
+                        <div class="resp-tabs-container hor_1" [ngClass]="isSubmitted? 'view-mod' : ''">
+                            <div>
+                                <div class="prom_inr pb-0">
+                                    <div class="prom_inr_com form-group">
+                                        <label>Status of the project : <b>Ongoing</b> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="prom_inr pb-0">
+                                    <div class="prom_inr_com form-group">
+                                        <label>{{'Target Completion Date'}} <span style="color: red">*</span></label>
+                                        <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                        <p *ngIf="isSubmitted">{{targetCompletionDate}}</p>
+                                    </div>
+
+                                    <div class="prom_inr_com form-group">
+                                        <label>{{'Reason for Delay'}}</label>
+                                        <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                        <p *ngIf="isSubmitted">{{delayReason}}</p>
+
+                                    </div>
+                                    <div class="prom_inr_com form-group">
+                                        <label>{{'Likely Completion Date'}} <span style="color: red">*</span></label>
+                                        <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                        <p *ngIf="isSubmitted">{{likelyCompletionDate}}</p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="prom_inr_com form-group">
+                                <label>{{'Is there any event of Force Majeure?'}} <span style="color: red">*</span></label>
+                                <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                <p *ngIf="isSubmitted">{{isForceMajeure}}</p>
+                            </div>
+                            <div id="div34" *ngIf="isForceMajeure === 'Yes'">
+
+                                <div class="prom_inr pb-0">
+                                    <div class="prom_inr_com form-group">
+                                        <label>{{'What is the Force Majeure?'}} <span style="color: red">*</span></label>
+                                        <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                        <p *ngIf="isSubmitted">{{forceMajeure}}</p>
+                                    </div>
+
+                                    <div class="prom_inr_com form-group">
+                                        <label>{{'what is the impact?'}} <span style="color: red">*</span></label>
+                                        <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                        <p *ngIf="!isSubmitted">{{forceMajeureImpact}}</p>
+                                    </div>
+                                    <div class="prom_inr_com form-group">
+                                        <label>{{'Period of Force Majeure in days'}} <span style="color: red">*</span></label>
+                                        <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                        <p *ngIf="isSubmitted">{{forceMajeureDays}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prom_inr pb-0">
+                                <div class="prom_inr_com form-group">
+                                    <label>{{isSubmitted ? 'Project Extension Period' : 'Please Mention Project Extension Period Required'}}
+                                        <span
+                                                style="color: red">*</span></label>
+                                    <span class="weight-500" *ngIf="isSubmitted">: &nbsp; </span>
+                                    <p *ngIf="isSubmitted">{{projectExtensionPeriod}}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-success ml-3" *ngIf="isSubmitted"
+                                        (click)="goToNext()">Next
+                                </button>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Development Plan">
+                        <div class="resp-tabs-container hor_1">
+                            <mat-tab-group dynamicHeight [(selectedIndex)]="devTabIndex"
+                                           (selectedTabChange)="onDevTabChange($event)">
+                                <mat-tab label="{{'Development Plan'}}">
+                                    <div>
+                                        <h5>{{'Development Plan'}}</h5>
+                                        <div class="radio_buildng">
+                                            <mat-radio-group [(ngModel)]="selectedBuilding">
+                                                <mat-radio-button *ngFor="let building of buildingList;"
+                                                                  value="{{building.buildingName}}"
+                                                                  (change)="onBuildingChange(building)">{{building.buildingName}}</mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+
+                                        <div class="table-responsive">
+
+                                            <table class="table table-striped" width="100%" cellspacing="0"
+                                                   cellpadding="0" border="0">
+                                                <tbody>
+                                                <tr>
+                                                    <th width="10%" valign="top"
+                                                        align="left">{{'SL No.'}}</th>
+                                                    <th width="35%" valign="top"
+                                                        align="left">{{'Task / Activity'}}</th>
+                                                    <th width="10%" valign="top"
+                                                        align="left">{{'Planned Completion MM-YYYY'}}</th>
+                                                    <th width="10%" valign="top"
+                                                        align="left">{{'% of actual work done'}}</th>
+                                                    <th width="20%" valign="top"
+                                                        align="left">{{'Delay if any Ask to fill reason for delay'}}</th>
+                                                    <th width="10%" valign="top"
+                                                        align="left">{{'Likely Date of Completion (MM-YYYY)'}}</th>
+                                                </tr>
+                                                <tr *ngFor="let obj of constructionProgressList; let i = index;">
+                                                    <td valign="top" align="left">{{i + 1}}</td>
+                                                    <td valign="top" align="left">{{obj.fielddesc}}</td>
+                                                    <td valign="top" align="left">{{obj.enddate}}</td>
+                                                    <td valign="top" align="left">
+
+                                                        <div *ngIf="isSubmitted">
+                                                            <p class="viewmode-txt">
+                                                                {{obj.work_done}}
+                                                            </p>
+                                                        </div>
+
+                                                    </td>
+                                                    <td valign="top" align="left">
+                                                        <div *ngIf="isSubmitted">
+                                                            <p class="viewmode-txt">
+                                                                {{obj.delay_reason ? obj.delay_reason : 'NA'}}
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                    <td valign="top" align="left">
+
+                                                        <div *ngIf="isSubmitted">
+                                                            <p class="viewmode-txt">
+                                                                {{obj.estimate_completion ? obj.estimate_completion : 'NA'}}
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-right">
+                                            <button class="btn btn-primary"
+                                                    [hidden]="selectedTabIndex==0"
+                                                    (click)="goToPrevTab()">
+                                                {{'Previous'}}
+                                            </button>
+                                            <button class="btn btn-success ml-3" *ngIf="isSubmitted"
+                                                    (click)="goToNextDevTab()">Next
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="{{'Common Amenities'}}">
+                                    <div>
+                                        <h5>{{'Common Amenities'}}</h5>
+
+                                        <div class="table-responsive">
+
+                                            <table class="table table-striped" width="100%" cellspacing="0"
+                                                   cellpadding="0" border="0">
+                                                <tbody>
+                                                <tr>
+                                                    <th width="35%" valign="top"
+                                                        align="left">{{'Common Amenity'}}</th>
+                                                    <th width="20%" valign="top"
+                                                        align="left">{{'Planned Completion MM-YYYY'}}</th>
+                                                    <th width="7%" valign="top"
+                                                        align="left">{{'% of actual work done'}}</th>
+                                                    <th width="30%" valign="top"
+                                                        align="left">{{'Delay if any Ask to fill reason for delay'}}</th>
+                                                    <th width="8%" valign="top"
+                                                        align="left">{{'Completion (MM-YYYY)'}}</th>
+                                                </tr>
+                                                <tr *ngFor="let obj of commonAmenities;">
+                                                    <td valign="top" align="left">{{obj.fielddisplaydesc}}</td>
+                                                    <td valign="top" align="left">{{obj.enddate}}</td>
+                                                    <td valign="top" align="left">
+                                                        <div *ngIf="isSubmitted">
+                                                            <p class="viewmode-txt">
+                                                                {{obj.work_done ? obj.work_done : 'NA'}}
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                    <td valign="top" align="left">
+                                                        <div *ngIf="isSubmitted">
+                                                            <p class="viewmode-txt">
+                                                                {{obj.delay_reason ? obj.delay_reason : 'NA'}}
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                    <td valign="top" align="left">
+                                                        <div *ngIf="isSubmitted">
+                                                            <p class="viewmode-txt">
+                                                                {{obj.estimate_completion ? obj.estimate_completion : 'NA'}}
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-right">
+                                            <button class="btn btn-primary"
+                                                    [hidden]="selectedTabIndex==0"
+                                                    (click)="goToPrevDevTab()">
+                                                {{'Previous'}}
+                                            </button>
+                                            <button class="btn btn-success ml-3" *ngIf="isSubmitted"
+                                                    (click)="goToNext()">Next
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Document">
+                        <div class="resp-tabs-container hor_1">
+                            <h5>Documents</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped  table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Document Name</th>
+                                        <th>Issuing Office <span style="color: red;">*</span></th>
+                                        <th>Issue Date<span style="color: red;">*</span></th>
+                                        <th>Validity Date<span style="color: red;">*</span></th>
+                                        <th>Document Upload<span style="color: red;">*</span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let obj of documentList;">
+                                        <td>{{obj.documentname}}</td>
+                                        <td>
+                                            <span>{{obj.issuingoffice}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{obj.issuedate}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{obj.validitydate}}</span>
+                                        </td>
+                                        <td>
+                                            <p *ngIf="obj.docfile && obj.docfile !== ''"
+                                               style="display: block;font-size: 13px;color: #555;">
+                                                <a (click)="openLink(obj.docfile)" [title]="obj.docfile">
+                                                    <img *ngIf="obj.docfile.indexOf('.pdf') == -1"
+                                                         [src]="FILE_ROOT + obj.docfile" [alt]="" #img
+                                                         (error)="img.src='assets/images/image-ico.png'"
+                                                         style="height: 40px;"/>
+                                                    <img *ngIf="obj.docfile.indexOf('.pdf') > -1"
+                                                         [src]="'assets/images/pdf-ico.png'" [alt]=""
+                                                         style="height: 40px;"/>
+                                                </a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <h5>Any Other Relevant Document</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Document Name<span style="color: red;">*</span></th>
+                                            <th>Reason For Upload</th>
+                                            <th>Upload Document<span style="color: red;">*</span></th>
+                                            <th *ngIf="!isSubmitted">&nbsp;</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let obj of otherDocuments;let i = index;">
+                                            <td>
+                                                <p>{{obj.documentname}}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{obj.reason}}</p>
+                                            </td>
+                                            <td>
+                                                <p *ngIf="obj.docfile && obj.docfile !== ''"
+                                                   style="display: block;font-size: 13px;color: #555;">
+                                                    <a (click)="openLink(obj.docfile)" [title]="obj.docfile">
+                                                        <img *ngIf="obj.docfile.indexOf('.pdf') == -1"
+                                                             [src]="FILE_ROOT + obj.docfile" [alt]="" #img
+                                                             (error)="img.src='assets/images/image-ico.png'"
+                                                             style="height: 40px;"/>
+                                                        <img *ngIf="obj.docfile.indexOf('.pdf') > -1"
+                                                             [src]="'assets/images/pdf-ico.png'" [alt]=""
+                                                             style="height: 40px;"/>
+                                                    </a>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="text-right mt-4">
+                                <button class="btn btn-primary"
+                                        [hidden]="selectedTabIndex==0"
+                                        (click)="goToPrevTab()">
+                                    {{'Previous'}}
+                                </button>
+                                <button class="btn btn-success ml-3" *ngIf="isSubmitted" (click)="goToNext()">Next
+                                </button>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Declaration">
+                        <div class="resp-tabs-container hor_1 mb-3 ml-3">
+                            <input type="checkbox" [(ngModel)]="isCheck" [disabled]="isSubmitted">
+                            [I/We] solemnly affirm and declare that the particulars given herein are correct to [my/our]
+                            knowledge and belief and nothing material has been concealed by [me/us] therefrom.
+                            <div class="payment_dv mt-5">
+                                <div class="play_txt">
+                                    <p class="pay_cal">Based on RERA Bihar Calculation your Registration
+                                        Amount is : <strong style="font-family: initial; font-size: 25px;"> ₹
+                                            500</strong></p>
+                                    <p>To Complete Project Registration, Proceed the Payment</p>
+                                </div>
+                                <!--<div class="sle_ppr">
+                                    <div class="form-check"><input type="radio" name="flexRadioDefault"
+                                                                   id="flexRadioDefault10" value="panjab"
+                                                                   class="form-check-input ng-untouched ng-pristine"
+                                    ><label for="flexRadioDefault10"
+                                            class="form-check-label"><img
+                                            src="assets/images/panjabbank.webp"><strong>Panjab
+                                        Bank</strong></label></div>
+                                    <div class="form-check"><input type="radio" name="flexRadioDefault"
+                                                                   id="flexRadioDefault11" value="axis"
+                                                                   class="form-check-input ng-untouched ng-pristine"
+                                    ><label for="flexRadioDefault11"
+                                            class="form-check-label"><img
+                                            src="assets/images/axisbank.jpg"><strong>Axis
+                                        Bank</strong></label></div>
+                                </div>
+                                <div class="pay_prev">
+                                    <button class="btn btn-primary text-center mb-3 ng-star-inserted carousel-pointer"
+                                    >Make Payment
+                                    </button>
+                                    &lt;!&ndash;<button class="btn btn-dark text-center mb-3 ng-star-inserted carousel-pointer"
+                                            disabled=""><i class="fa fa-eye"></i>&nbsp; Preview
+                                    </button>&ndash;&gt;
+                                </div>-->
+                            </div>
+
+                            <div class="undrtakes">
+                                <div class="sign_dv">
+                                    <div style="padding-top: 40px;">
+                                        <p>Name : {{name}}</p>
+                                    </div>
+                                    <div class="prom_sign" style="width: 244px;">
+                                        <img [src]="FILE_ROOT + signatureImg" #img (error)="img.src='assets/images/signature-ico.png'" style="width:200px;height: 50px;">
+                                        <p>Signature of Promoter</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

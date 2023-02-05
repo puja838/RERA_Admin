@@ -1,0 +1,143 @@
+.gal_img img {
+    width: 100%;
+    padding: 5px;
+    background: #eee;
+  }
+  /* .gal_img {
+    width: 100%;
+  }
+  .gal_sec ul li {
+    width: 31.7%;
+margin: 7px;
+  }
+  .gal_sec ul {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+  } */
+  .gal_sec_in a {
+    display: block;
+    width: 100%;
+  }
+  .gal_sec_in {overflow: hidden;}
+  .gal_sec_in img{transform: scale(1);transition: all 0.45s ease 0s;}
+  .gal_sec_in:hover img{
+    transform: scale(1.5);
+    transition: all 0.45s ease 0s;
+  }
+  #ex_order_dv h3,
+  #order_dv h3{
+    font-size: 22px;
+    margin: 0 0 20px;
+    color: #14147A;
+    background: none;
+    padding: 0;
+  }
+  .page-in-radio .form-check-input {
+    margin-top: 0;
+  }
+  .page-in-radio {
+    margin: 0px auto 20px;
+  }
+  .page-in-radio .form-check {
+    margin-right: 20px;
+  }
+  .resp-tabs-container_in table th {
+    background: #6F6F6F;
+    color: #fff;
+    font-weight: 400;
+  }
+  .resp-tabs-container_in table td i.fa.fa-eye{color: #000; font-size: 18px;}
+  .resp-tabs-container_in table td i.fa.fa-download{font-size: 18px;}
+  .animated.bounceInDown {
+    height: 100%;
+    border: 1px solid #c4c5c6;
+  }
+  
+nav ul.asidenav li.active::after {
+    right: -44px;
+}
+nav ul.asidenav li a img {
+    width: 24px;
+    margin-right: 5px;
+  }
+  nav ul.asidenav li a {display: flex; justify-content:flex-start; align-items: center;}
+  nav.animated.bounceInDown ul.asidenav li a i.fa.fa-building {
+    font-size: 24px;
+    margin-right: 11px;
+  }
+  nav ul.asidenav li a{font-size: 16px;}
+  .accrod_dv li {
+    color: #061223;
+    font-size: 15px;
+    line-height: 24px;
+    background: url(../images/breadcrumb-chevron-right.svg) no-repeat 5px 3px;
+    padding-left: 25px;
+    padding-bottom: 10px;
+  }
+  #cssmenu ul ul li:last-child a{border-bottom: 0;}
+  nav ul.asidenav li a i.fa.fa-wpforms {
+    float: left;
+    position: inherit;
+    top: inherit;
+    left: inherit;
+    right: inherit;
+    font-size: 18px;
+  }
+  nav ul.asidenav li.sub-menu .fa.fa-caret-down.right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 9;
+    color: #fff;
+    font-size: 20px;
+  }
+  nav.animated.bounceInDown ul.asidenav li a .fa.fa-bullhorn {
+    font-size: 24px;
+    margin-right: 12px;
+  }
+  .what_rera_img {
+    width: 350px;
+    background: #eee;
+    padding: 4px;
+    margin: 0 0 0px 30px;
+  }
+  .accrod_dv ul,
+  .accrod_dv li {
+    background: none;
+    position: relative;
+  }
+  .accrod_dv ul::before {
+    border-left: 1px solid #eb6d11;
+    content: "";
+    position: absolute;
+    width: 1px;
+    top: 0;
+    height: 100%;
+    left: 1px;
+  }
+  .accrod_dv li::before {
+    position: absolute;
+    left: -6px;
+    width: 15px;
+    height: 15px;
+    background: #eb6d11;
+    border-radius: 50%;
+    content: "";
+    top: 5px;
+  }
+  #container_div h3,
+  #ex_order_dv h3, #order_dv h3 {position: relative; margin-bottom: 30px;}
+  #container_div h3::after,#ex_order_dv h3::after, #order_dv h3::after {
+    position: absolute;
+    left: 0;
+    bottom: -14px;
+    background: linear-gradient(130deg,#ff7a18,#af002d 41.07%,#28a745 76.05%);
+    content: "";
+    width: 12%;
+    height: 4px;
+  }
+  .regst_data_ls li {
+    border-bottom: 1px solid #f5f5f5;
+  }

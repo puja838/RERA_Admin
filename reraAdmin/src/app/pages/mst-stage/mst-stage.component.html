@@ -1,0 +1,112 @@
+<notifier-container></notifier-container>
+<div class="container-fluid pt-2">
+  <div class="page-header">
+    <h2>Steps</h2>
+    <hr>
+  </div>
+  <div class="page-body">
+    <div class="top-actions" style="display: block ruby;">
+      <button class="float-end" mat-raised-button color="primary" (click)="openModal(0)">Add Step</button>
+    </div>
+    <div style="display: block;">
+      <div class="card mt-5 p-3">
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+              <th>Sequence</th>
+              <th>Step Name</th>
+              <th>Table View</th>
+              <th>Step Type</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+            <tr *ngFor="let obj of listData; let i = index;" cdkDrag class="drag-row">
+              <td>{{obj.sequenceno}}</td>
+              <td>{{obj.stepdesc}}</td>
+              <td>
+                <span *ngIf="obj.istableview=='1'">Yes</span>
+                <span *ngIf="obj.istableview=='0'">No</span>
+              </td>
+              <td>
+                <span *ngIf="obj.steptype==1">Project</span>
+                <span *ngIf="obj.steptype==2">Profile</span>
+              </td>
+              <td>
+                <button style="color: blue;" (click)="edit(obj, i)">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button class="m-lg-1" style="color: red;" (click)="openDeleteModal(deleteModal, obj.stepid, i)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+              <div class="drag-custom-preview" *cdkDragPreview>{{obj.stepdesc}}</div>
+            </tr>
+            <tr *ngIf="listData.length === 0">
+              <td colspan="3" class="text-center">No data found.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">{{modalHeader}} Entity</h3>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="entityInput" class="form-label">Step Name:</label>
+        <input type="text" class="form-control" id="entityInput" placeholder="Step Name" [(ngModel)]="name">
+        <span class="err-msg">{{errMsg}}</span>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="isTableView" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          Table view
+        </label>
+      </div>
+      <div class="mb-3">
+        <label for="entityInput" class="form-label">Step Type:</label>
+        <select class="form-control" [(ngModel)]="stepType">
+          <option value="1">Project</option>
+          <option value="2">Profile</option>
+        </select>
+        <span class="err-msg">{{errMsg}}</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Add'" (click)="saveData()">Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Update'" (click)="updateData()">Update
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal>
+  <div class="modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <div class="icon-box">
+          <i class="material-icons">&#xE5CD;</i>
+        </div>
+        <h4 class="modal-title w-100">Are you sure?</h4>
+        <!--        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteData()">Delete</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

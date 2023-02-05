@@ -1,0 +1,907 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+
+            <div class="profl_pgese">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a
+                                routerLink="/pages/project-dashboard">{{'Dashboard' | translate}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{'Project' | translate}}</li>
+                    </ol>
+                </nav>
+                <strong>{{'Welcome' | translate}}: {{name}}</strong>
+                <a class="logout_btn" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+            </div>
+
+            <div class="prom_reg_in proj_dtl_preview" id="prom_reg_in">
+                <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex"
+                               (selectedTabChange)="onTabChange($event)">
+                    <mat-tab label="Promoter Profile">
+                        <app-profile-view [userID]="userId"></app-profile-view>
+                    </mat-tab>
+                    <mat-tab *ngFor="let step of stepListShow; let stepPos = index" label="{{step | translate}}">
+
+                        <!-- [disabled]="!(selectedTabIndex === stepPos+1) && step !== 'Past Projects'"  -->
+                        <div *ngIf="step !== 'Payment'">
+                            <div class="resp-tabs-container hor_1 mb-3">
+                                <!--                <h5 class="mt-2 step-name-heading" *ngIf="step !== 'Past Projects' && step !== 'Financial Details'"><b>{{step}}</b></h5>-->
+                                <div>
+                                    <div class="row" *ngIf="step !== 'Development Plan'">
+                                        <div *ngFor="let obj of this.formDetails[step];let i = index;"
+                                             [ngClass]="obj.groupid != null ? 'col-12' : 'col-' + obj.fieldwidth">
+
+                                            <!-- If group field table -->
+                                            <div *ngIf="obj.groupid != null && obj.groupView == 'table'">
+                                                <div class="table-responsive">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                           class="table table-striped table-bordered table-hover">
+                                                        <tbody>
+                                                        <tr *ngFor="let key of obj.fielddetails.keys; let ind = index;">
+                                                            <td align="left" valign="middle"
+                                                                *ngFor="let tableObj of obj.fielddetails.details[key]; let j = index;">
+                                                                <label *ngIf="tableObj.controltype === 16 || tableObj.controltype === 10"
+                                                                       [ngClass]="tableObj.controltype === 16 ? 'table-heading-lbl' : ''">{{tableObj.fielddisplaydesc | translate}}</label>
+                                                                <!--<input type="date" class="form-control"
+                                                                       *ngIf="tableObj.controltype === 5"
+                                                                       [disabled]="isDisabled"
+                                                                       [(ngModel)]="tableObj.fieldvalue"
+                                                                       (focusout)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid)">
+                                                                <input type="file" class="form-control"
+                                                                       accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                                                       *ngIf="tableObj.controltype === 6"
+                                                                       (change)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid)"
+                                                                       [id]="tableObj.fielddesc + '_' + j">
+                                                                <input *ngIf="tableObj.controltype == 1"
+                                                                       placeholder="{{tableObj.fielddisplaydesc}}"
+                                                                       type="text"
+                                                                       class="form-control" [disabled]="isDisabled"
+                                                                       [(ngModel)]="tableObj.fieldvalue"
+                                                                       (focusout)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid)"/>
+
+                                                                &lt;!&ndash; For Radio &ndash;&gt;
+                                                                <div class="form-group"
+                                                                     *ngIf="tableObj.controltype == 3">
+                                                                  <div class="form-check form-check-inline"
+                                                                       *ngFor="let d of tableObj.controlvalue.split('|')">
+                                                                    <input class="form-check-input" type="radio"
+                                                                           name="{{i}}{{ind}}" value="{{d}}"
+                                                                           [(ngModel)]="tableObj.fieldvalue"
+                                                                           [disabled]="isDisabled"
+                                                                           (focusout)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid)">
+                                                                    <label class="form-check-label">{{d}}</label>
+                                                                  </div>
+                                                                </div>-->
+                                                                <p>
+                                                                    <a *ngIf="tableObj.controltype === 6 && tableObj.fieldvalue !== ''"
+                                                                       class="anker-hover"
+                                                                       (click)="viewFile(tableObj.fieldvalue)">
+                                                                            <img *ngIf="tableObj.fieldvalue.indexOf('.pdf') == -1" [src]="FILE_ROOT + tableObj.fieldvalue" [alt]="" #img
+                                                                                 (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                            <img *ngIf="tableObj.fieldvalue.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                                    </a>
+                                                                    <span *ngIf="tableObj.controltype !== 6">{{tableObj.fieldvalue}}</span>
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- If group field with form -->
+                                            <div *ngIf="obj.groupid != null && obj.groupView == 'form'">
+                                                <div *ngFor="let field of obj.fielddetails; let j = index;"
+                                                     class="sub-group-margin row">
+                                                    <div *ngIf="step === 'Past Projects' && (obj.groupid === 17 || obj.groupid === 21 || obj.groupid === 36)"
+                                                         class="col-12">
+                                                        <h5>{{obj.groupid === 21 ? 'Details of ' : 'Enter the Details of '}} {{numberInWords(j + 1)}}
+                                                            Project</h5>
+                                                    </div>
+                                                    <div *ngIf="step === 'Building Details' && obj.groupid === 13"
+                                                         class="col-12">
+                                                        <h5>Enter the Details of {{numberInWords(j + 1)}} Building</h5>
+                                                    </div>
+                                                    <div *ngFor="let key of obj.fielddetailskeys[j]; let l = index;"
+                                                         [ngClass]="[field[key] !== undefined && field[key][0].fieldgroupid !== null && field[key][0].fielddetailskeys[0].length > 1 ? 'col-12' : 'col-' + field[key][0].fieldwidth, field[key][0].fieldwidth ? 'col-' + field[key][0].fieldwidth : 'col-4']">
+
+                                                        <div *ngIf="field[key] !== undefined && field[key][0].fieldgroupid === null">
+                                                            <!-- For Text -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 1">
+                                                                <label *ngIf="field[key][0].islabelshow == 1">{{field[key][0].fielddisplaydesc | translate}}
+                                                                    : &nbsp;&nbsp;
+                                                                </label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                <!--<input class="form-control" type="text"
+                                                                       [disabled]="isDisabled"
+                                                                       (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                                                       placeholder="Enter {{field[key][0].fielddisplaydesc}}"
+                                                                       [(ngModel)]="field[key][0].fieldvalue"
+                                                                       [id]="field[key][0].fielddesc + '_' + j"
+                                                                       [attr.data-fieldID]="field[key][0].fieldid"
+                                                                       [attr.data-stepID]="obj.stepid"
+                                                                       />
+                                                                <span style="color: red;">{{field[key][0].valideerr}}</span>-->
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For Combo -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 2">
+                                                                <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc | translate}}
+                                                                    : &nbsp;&nbsp;
+                                                                </label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                <!--<select class="form-control"
+                                                                        [(ngModel)]="field[key][0].fieldvalue"
+                                                                        [disabled]="isDisabled"
+                                                                        (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                                                        [id]="field[key][0].fielddesc + '_' + j + '_' + i + '_' + l"
+                                                                        (change)="onRadioButtonChange(obj, step, field[key][0], 'group', j)"
+                                                                        >
+                                                                  <option *ngFor="let d of field[key][0].controlvalue.split('|')"
+                                                                          [value]="d">{{d == '' ? 'Select' : d}}</option>
+                                                                </select>-->
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For Radio -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 3">
+                                                                <label
+                                                                        *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc | translate}}
+                                                                    : &nbsp;&nbsp;
+                                                                </label>
+                                                                <!--<div class="form-check form-check-inline"
+                                                                     *ngFor="let d of field[key][0].controlvalue.split('|')">
+                                                                  <input class="form-check-input" type="radio"
+                                                                         name="{{i}}{{j}}{{l}}" value="{{d}}"
+                                                                         [(ngModel)]="field[key][0].fieldvalue"
+                                                                         [disabled]="isDisabled"
+                                                                         (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                                                         (change)="onRadioButtonChange(obj, step, field[key][0], 'group', j)">
+                                                                  <label class="form-check-label">{{d}}</label>
+                                                                </div>-->
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For Checkbox -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 4">
+                                                                <div class="form-check form-check-inline">
+                                                                    <!--<input class="form-check-input" type="checkbox"
+                                                                           [(ngModel)]="field[key][0].fieldvalue"
+                                                                           [disabled]="isDisabled"
+                                                                           (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)">-->
+                                                                    <label class="form-check-label">{{field[key][0].fielddisplaydesc | translate}}
+                                                                        : </label>
+                                                                    <p>{{field[key][0].fieldvalue}}</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- For Date -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 5">
+                                                                <label>{{field[key][0].fielddisplaydesc | translate}} :
+                                                                    &nbsp;&nbsp; </label>
+                                                                <!--<input class="form-control" type="date"
+                                                                       [(ngModel)]="field[key][0].fieldvalue"
+                                                                       [disabled]="isDisabled"
+                                                                       (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                                                       [id]="field[key][0].fielddesc + '_' + j"/>-->
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For File -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 6">
+                                                                <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc | translate}}
+                                                                    : &nbsp;&nbsp;
+                                                                </label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                <!--<input class="form-control" type="file"
+                                                                       [disabled]="isDisabled"
+                                                                       accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                                                       (change)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                                                       [id]="field[key][0].fielddesc + '_' + j"/>
+                                                                <span
+                                                                        style="display: block;font-size: 13px;color: #555;">{{field[key][0].fieldvalue}}</span>-->
+                                                                <p><a class="anker-hover" *ngIf="field[key][0].fieldvalue !== ''"
+                                                                      (click)="viewFile(field[key][0].fieldvalue)">
+                                                                        <img *ngIf="field[key][0].fieldvalue.indexOf('.pdf') == -1" [src]="FILE_ROOT + field[key][0].fieldvalue" [alt]="" #img
+                                                                             (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                        <img *ngIf="field[key][0].fieldvalue.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                                </a>
+                                                                </p>
+                                                            </div>
+
+                                                            <!-- For Button -->
+                                                            <!--<div class="form-group"
+                                                                 style="display: inline; margin-right: 10px;"
+                                                                 *ngIf="field[key][0].controltype == 7 && obj.fielddetails.length > 1">
+                                                              <button class="btn btn-danger"
+                                                                      style="margin-bottom: 10px;"
+                                                                      [disabled]="isDisabled"
+                                                                      [ngStyle]="{'margin-top': (obj.fielddetailskeys[j].length - 1) % 3 !== 0 ? '24px' : 'unset'}"
+                                                                      (click)="removeItemBtn(obj, j)">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                              </button>
+                                                            </div>
+                                                            <div class="form-group" style="display: inline"
+                                                                 *ngIf="field[key][0].controltype == 7 && obj.fielddetails.length >= 1 && obj.fielddetails.length == (j + 1)">
+                                                              <button class="btn btn-warning"
+                                                                      style="margin-bottom: 10px;"
+                                                                      [disabled]="isDisabled"
+                                                                      [ngStyle]="{'margin-top': (obj.fielddetailskeys[j].length - 1) % 3 !== 0 ? '24px' : 'unset'}"
+                                                                      (click)="addMoreBtn(obj, j, obj.stepid, obj.groupid)">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                                {{field[key][0].fielddisplaydesc}}
+                                                              </button>
+                                                            </div>-->
+
+                                                            <!-- For Heading -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 8">
+                                                                <h5 style="text-transform: capitalize;">{{field[key][0].fielddisplaydesc.replace('Enter', '') | translate}}</h5>
+                                                            </div>
+
+                                                            <div *ngIf="field[key][0].controltype == 13">
+                                                                <hr>
+                                                            </div>
+
+                                                            <!-- For Label -->
+                                                            <div *ngIf="field[key][0].controltype == 10">
+                                                                <label [ngClass]="field[key][0].customclass">{{field[key][0].fielddisplaydesc | translate}}</label>
+                                                            </div>
+
+                                                            <!-- For Textarea -->
+                                                            <div class="form-group"
+                                                                 *ngIf="field[key][0].controltype == 9">
+                                                                <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc | translate}}
+                                                                    : &nbsp;&nbsp;
+                                                                </label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                <!--<textarea class="form-control" type="text"
+                                                                          [(ngModel)]="field[key][0].fieldvalue"
+                                                                          placeholder="Enter {{field[key][0].fielddisplaydesc}}"
+                                                                          [disabled]="isDisabled"
+                                                                          (focusout)="onBlurElement(field[key][0], obj.groupid, $event, j, obj.stepid)"
+                                                                          [id]="field[key][0].fielddesc + '_' + j"></textarea>-->
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+                                                            <!-- ******************************************* End ******************************************* -->
+                                                        </div>
+
+                                                        <div *ngIf="field[key][0].fieldgroupid !== null">
+
+                                                            <!-- If group view is table -->
+
+                                                            <!-- If group field table -->
+                                                            <div *ngIf="field[key][0].groupView == 'table'">
+                                                                <div class="table-responsive">
+                                                                    <table width="100%" border="0" cellspacing="0"
+                                                                           cellpadding="0"
+                                                                           class="table table-striped table-bordered table-hover">
+                                                                        <tbody>
+                                                                        <tr *ngFor="let key1 of field[key][0].fielddetails.keys; let ind = index;">
+                                                                            <td align="left" valign="middle"
+                                                                                *ngFor="let tableObj of field[key][0].fielddetails.details[key1];">
+                                                                                <label *ngIf="tableObj.controltype === 16 || tableObj.controltype === 10"
+                                                                                       [ngClass]="tableObj.controltype === 16 ? 'table-heading-lbl' : ''">{{tableObj.fielddisplaydesc | translate}}</label>
+                                                                                <!--<input type="date" class="form-control"
+                                                                                       *ngIf="tableObj.controltype === 5"
+                                                                                       [disabled]="isDisabled"
+                                                                                       [(ngModel)]="tableObj.fieldvalue"
+                                                                                       (focusout)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, 0)">
+                                                                                <input type="file" class="form-control"
+                                                                                       accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                                                                       *ngIf="tableObj.controltype === 6"
+                                                                                       (change)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, 0)"
+                                                                                       [id]="tableObj.fielddesc + '_' + j">
+                                                                                <input *ngIf="tableObj.controltype == 1"
+                                                                                       placeholder="{{tableObj.fielddisplaydesc}}"
+                                                                                       type="text"
+                                                                                       class="form-control" [disabled]="isDisabled"
+                                                                                       [(ngModel)]="tableObj.fieldvalue"
+                                                                                       (focusout)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, 0)"/>
+
+                                                                                &lt;!&ndash; For Radio &ndash;&gt;
+                                                                                <div class="form-group"
+                                                                                     *ngIf="tableObj.controltype == 3">
+                                                                                  <div class="form-check form-check-inline"
+                                                                                       *ngFor="let d of tableObj.controlvalue.split('|')">
+                                                                                    <input class="form-check-input" type="radio"
+                                                                                           name="{{i}}{{ind}}" value="{{d}}"
+                                                                                           [(ngModel)]="tableObj.fieldvalue"
+                                                                                           [disabled]="isDisabled"
+                                                                                           (focusout)="onBlurElement(tableObj, obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, 0)">
+                                                                                    <label class="form-check-label">{{d}}</label>
+                                                                                  </div>
+                                                                                </div>-->
+                                                                                <p>
+                                                                                    <a *ngIf="tableObj.controltype === 6 && tableObj.fieldvalue !== ''"
+                                                                                       class="anker-hover"
+                                                                                       (click)="viewFile(tableObj.fieldvalue)">
+                                                                                            <img *ngIf="tableObj.fieldvalue.indexOf('.pdf') == -1" [src]="FILE_ROOT + tableObj.fieldvalue" [alt]="" #img
+                                                                                                 (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                                            <img *ngIf="tableObj.fieldvalue.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                                                    </a>
+                                                                                    <span *ngIf="tableObj.controltype !== 6">{{tableObj.fieldvalue}}</span>
+                                                                                </p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <!-- If group view is form -->
+                                                            <div *ngIf="field[key][0].groupView == 'form'">
+                                                                <div *ngFor="let field2 of field[key][0].fielddetails; let c = index;"
+                                                                     class="sub-group-margin row">
+                                                                    <div class="col-12" *ngIf="step === 'Past Projects' && field[key][0].fieldgroupid === 5 && obj.groupid === 21">
+                                                                        <h5>{{'Enter details of ' + numberInWords(c + 1) + ' Plot'}}</h5>
+                                                                    </div>
+                                                                    <div class="col-12" *ngIf="step === 'Land Details' && field[key][0].fieldgroupid === 48 && obj.groupid === 47">
+                                                                        <h5>{{'Enter details of ' + numberInWords(c + 1) + ' landowner'}}</h5>
+                                                                    </div>
+                                                                    <div *ngFor="let key1 of field[key][0].fielddetailskeys[c]; let k = index;"
+                                                                         [ngClass]=" field[key][0].fielddetailskeys[c].length === 1 ? 'col-12 multifield-single' : 'col-' + field2[key1][0].fieldwidth">
+                                                                        <!-- For Text -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 1">
+                                                                            <label [id]="'lable_'+obj.fielddetails.fielddesc"
+                                                                                   *ngIf="field2[key1][0].islabelshow == 1">{{field2[key1][0].fielddisplaydesc | translate}}111
+                                                                                : &nbsp;&nbsp;
+                                                                            </label>
+                                                                            <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                            <!--<input class="form-control" type="text"
+                                                                                   [disabled]="isDisabled"
+                                                                                   (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                                                   placeholder="Enter {{field2[key1][0].fielddisplaydesc}}"
+                                                                                   [(ngModel)]="field2[key1][0].fieldvalue"
+                                                                                   [id]="field2[key1][0].fielddesc + '_' + j"
+                                                                                   [attr.data-fieldID]="field2[key1][0].fieldid"
+                                                                                   [attr.data-stepID]="obj.stepid"/>
+                                                                            <span style="color: red;">{{field2[key1][0].valideerr}}</span>-->
+                                                                            <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                            <!--<a *ngIf="field[key][0].fielddetailskeys[c].length == 1 && (field[key][0].fielddetails.length - 1) == c"
+                                                                               class="multi-textbox"
+                                                                               (click)="addMoreBtn(field[key][0], j, obj.stepid, obj.groupid, c)">
+                                                                              <i class="fa fa-plus-square "
+                                                                                 aria-hidden="true "></i>
+                                                                            </a>
+                                                                            <a *ngIf="field[key][0].fielddetailskeys[c].length == 1 && field[key][0].fielddetails.length > 1 && (field[key][0].fielddetails.length - 1) > c"
+                                                                               class="multi-textbox"
+                                                                               (click)="removeItemBtn(obj, j, field[key][0], c)">
+                                                                              <i class="fa fa-minus-square"
+                                                                                 aria-hidden="true "></i>
+                                                                            </a>-->
+                                                                        </div>
+
+                                                                        <!-- For Combo -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 2">
+                                                                            <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc | translate}}
+                                                                                : &nbsp;&nbsp;
+                                                                            </label>
+                                                                            <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                            <!--<select class="form-control"
+                                                                                    [(ngModel)]="field2[key1][0].fieldvalue"
+                                                                                    [disabled]="isDisabled"
+                                                                                    (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                                                    [id]="field2[key1][0].fielddesc + '_' + j"
+                                                                                    (change)="onRadioButtonChange(obj, step, field2[key1][0], 'group')">
+                                                                              <option *ngFor="let d of field2[key1][0].controlvalue.split('|')"
+                                                                                      [value]="d">{{d}}</option>
+                                                                            </select>-->
+                                                                            <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                        </div>
+
+                                                                        <!-- For Combo -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 17">
+                                                                            <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc | translate}}
+                                                                                : &nbsp;&nbsp;
+                                                                            </label>
+                                                                            <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                            <!--<select class="form-control"
+                                                                                    [(ngModel)]="field2[key1][0].fieldvalue"
+                                                                                    [disabled]="isDisabled"
+                                                                                    (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                                                    [id]="field2[key1][0].fielddesc + '_' + j"
+                                                                                    (change)="onRadioButtonChange(obj, step, field2[key1][0], 'group')">
+                                                                              <option *ngFor="let d of field2[key1][0].controlvalue.split('|')"
+                                                                                      [value]="d">{{d}}</option>
+                                                                            </select>-->
+                                                                            <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                        </div>
+
+                                                                        <!-- For Radio -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 3">
+                                                                            <label
+                                                                                    *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc | translate}}
+                                                                                : &nbsp;&nbsp;
+                                                                            </label>
+                                                                            <div class="form-check form-check-inline"
+                                                                                 *ngFor="let d of field2[key1][0].controlvalue.split('|')">
+                                                                                <!--<input class="form-check-input" type="radio"
+                                                                                       name="{{i}}{{j}}{{k}}" value="{{d}}"
+                                                                                       [(ngModel)]="field2[key1][0].fieldvalue"
+                                                                                       [disabled]="isDisabled"
+                                                                                       (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                                                       (change)="onRadioButtonChange(obj, step, field2[key1][0], 'group')">
+                                                                                <label class="form-check-label">{{d}}</label>-->
+                                                                                <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- For Checkbox -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 4">
+                                                                            <div class="form-check form-check-inline">
+                                                                                <!--<input class="form-check-input"
+                                                                                       type="checkbox"
+                                                                                       [(ngModel)]="field2[key1][0].fieldvalue"
+                                                                                       [disabled]="isDisabled"
+                                                                                       (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)">-->
+                                                                                <label class="form-check-label">{{field2[key1][0].fielddisplaydesc | translate}}
+                                                                                    : </label>
+                                                                                <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- For Date -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 5">
+                                                                            <label>{{field2[key1][0].fielddisplaydesc | translate}}
+                                                                                : &nbsp;&nbsp;
+                                                                            </label>
+                                                                            <!--<input class="form-control" type="date"
+                                                                                   [(ngModel)]="field2[key1][0].fieldvalue"
+                                                                                   [disabled]="isDisabled"
+                                                                                   (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                                                   [id]="field2[key1][0].fielddesc + '_' + j"/>-->
+                                                                            <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                        </div>
+
+                                                                        <!-- For File -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 6">
+                                                                            <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc | translate}}
+                                                                                : &nbsp;&nbsp;
+                                                                            </label>
+                                                                            <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                            <!--input class="form-control" type="file"
+                                                                                   [disabled]="isDisabled"
+                                                                                   accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                                                                   (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                                                   [id]="field2[key1][0].fielddesc + '_' + j"/>
+                                                                            <span
+                                                                                    style="display: block;font-size: 13px;color: #555;">{{field2[key1][0].fieldvalue}}</span>-->
+                                                                            <p><a class="anker-hover" *ngIf="field2[key1].fieldvalue !== ''"
+                                                                                  (click)="viewFile(field2[key1][0].fieldvalue)">
+                                                                                    <img *ngIf="field2[key1][0].fieldvalue.indexOf('.pdf') == -1" [src]="FILE_ROOT + field2[key1].fieldvalue" [alt]="" #img
+                                                                                         (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                                    <img *ngIf="field2[key1][0].fieldvalue.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                                            </a>
+                                                                            </p>
+                                                                        </div>
+
+                                                                        <!-- For Button -->
+                                                                        <!--<div class="form-group"
+                                                                             style="display: inline; margin-right: 10px;"
+                                                                             *ngIf="field2[key1][0].controltype == 7 && field[key][0].fielddetails.length > 1">
+                                                                          <button class="btn btn-danger"
+                                                                                  style="margin-bottom: 10px;"
+                                                                                  [disabled]="isDisabled"
+                                                                                  [ngStyle]="{'margin-top': ((field[key][0].fielddetailskeys[c].length - 1) % 3) !== 0 ? '24px' : 'unset'}"
+                                                                                  (click)="removeItemBtn(obj, j, field[key][0], c)">
+                                                                            <i class="fa fa-minus"
+                                                                               aria-hidden="true"></i>
+                                                                          </button>
+                                                                        </div>
+                                                                        <div class="form-group" style="display: inline"
+                                                                             *ngIf="field2[key1][0].controltype == 7 && field[key][0].fielddetails.length >= 1 && field[key][0].fielddetails.length == (c + 1)">
+                                                                          <button class="btn btn-warning"
+                                                                                  style="margin-bottom: 10px;"
+                                                                                  [disabled]="isDisabled"
+                                                                                  [ngStyle]="{'margin-top': ((field[key][0].fielddetailskeys[c].length - 1) % 3) !== 0 ? '24px' : 'unset'}"
+                                                                                  (click)="addMoreBtn(field[key][0], j, obj.stepid, obj.groupid, c)">
+                                                                            <i class="fa fa-plus"
+                                                                               aria-hidden="true"></i>
+                                                                            {{field2[key1][0].fielddisplaydesc}}
+                                                                          </button>
+                                                                        </div>-->
+
+                                                                        <!-- For Heading -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 8">
+                                                                            <h5>{{field2[key1][0].fielddisplaydesc.replace('Enter the', '').replace('Enter', '') | translate}}</h5>
+                                                                        </div>
+
+                                                                        <div *ngIf="field2[key1][0].controltype == 13">
+                                                                            <hr>
+                                                                        </div>
+
+                                                                        <!-- For Label -->
+                                                                        <div *ngIf="field2[key1][0].controltype == 10">
+                                                                            <label [ngClass]="field[key][0].customclass">{{field2[key1][0].fielddisplaydesc | translate}}</label>
+                                                                        </div>
+
+                                                                        <!-- For Textarea -->
+                                                                        <div class="form-group"
+                                                                             *ngIf="field2[key1][0].controltype == 9">
+                                                                            <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc | translate}}
+                                                                                : &nbsp;&nbsp;
+                                                                            </label>
+                                                                            <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                            <!--<textarea class="form-control" type="text"
+                                                                                      [(ngModel)]="field2[key1][0].fieldvalue"
+                                                                                      placeholder="Enter {{field2[key1][0].fielddisplaydesc}}"
+                                                                                      [disabled]="isDisabled"
+                                                                                      (focusout)="onBlurElement(field2[key1][0], obj.groupid, $event, j, obj.stepid, field[key][0].fieldgroupid, c)"
+                                                                                      [id]="field2[key1][0].fielddesc + '_' + j + '_' + c"></textarea>-->
+                                                                            <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                        </div>
+                                                                        <!-- ******************************************* End ******************************************* -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- If single field -->
+                                            <div>
+
+                                                <!-- Blank Message Field-->
+                                                <div *ngIf="obj.groupid==21" [hidden]="!isDataBlank"
+                                                     style="text-align: center;"> No Project Registered or Applied for Registration with RERA Bihar in past Five Years <br><br><br>
+                                                </div>
+
+                                                <div *ngIf="obj.groupid == null">
+
+                                                    <!-- For Text -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 1">
+                                                        <label [id]="'label_'+obj.fielddetails.fielddesc"
+                                                               *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                            :
+                                                            &nbsp;&nbsp;</label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <!--<input class="form-control" type="text"
+                                                               (focusout)="onBlurElement(obj)" [disabled]="isDisabled"
+                                                               placeholder="Enter {{obj.fielddetails.fielddisplaydesc}}"
+                                                               [attr.data-fieldID]="obj.fielddetails.fieldid"
+                                                               [attr.data-stepID]="obj.stepid"
+                                                               [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                               [id]="obj.fielddetails.fielddesc"
+                                                               [readOnly]="obj.fielddetails.isreadonly == 1"
+                                                               (keydown)="validationValue($event, obj)"
+                                                               (keyup)="onKeyUpChanges(obj)"/>
+                                                        <span style="color: red;">{{obj.valideerr}}</span>-->
+                                                        <p [id]="obj.fielddetails.fielddesc">{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- For Combo -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 2">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                            :
+                                                            &nbsp;&nbsp;</label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <!--<select class="form-control"
+                                                                [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                                [disabled]="isDisabled"
+                                                                (focusout)="onBlurElement(obj)"
+                                                                [id]="obj.fielddetails.fielddesc"
+                                                                (change)="onRadioButtonChange(obj, step)">
+                                                          <option *ngFor="let d of obj.fielddetails.controlvalue.split('|')"
+                                                                  [value]="d">{{d == '' ? 'Select' : d}}</option>
+                                                        </select>-->
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- For Radio -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 3"
+                                                         [id]="obj.fielddetails.fielddesc">
+                                                        <label
+                                                                *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                            :
+                                                            &nbsp;&nbsp;</label>
+                                                        <!--<div class="form-check form-check-inline"
+                                                             *ngFor="let d of obj.fielddetails.controlvalue.split('|')">
+                                                          <input class="form-check-input" type="radio"
+                                                                 name="{{obj.fielddetails.fielddesc}}" value="{{d}}"
+                                                                 (focusout)="onBlurElement(obj)"
+                                                                 [disabled]="isDisabled"
+                                                                 [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                                 (change)="onRadioButtonChange(obj, step)">
+                                                          <label class="form-check-label">{{d}}</label>
+                                                        </div>-->
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+                                                    <!-- For Radio -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 12">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                            :
+                                                            &nbsp;&nbsp;</label>
+                                                        <!--<div class="form-check form-check-inline"
+                                                             *ngFor="let d of obj.fielddetails.controlvalue.split('|')">
+                                                          <input class="form-check-input" type="radio" name="{{i}}"
+                                                                 value="{{d}}"
+                                                                 (focusout)="onBlurElement(obj)"
+                                                                 [disabled]="isDisabled"
+                                                                 [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                                 (change)="onRadioButtonChange(obj, step)">
+                                                          <label class="form-check-label">{{d}}</label>
+
+                                                        </div>-->
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                        &nbsp;&nbsp;
+                                                        <div class="form-group">
+                                                            <!--<input class="form-control" type="text"
+                                                                   (focusout)="onBlurElement(obj)"
+                                                                   placeholder="Enter Name" [disabled]="isDisabled"
+                                                                   [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                                   [id]="obj.fielddetails.fielddesc"/>-->
+                                                            <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- For Checkbox -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 4">
+                                                        <div class="form-check form-check-inline">
+                                                            <!--<input class="form-check-input" type="checkbox"
+                                                                   [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                                   [disabled]="isDisabled"
+                                                                   (focusout)="onBlurElement(obj)">-->
+                                                            <label class="form-check-label">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                                : &nbsp;&nbsp;</label>
+                                                            <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- For Date -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 5">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                            :
+                                                            &nbsp;&nbsp;</label>
+                                                        <!--<input class="form-control" type="date"
+                                                               [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                               [disabled]="isDisabled"
+                                                               (focusout)="onBlurElement(obj)"
+                                                               [id]="obj.fielddetails.fielddesc"/>-->
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- For File -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 6">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                            : &nbsp;&nbsp;
+                                                        </label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <!--<input class="form-control" type="file" [disabled]="isDisabled"
+                                                               accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                                               (focusout)="onBlurElement(obj, 0, $event)"
+                                                               [id]="obj.fielddetails.fielddesc"/>
+                                                        <span
+                                                                style="display: block;font-size: 13px;color: #555;">{{obj.fielddetails.fieldvalue}}</span>-->
+                                                        <p *ngIf="obj.fielddetails.fieldid !== 18">
+                                                            <a class="anker-hover" *ngIf="obj.fielddetails.fieldvalue !== ''"
+                                                               (click)="viewFile(obj.fielddetails.fieldvalue)">
+                                                                <img *ngIf="obj.fielddetails.fieldvalue.indexOf('.pdf') == -1" [src]="FILE_ROOT + obj.fielddetails.fieldvalue" [alt]="" #img
+                                                                     (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                <img *ngIf="obj.fielddetails.fieldvalue.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                            </a>
+                                                        </p>
+
+                                                        <div class="uplod_list" *ngIf="obj.fielddetails.fieldid == 18 && obj.fielddetails.fieldvalue !== ''">
+                                                          <ol>
+                                                              <li *ngFor="let file of obj.fielddetails.fieldvalue.split(','); let findx = index;">
+                                                                  <a (click)="viewFile(file)">
+                                                                      <img [src]="FILE_ROOT + file" [alt]="" #img
+                                                                              (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                  </a>
+                                                              </li>
+                                                          </ol>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- For Button -->
+                                                    <!--<div class="form-group" *ngIf="obj.fielddetails.controltype == 7"
+                                                         style="margin-top: 24px;">
+                                                      <button class="btn"
+                                                              [ngClass]="obj.fielddetails.fielddisplaydesc.toLowerCase().indexOf('verify') > -1 ? 'btn-info' : 'btn-primary'"
+                                                              (click)="onButtonClick(step, obj.fielddetails.fielddesc, obj.stepid, obj.groupid)"
+                                                              [disabled]="isDisabled">
+                                                        <i *ngIf="obj.fielddetails.fielddisplaydesc.toLowerCase().indexOf('verify') > -1"
+                                                           class="fa fa-check"></i>
+                                                        {{obj.fielddetails.fielddisplaydesc}}
+                                                      </button>
+                                                    </div>-->
+
+                                                    <!-- For Heading -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 8">
+                                                        <h5 [ngClass]="obj.customclass" style="text-transform: capitalize;">{{obj.fielddetails.fielddisplaydesc.replace('Enter the', '').replace('Enter', '') | translate}}</h5>
+                                                    </div>
+
+                                                    <!-- For Label -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 10 && obj.fielddetails.fieldid !== 854">
+                                                        <label [ngClass]="obj.customclass">{{obj.fielddetails.fielddisplaydesc | translate}}</label>
+                                                    </div>
+
+                                                    <!-- For Horizontal Line -->
+                                                    <div *ngIf="obj.fielddetails.controltype == 13">
+                                                        <hr>
+                                                    </div>
+
+                                                    <!-- For Textarea -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 9">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc | translate}}
+                                                            :&nbsp;&nbsp;
+                                                        </label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <!--<textarea class="form-control" type="text"
+                                                                  [disabled]="isDisabled"
+                                                                  placeholder="Enter {{obj.fielddetails.fielddisplaydesc}}"
+                                                                  [(ngModel)]="obj.fielddetails.fieldvalue"
+                                                                  (focusout)="onBlurElement(obj)"
+                                                                  [id]="obj.fielddetails.fielddesc"></textarea>-->
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- For Horizontal Line -->
+                                                    <div *ngIf="obj.fielddetails.controltype == 15">
+                                                        <a class="mapes" (click)="openGoogleMaps()"
+                                                           >
+                                                            <img [src]="'assets/images/' + obj.fielddetails.controlvalue"
+                                                                 alt="">
+                                                        </a>
+                                                    </div>
+                                                    <!-- ******************************************* End ******************************************* -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="step=='Development Plan'">
+                                        <div *ngFor="let stepFields of formDetails[step];let tc = index;">
+                                            <div class="table-responsive" *ngIf="stepFields.groupid !== null">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                       class="table  table-hover">
+                                                    <tr>
+                                                        <th align="left" valign="middle">SL No.</th>
+                                                        <th align="left" valign="middle">Applicable Activity</th>
+                                                        <th align="left" valign="middle">Start Date</th>
+                                                        <th align="left" valign="middle">End Date</th>
+                                                        <!--                            <th align="left" valign="middle">Action Taken</th>-->
+                                                        <th align="left" valign="middle"></th>
+                                                    </tr>
+                                                    <tr *ngFor="let key of stepFields.fielddetails.keys; let ind = index;">
+                                                        <td align="left" valign="middle">{{ind + 1}}</td>
+                                                        <td align="left" valign="middle">
+                                                            {{key}}
+                                                        </td>
+                                                        <td align="left" valign="middle"
+                                                            *ngFor="let obj of stepFields.fielddetails.details[key]; let j = index;">
+                                                            <!--<input *ngIf="obj.controltype == 5" type="date" class="form-control" data-date-format="MM-YYYY"
+                                                                   [(ngModel)]="obj.fieldvalue"
+                                                                   (focusout)="onBlurElement(obj, stepFields.groupid, $event, j, stepFields.stepid)"/>-->
+                                                            <!-- onBlurElement(field[key][0], stepFields.groupid, $event, j, stepFields.stepid) -->
+                                                            <app-calender *ngIf="obj.controltype == 5"
+                                                                          [dateShow]="obj.fieldvalue"
+                                                                          [isFormSubmitted]="isDisabled"
+                                                                          (dateSelect)="onCustomeDateSelect($event, obj, stepFields.groupid, j, stepFields.stepid)"></app-calender>
+                                                            <input *ngIf="obj.controltype == 1" placeholder="Action"
+                                                                   type="text"
+                                                                   class="form-control" [disabled]="isDisabled"
+                                                                   [(ngModel)]="obj.fieldvalue"
+                                                                   (focusout)="onBlurElement(obj, stepFields.groupid, $event, j, stepFields.stepid)"/>
+                                                            <span *ngIf="obj.controltype == 11">
+                            <i *ngIf="obj.fieldvalue == '1'" class="fa fa-check" aria-hidden="true"></i>
+                            <i *ngIf="obj.fieldvalue != '1'" class="fa fa-times" aria-hidden="true"></i>
+                          </span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div>
+                                                <!-- For Heading -->
+                                                <div class="form-group"
+                                                     *ngIf="stepFields.fielddetails.controltype == 8">
+                                                    <h5 [ngClass]="stepFields.customclass">{{stepFields.fielddetails.fielddisplaydesc}}</h5>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group button_dv mb-2 mr-2">
+                                    <button class="btn btn-primary" *ngIf="stepPos>0" (click)="goToPrevious()">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i>Previous
+                                    </button>
+                                    <!--<button class="btn btn-success" [disabled]="isDisabled"><i class="fa fa-floppy-o"
+                                                                                                aria-hidden="true"></i>Save
+                                    </button>-->
+                                    <button class="btn btn-success" (click)="goToNext(this.formDetails[step])"><i
+                                            class="fa fa-arrow-right"
+                                            aria-hidden="true"></i> Next
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="">
+                                <p><span style="color: #f00;">*</span> All fields are mandatory</p>
+                                <p *ngIf="step=='Basic Details'"><span style="color: #000;">#</span> Mandatory for more
+                                    than 500 sq mts
+                                    of land or more than 8 Flats in the entire project</p>
+                            </div>
+                        </div>
+                        <div *ngIf="step === 'Payment'">
+                            <div class="resp-tabs-container hor_1 mb-3 ml-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" [(ngModel)]="isAccept" [disabled]="true">
+                                            [I/We] solemnly affirm and declare that the particulars given herein are
+                                            correct to [my/our] knowledge and belief and nothing material has been
+                                            concealed by [me/us] therefrom.
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="signature-container">
+                                            <div class="signature">
+                                                <img *ngIf="signatureImg !== ''" id="signt" [src]="signatureImg" alt="">
+                                            </div>
+                                            <input type="file" accept="image/jpeg,image/png" id="signatureupl"
+                                                   style="display: none;">
+                                            <p class="text-center">
+                                                Signature
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="payment_dv mt-5">
+                                <div class="play_txt">
+                                    <p class="pay_cal">Based on RERA Bihar Calculation your Registration Amount is :
+                                        <strong style="font-family: initial; font-size: 25px;">
+                                            &#8377; {{totalAmount.toLocaleString('en-IN')}}</strong></p>
+
+                                    <!--                                    <h4>Select Payment Method</h4>-->
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #confirmSubmitModal>
+    <div class=" modal-content ">
+        <div class="modal-header">
+            <button type="button" class="btn-close" (click)="closeModal()">X</button>
+        </div>
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <p class="form-group">
+                    <span style="color: red;">** </span>
+                    After clicking on the confirm button, you are no longer able to change or edit your profile.
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="confirmSubmit()">Confirm
+            </button>
+        </div>
+    </div>
+</ng-template>
+

@@ -1,0 +1,114 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <app-dashboard-header [linkName]="'Edit Query'" [dashboardURL]="workflowtype===AGENT_TYPE ? 'agent-dashboard' : 'project-dashboard'"></app-dashboard-header>
+            <div class="prom_reg_in">
+                <div class="prom_reg_frm stageIIIpage">
+
+                    <div class="dev_tabl dev_wrk prev_tabl mb-3 p-0">
+                        <div class="personal_view_page stage_dv">
+                            <div class="row">
+                                <div class="col-12" *ngIf="workflowtype!==AGENT_TYPE">
+                                    <h5>Project Name : {{projName}}</h5>
+                                </div>
+                                <div class="col-12" *ngIf="workflowtype===AGENT_TYPE">
+                                    <h5>Agent Name : {{agentname}}</h5>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Application No. : </label>
+                                        <p *ngIf="workflowtype!==AGENT_TYPE">{{applicationNo}}</p>
+                                        <p *ngIf="workflowtype===AGENT_TYPE">{{userno}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>Application Type : </label>
+                                        <p>{{applicationType}} Application</p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="workflowtype!==AGENT_TYPE">
+                                    <div class="form-group">
+                                        <label>Project Type : </label>
+                                        <p>{{projectType}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-4" *ngIf="workflowtype!==AGENT_TYPE">
+                                    <div class="form-group">
+                                        <label>Project Address : </label>
+                                        <p>{{address}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-4" *ngIf="workflowtype!==AGENT_TYPE">
+                                    <div class="form-group">
+                                        <label>Project Start Date : </label>
+                                        <p>{{startDate}} </p>
+                                    </div>
+                                </div>
+                                <div class="col-4" *ngIf="workflowtype!==AGENT_TYPE">
+                                    <div class="form-group">
+                                        <label>Project Status
+                                            : </label>
+                                        <p>{{status}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <div class="form-group align-right-div" *ngIf="workflowtype!==AGENT_TYPE">
+                                        <button class="btn btn-dark" (click)="goToProjectDetails()">View Project
+                                            Details
+                                        </button>
+                                    </div>
+                                    <div class="form-group align-right-div" *ngIf="workflowtype===AGENT_TYPE">
+                                        <button class="btn btn-dark" (click)="goToAgentDetails()">View Application
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="personal_view_page stage_dv mt-3">
+                            <h5>Queries Raised by RERA</h5>
+                            <div class="table-responsive">
+                                <table class="table  table-hover" width="100%" cellspacing="0" cellpadding="0"
+                                       border="0">
+                                    <tbody>
+                                    <tr>
+                                        <th width="5%" valign="middle" align="left">SL No.</th>
+                                        <th width="12%" valign="middle" align="left">Query</th>
+                                        <th width="12%" valign="middle" align="left">Raised On</th>
+                                        <th width="12%" valign="middle" align="left">Days Remaining to Respond</th>
+                                        <th width="10%" valign="middle" align="left">Respond to RERA</th>
+                                    </tr>
+                                    <tr *ngFor="let val of queries;let i=index;">
+                                        <td valign="middle" align="left">{{i + 1}}</td>
+                                        <td valign="middle" align="left">{{val.query}}</td>
+                                        <td valign="middle" align="left">{{val.dateofquery | date:'dd-MM-yyyy'}}</td>
+                                        <td valign="middle" align="left">{{val.remaining}} days</td>
+                                        <td valign="middle" align="left">
+                                            <button class="btn btn-primary" (click)="gotoResponse(val.id)">Respond to
+                                                RERA
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="btn_dv text-center">
+                                <button class="btn btn-primary text-white" (click)="submit()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

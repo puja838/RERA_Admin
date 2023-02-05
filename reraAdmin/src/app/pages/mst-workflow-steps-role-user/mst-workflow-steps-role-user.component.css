@@ -1,0 +1,7 @@
+fieldset{
+    border: 2px groove; 
+    border-color: #007bff; 
+    box-sizing: border-box; 
+    padding: 10px; 
+    width: inherit; 
+}

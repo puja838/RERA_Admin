@@ -1,0 +1,70 @@
+<div class="head-part">
+  <div class="head_midd">
+    <div class="container">
+      <div class="rera-logo"> <a routerLink="/"><img src="assets/images/rera-logo.png" /></a> </div>
+      <div class="logo_rt">
+        <div class="mbre"> <span><img src="assets/images/mbr-img1.png" /></span> <strong>Shri Nitish Kumar</strong>
+          <p>Hon’ble Chief Minister of Bihar</p>
+        </div>
+        <div class="rera_txte">Real Estate Regulatory Authority, Bihar</div>
+        <div class="mbre"> <span><img src="assets/images/mbr-img2.png" /></span> <strong>Shri Phagu Chauhan</strong>
+          <p>Hon’ble Governor of Bihar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button style="position: fixed;z-index: 99;top: 5px;right: 5px;background: #ea7117;color: #fff; border: 0;padding: 5px 14px; border-radius: 3px;" (click)="logout()">Logout</button>
+</div>
+<router-outlet></router-outlet>
+<div class="footer_sec">
+  <div class="foot_top">
+    <div class="container">
+      <div class="foot_top_in">
+        <div class="foot_lnk addrse">
+          <h3>Get in Touch</h3>
+          <p class="foot_adr">6yh floor, Bihar State Building Connstruction Corporation Campus, Hospital Rd, Hathikhana, Rajbansi Nagar, Patna, Bihar 800012</p>
+          <p class="foot_cont">Telephone: 0612-2291014</p>
+          <p class="foot_eml">E-mail: <a href="mailto:inforera@bihar.com">inforera@bihar.com</a></p>
+        </div>
+        <div class="foot_lnk scn_lnk">
+          <h3>About Us</h3>
+          <ul>
+            <li> <a >Vision & Mission</a> </li>
+            <li> <a >Transparency</a> </li>
+            <li> <a >Non-Compliance & Penalties</a> </li>
+            <li> <a >Chariman's Message</a> </li>
+            <li> <a >Contact Us</a> </li>
+          </ul>
+        </div>
+        <div class="foot_lnk thr_lnk">
+          <h3>Quick Links</h3>
+          <ul>
+            <li> <a >Copyright Policy</a> </li>
+            <li> <a >RTI Links</a> </li>
+            <li> <a >Feedback</a> </li>
+            <li> <a >Disclaimer</a> </li>
+          </ul>
+          <img src="assets/images/footer-logo.png" /> </div>
+        <div class="foot_lnk fot_logo">
+          <h3>Subscribe for Newsletter</h3>
+          <div class="newsltt">
+            <form action="#">
+              <input type="text" class="form-control" placeholder="Enter Email ID" />
+              <button class="btn btn-success">Subscribe</button>
+            </form>
+          </div>
+          <img src="assets/images/footer-logo.png" /> </div>
+      </div>
+    </div>
+  </div>
+  <div class="copy_rit">
+    <div class="container">
+      <p><span>&copy;Real Estate Regulatory Autharity (RERA) Bihar,</span> Govt. of Bihar. All Rights Reserved</p>
+      <p>Page last updated on: 21-04-2022 | Visitor: 13591</p>
+    </div>
+  </div>
+</div>
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-scale-pulse" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+

@@ -1,0 +1,421 @@
+<div class="promot_regs">
+    <div class="container">
+        <div class="profl_pgese">
+            <div class="dashbrde">
+                <!-- <a class="dropdown-toggle" [matMenuTriggerFor]="promoter"><i class="fa fa-bars"></i></a> -->
+                <h2>{{'Promoter Dashboard' | translate}}</h2>
+
+                <mat-menu #promoter="matMenu">
+                    <button mat-menu-item [matMenuTriggerFor]="project">
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                        {{'Project' | translate}}
+                    </button>
+                    <button mat-menu-item>
+                        <i class="fa fa-bar-chart"
+                           aria-hidden="true"></i>
+                        {{'Project List' | translate}}
+                    </button>
+                    <button mat-menu-item>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        {{'Project Report' | translate}}
+                    </button>
+                    <button mat-menu-item [matMenuTriggerFor]="Complaints">
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                        {{'Complaints' | translate}}
+                    </button>
+                </mat-menu>
+
+                <mat-menu #project="matMenu">
+                    <button mat-menu-item (click)="goTo('/pages/project', 0, 0, '0')">
+                        <i class="fa fa-newspaper-o"
+                           aria-hidden="true"></i>
+                        {{'Create New' | translate}}
+                    </button>
+                    <button mat-menu-item>
+                        <i class="fa fa-bar-chart"
+                           aria-hidden="true"></i>
+                        {{'Update Existing' | translate}}
+                    </button>
+                </mat-menu>
+
+                <mat-menu #Complaints="matMenu">
+                    <button mat-menu-item>
+                        <i class="fa fa-newspaper-o"
+                           aria-hidden="true"></i>
+                        {{'Upcoming Deadlines' | translate}}
+                    </button>
+                </mat-menu>
+            </div>
+
+            <div class="profl">
+                <a class="dropdown-toggle" href="javascript:void(0)" role="button" id="dropdownMenuLink2"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                        class="fa fa-user"></i>{{'Welcome' | translate}}: {{name}}</a>
+
+                <!-- <mat-menu #profile="matMenu">
+                  <button mat-menu-item (click)="goToProfile()">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    Edit Profile
+                  </button>
+                  <button mat-menu-item (click)="logout()">
+                    <i class="fa fa-sign-out"
+                       aria-hidden="true"></i>
+                    Logout
+                  </button>
+                </mat-menu> -->
+                <div class="prof_div dropdown-menu" aria-labelledby="dropdownMenuLink2">
+                    <a class="dropdown-item" (click)="goToAnnualReport()"><i class="fa fa-pencil-square-o"
+                                                                             aria-hidden="true"></i> {{'Annual Report' | translate}}
+                    </a>
+                    <a class="dropdown-item" (click)="goToProfile()"><i class="fa fa-pencil-square-o"
+                                                                        aria-hidden="true"></i> {{'Edit Profile' | translate}}
+                    </a>
+                    <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"
+                                                                   aria-hidden="true"></i> {{'Logout' | translate}}</a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row mt-3 mb-3">
+           <div class="col-lg-3 col-md-6 mb-3">
+                <button class="btn btn-primary col-lg-12 d-flex align-items-center" (click)="goTo('/pages/project', 0, 0, '0')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z"/>
+                    </svg>&nbsp; {{'Apply for Project Registration' | translate}}
+                </button>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <button class="btn btn-primary col-lg-12 d-flex align-items-center" (click)="generateToken()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z"/>
+                    </svg>&nbsp; {{'File a Complaint' | translate}}
+                </button>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <button class="btn btn-primary col-lg-12 d-flex align-items-center" (click)="goToProfile()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                    </svg>&nbsp; {{'View / Update Profile' | translate}}
+                </button>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <button class="btn btn-primary col-lg-12 d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-file-earmark-arrow-up-fill" viewBox="0 0 16 16">
+                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.354 9.854a.5.5 0 0 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 8.707V12.5a.5.5 0 0 1-1 0V8.707L6.354 9.854z"/>
+                    </svg>&nbsp; {{'Apply for Project Extension' | translate}}
+                </button>
+            </div>
+
+
+        </div>
+        <div class="row mt-3 mb-3">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-blu shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white"><i class="fa fa-bell" aria-hidden="true"></i> {{notificationCount}}
+                        </h2>
+                        <h4> {{'Alerts & Notifications' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-sky shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer"
+                     (click)="listShow(4, 'Registered Applications')">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-check-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                            </svg>
+                            {{getCountOfTotalRegistrationApplications}}
+                        </h2>
+                        <h4> {{'Registered Applications' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-grn shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer"
+                     (click)="listShow(3, 'Update Project details')">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-ruled-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1H6v2h7v1H6v2H5v-2H3v-1h2v-2H3V9z"/>
+                            </svg>
+                            {{countOfTotalProjectStageTwo}}
+                        </h2>
+                        <h4> {{'Update Project details' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-red shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer"
+                     (click)="listShow(5, 'Upcoming / Pending QPR')">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-ruled-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1H6v2h7v1H6v2H5v-2H3v-1h2v-2H3V9z"/>
+                            </svg>
+                            {{UpcomingQpr}}
+                        </h2>
+                        <h4> {{'Upcoming / Pending QPR' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-yylo shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer"
+                     (click)="listShow(1, 'Projects Registered')">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-check-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                            </svg>
+                            {{getCountOfTotalRegisteredProjects}}
+                        </h2>
+                        <h4> {{'Projects Registered' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-dblu shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer"
+                     (click)="listShow(2, 'Queries from RERA')">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+                            </svg>
+                            {{totalWorkflowProjectCount}}
+                        </h2>
+                        <h4> {{'Queries from RERA' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-blk shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer"
+                     (click)="generateToken()">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white"><i class="fa fa-briefcase" aria-hidden="true"></i> {{CasesfiledAllotteesCount}}</h2>
+                        <h4> {{'Cases filed by Allottees' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="bg-dgr shadow-lg py-3 px-3 rounded-3 dashboard_top_box cursor-pointer"
+                     (click)="generateToken()">
+                    <div class="col-auto d-block">
+                        <h2 class="text-white">
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            {{CasesfiledPromoterCount}}
+                        </h2>
+                        <h4> {{'Cases filed by Promoter' | translate}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dev_tabl ongoing_proj" id="listcontainer">
+            <h5>{{listHeading | translate}}</h5>
+            <div *ngIf="listType === 0">
+                <carousel [loop]="true" [autoplay]="true" [cellsToShow]="4" [height]="240"
+                          [autoplayInterval]="2000">
+                    <div class="carousel-cell" *ngFor="let obj of noticeList">
+                        <a (click)="openFile(obj.file)">
+                            <div class="imp_notic_in">
+                                <span>{{obj.date}} </span>
+                                <p *ngIf="obj.content.length <= 90" [title]="obj.content">{{obj.content | translate}}</p>
+                                <p *ngIf="obj.content.length > 90" [title]="obj.content">{{obj.content.substring(0, 90) + '...' | translate}}</p>
+                            </div>
+                        </a>
+                    </div>
+                </carousel>
+            </div>
+            <div class="table-responsive" *ngIf="listType === 1 || listType === 4">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                    <tr>
+                        <th align="left" valign="middle">{{'Sr No.' | translate}}</th>
+                        <th align="left" valign="middle">{{'Application No' | translate}}</th>
+                        <th align="left" valign="middle">{{'Date of Submission' | translate}}</th>
+                        <th align="left" valign="middle">{{'Days submitted' | translate}}</th>
+                        <th align="left" valign="middle">{{'Promoter Name' | translate}}</th>
+                        <th align="left" valign="middle" *ngFor="let head of tableHead;">{{head | translate}}</th>
+                        <!--            <th align="left" valign="middle">Current Stage</th>-->
+                        <th align="left" valign="middle">{{'Application Status' | translate}}</th>
+                        <th align="left" valign="middle">{{'View/Edit' | translate}}</th>
+                    </tr>
+                    <tr *ngFor="let obj of projectList;let i = index;">
+                        <td align="left" valign="middle">{{i + 1}}</td>
+                        <td align="left" valign="middle">{{obj.projectuid}}</td>
+                        <td align="left" valign="middle">{{obj.submitiontime}}</td>
+                        <td align="left" valign="middle">{{obj.submitionDays}}</td>
+                        <td align="left" valign="middle">{{obj.username}}</td>
+                        <td align="left" valign="middle" *ngFor="let head of tableHead;">
+                            <a><span
+                                    *ngIf="obj.fieldList[head] !== undefined">{{obj.fieldList[head][0].projectfieldvalue}}</span></a>
+                            <!-- [ngClass]="obj.isapproved === 1 ? 'approve-proj' : ''" (click)="goToChecklist(obj.id)" -->
+                        </td>
+                        <!--<td align="left" valign="middle">
+                          <span *ngIf="obj.isapproved === 3" style="color: #0b6e0b;">{{'Approved' | translate}}</span>
+                          <span *ngIf="obj.isapproved !== 3 && obj.isapproved !== 4" style="color: red;">{{'Rejected' | translate}}</span>
+                          <span *ngIf="obj.isapproved !== 4" style="color: red;">{{'Rejected' | translate}}</span>
+                        </td>-->
+                        <td align="left" valign="middle">
+                            <span *ngIf="obj.iscomplete === 0">{{'Draft' | translate}}</span>
+                            <span *ngIf="obj.iscomplete === 1 && obj.isapproved !== 3 && obj.isapproved !== 4">{{'Under Scrutiny' | translate}}</span>
+                            <span *ngIf="obj.isapproved === 3 && obj.progressstatus == 'new'" style="color: #0b6e0b;">{{'Approved' | translate}}</span>
+                            <span *ngIf="obj.isapproved === 4 && obj.progressstatus == 'new'" style="color: red;">{{'Rejected' | translate}}</span>
+                            <span *ngIf="(obj.isapproved === 3 || obj.isapproved === 4) && obj.progressstatus != 'new'" style="color: #0b6e0b;text-transform: capitalize;">
+                                {{obj.progressstatus | translate}}
+                            </span>
+                        </td>
+                        <td align="left" valign="middle">
+                            <a *ngIf="obj.iscomplete === 0"
+                               (click)="goTo('/pages/project', obj.id, obj.iscomplete, obj.projectuid)">
+                                <i class="fa fa-edit" aria-hidden="true" style="font-size: 14px;"></i>
+                            </a>
+                            <a *ngIf="obj.iscomplete === 1 && obj.isapproved != 3 && obj.isapproved != 4"
+                               (click)="goTo('/pages/project-details', obj.id, obj.iscomplete, obj.projectuid)">
+                                <i class="fa fa-eye" aria-hidden="true" style="font-size: 24px;color: blue;"></i>
+                            </a>
+
+                            <a *ngIf="obj.isapproved == 3 && obj.progressstatus == 'new'" (click)="viewCertificate(obj.id)">
+                                <i class="fa fa-certificate" aria-hidden="true" style="font-size: 25px;"></i>
+                            </a>
+                            <a *ngIf="obj.isapproved == 4 && obj.progressstatus == 'new'" (click)="showComment(obj.approvalcomment)">
+                                <i class="fa fa-comments" aria-hidden="true" style="font-size: 25px;"></i>
+                            </a>
+
+                            <a *ngIf="(obj.isapproved === 3 || obj.isapproved === 4)" class="ml-3"
+                               (click)="goTo('/pages/project-details', obj.id, obj.iscomplete, obj.projectuid)">
+                                <i class="fa fa-eye" aria-hidden="true" style="font-size: 24px;color: blue;"></i>
+                            </a>
+
+                            <a class="ml-4" *ngIf="obj.iscomplete === 0" (click)="openDeleteConfirmModal(obj.id)">
+                                <i class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="projectList.length === 0">
+                        <td colspan="8" class="text-center">
+                            {{'No data found' | translate}}
+                        </td>
+                    </tr>
+                    <!--<tr>
+                      <td align="left" valign="middle">2</td>
+                      <td align="left" valign="middle">Task 2</td>
+                      <td align="left" valign="middle">08-01-2022</td>
+                      <td align="left" valign="middle">08-03-2022</td>
+                      <td align="left" valign="middle">Completed</td>
+                      <td align="center" valign="middle"><a href="preview-entry.html"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                      </td>
+                    </tr>-->
+                </table>
+            </div>
+
+            <div class="table-responsive" *ngIf="listType === 2">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                    <tr>
+                        <th align="left" valign="middle">{{'SL No.' | translate}}</th>
+                        <th align="left" valign="middle">{{'Project Name' | translate}}</th>
+                        <th align="left" valign="middle">{{'Date of Submission' | translate}}</th>
+                    </tr>
+                    <tr *ngFor="let l of pendingProjectList;let i = index;">
+                        <td align="left" valign="middle">{{i + 1}}</td>
+                        <td align="left" valign="middle"><a class="blue"
+                                                            (click)="goToChecklist(l.uniqueprojectid)">{{l.projectfieldvalue}}</a>
+                        </td>
+                        <td align="left" valign="middle">20/06/2022</td>
+                    </tr>
+                    <tr *ngIf="pendingProjectList.length === 0">
+                        <td colspan="3" class="text-center">
+                            {{'No data found' | translate}}
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="table-responsive" *ngIf="listType === 3 || listType === 5">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                    <tr>
+                        <th align="left" valign="middle">{{'Sr No.' | translate}}</th>
+                        <th align="left" valign="middle">{{'Application No' | translate}}</th>
+                        <th align="left" valign="middle">{{'Date of Submission' | translate}}</th>
+                        <th align="left" valign="middle">{{'Days submitted' | translate}}</th>
+                        <th align="left" valign="middle">{{'Promoter Name' | translate}}</th>
+                        <th align="left" valign="middle"
+                            *ngFor="let head of updateProjectTableHead;">{{head | translate}}</th>
+                        <!--            <th align="left" valign="middle">Current Stage</th>-->
+                        <th align="left" valign="middle">{{'Application Status' | translate}}</th>
+                        <th align="left" valign="middle">{{'View/Edit' | translate}}</th>
+                    </tr>
+                    <tr *ngFor="let obj of updateProjectList;let i = index;">
+                        <td align="left" valign="middle">{{i + 1}}</td>
+                        <td align="left" valign="middle">{{obj.projectuid}}</td>
+                        <td align="left" valign="middle">{{obj.submitiontime}}</td>
+                        <td align="left" valign="middle">{{obj.submitionDays}}</td>
+                        <td align="left" valign="middle">{{obj.username}}</td>
+                        <td align="left" valign="middle" *ngFor="let head of updateProjectTableHead;">
+                            <a><span
+                                    *ngIf="obj.fieldList[head] !== undefined">{{obj.fieldList[head][0].projectfieldvalue}}</span></a>
+                            <!-- [ngClass]="obj.isapproved === 1 ? 'approve-proj' : ''" (click)="goToChecklist(obj.id)" -->
+                        </td>
+                        <!--<td align="left" valign="middle">
+                          <span *ngIf="obj.isapproved === 3" style="color: #0b6e0b;">{{'Approved' | translate}}</span>
+                          <span *ngIf="obj.isapproved !== 3 && obj.isapproved !== 4" style="color: red;">{{'Rejected' | translate}}</span>
+                          <span *ngIf="obj.isapproved !== 4" style="color: red;">{{'Rejected' | translate}}</span>
+                        </td>-->
+                        <td align="left" valign="middle">
+                            <span *ngIf="obj.iscomplete === 0">{{'Draft' | translate}}</span>
+                            <span *ngIf="obj.iscomplete === 1 && obj.isapproved !== 3 && obj.isapproved !== 4">{{'Under Scrutiny' | translate}}</span>
+                            <span *ngIf="obj.isapproved === 3" style="color: #0b6e0b;">{{'Approved' | translate}}</span>
+                            <span *ngIf="obj.isapproved === 4" style="color: red;">{{'Rejected' | translate}}</span>
+                        </td>
+                        <td align="left" valign="middle">
+                            <a *ngIf="obj.afterapprovestatus == 0"
+                               (click)="goTo('/pages/update-project', obj.id, obj.iscomplete, obj.projectuid)">
+                                <i class="fa fa-edit" aria-hidden="true" style="font-size: 14px;"></i>
+                            </a>
+                            <a *ngIf="obj.afterapprovestatus != 0"
+                               (click)="goTo('/pages/project-execution', obj.id, obj.iscomplete, obj.projectuid)">
+                                <i class="fa fa-edit" aria-hidden="true" style="font-size: 14px;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="updateProjectList.length === 0">
+                        <td colspan="8" class="text-center">
+                            {{'No data found' | translate}}
+                        </td>
+                    </tr>
+                    <!--<tr>
+                      <td align="left" valign="middle">2</td>
+                      <td align="left" valign="middle">Task 2</td>
+                      <td align="left" valign="middle">08-01-2022</td>
+                      <td align="left" valign="middle">08-03-2022</td>
+                      <td align="left" valign="middle">Completed</td>
+                      <td align="center" valign="middle"><a href="preview-entry.html"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                      </td>
+                    </tr>-->
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--<app-project-details [projectId]="projectId"></app-project-details>-->
+
+<ng-template #messageModal>
+    <div class="modal-content">
+        <div class="modal-body cnt223">
+            <h4>Remarks</h4>
+            <p>{{message}}</p>
+            <p>
+                <a class="close" style="font-size: 20px" (click)="closeModal()">Close</a>
+            </p>
+        </div>
+    </div>
+</ng-template>

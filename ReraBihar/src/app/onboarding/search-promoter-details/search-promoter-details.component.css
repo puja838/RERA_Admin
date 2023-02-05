@@ -1,0 +1,14 @@
+.personal_view_page {
+    background: #fff;
+    border: 1px solid #064bb6;
+    padding: 20px;
+}
+.row {
+     margin-left: -15px !important;
+     margin-right: -15px !important;
+}
+.resp-tabs-container_in table th {
+    background: #6F6F6F;
+    color: #fff;
+    font-weight: 400;
+}

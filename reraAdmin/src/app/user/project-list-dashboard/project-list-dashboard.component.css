@@ -1,0 +1,197 @@
+.prom_dbrd.chmem_das li {
+  background: #fff;
+}
+
+.prom_dbrd.chmem_das .con_dv_pd h2,
+.prom_dbrd.chmem_das .dashboard_top_box h4,
+.prom_dbrd.chmem_das .con_dv_pd h2 svg {
+  color: #6e6e6e;
+}
+
+.prom_dbrd.chmem_das li.bg-blu {
+  border: 3px solid #4242df;
+}
+
+.prom_dbrd.chmem_das li.bg-sky {
+  border: 3px solid #2AB8A7;
+}
+
+.prom_dbrd.chmem_das li.bg-grn {
+  border: 3px solid #1584b2;
+}
+
+.prom_dbrd.chmem_das li.bg-blk {
+  border: 3px solid #23b723;
+}
+
+.prom_dbrd.chmem_das li.bg-yylo {
+  border: 3px solid #16167c;
+}
+
+.prom_dbrd.chmem_das li.bg-dgr {
+  border: 3px solid #9d8711;
+}
+
+.prom_dbrd.chmem_das li.bg-red {
+  border: 3px solid #f60000;
+}
+
+.prom_dbrd.chmem_das li.bg-red1 {
+  border: 3px solid #6BBE65;
+}
+
+.prom_dbrd.chmem_das li.bg-red2 {
+  border: 3px solid #C3CC3E;
+}
+
+.prom_dbrd.chmem_das li.bg-red3 {
+  border: 3px solid #C4B60F;
+}
+
+.prom_dbrd.chmem_das li.bg-red4 {
+  border: 3px solid #A8C946;
+}
+
+.prom_dbrd.chmem_das li.bg-red5 {
+  border: 3px solid #ee810c;
+}
+
+
+.prom_dbrd.chmem_das li.bg-blu i,
+.prom_dbrd.chmem_das li.bg-blu h2 {
+  color: #4242df !important;
+}
+
+.prom_dbrd.chmem_das li.bg-sky svg,
+.prom_dbrd.chmem_das li.bg-sky h2 {
+  color: #2AB8A7 !important;
+}
+
+.prom_dbrd.chmem_das li.bg-grn svg,
+.prom_dbrd.chmem_das li.bg-grn h2 {
+  color: #1584b2 !important;
+}
+
+.prom_dbrd.chmem_das li.bg-blk svg,
+.prom_dbrd.chmem_das li.bg-blk h2 {
+  color: #23b723 !important;
+}
+
+.prom_dbrd.chmem_das li.bg-yylo svg,
+.prom_dbrd.chmem_das li.bg-yylo h2 {
+  color: #16167c !important;
+}
+
+.prom_dbrd.chmem_das li.bg-dgr svg,
+.prom_dbrd.chmem_das li.bg-dgr h2 {
+  color: #9d8711 !important;
+}
+
+.prom_dbrd.chmem_das li.bg-red svg,
+.prom_dbrd.chmem_das li.bg-red h2 {
+  color: #f60000 !important;
+}
+
+.prom_dbrd.chmem_das li.bg-red1 svg,
+.prom_dbrd.chmem_das li.bg-red1 h2 {
+  color: #6BBE65 !important;
+}
+
+.prom_dbrd.chmem_das li.bg-red2 i,
+.prom_dbrd.chmem_das li.bg-red2 h2 {
+  color: #C3CC3E !important;
+}
+
+.prom_dbrd.chmem_das li.bg-red3 svg,
+.prom_dbrd.chmem_das li.bg-red3 h2 {
+  color: #C4B60F !important;
+}
+
+.prom_dbrd.chmem_das li.bg-red4 svg,
+.prom_dbrd.chmem_das li.bg-red4 h2 {
+  color: #A8C946 !important;
+}
+
+.prom_dbrd.chmem_das li.bg-red5 svg,
+.prom_dbrd.chmem_das li.bg-red5 h2 {
+  color: #ee810c !important;
+}
+
+.prom_dbrd.chmem_das li.dashboard_top_box h4 {
+  color: #000 !important;
+}
+
+.font-size-13 {
+  font-size: 13px;
+}
+
+.charmn_lils_db ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.charmn_lils_db li {
+  width: 100%;
+  display: block;
+  background: #09357e;
+  margin: 0;
+  width: 18%;
+  border-radius: 5px;
+}
+
+.charmn_lils_db li .regs_in {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+.charmn_lils_db li .regs_in span {
+  margin: 0 auto;
+  display: block;
+}
+
+.charmn_lils_db li .regs_in img {
+  display: block;
+  margin: 0 auto;
+}
+
+.charmn_lils_db li .regs_in_co {
+  margin: 0px 0 20px;
+  text-align: center;
+}
+
+.charmn_lils_db li .regs_in_co strong {
+  font-size: 24px;
+  line-height: 26px;
+  font-weight: 500;
+  display: block;
+  padding-bottom: 5px;
+}
+
+.charmn_lils_db li .regs_in_co p {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.chmem_das_top .bg-blu {
+  background: #09357e;
+}
+
+.prom_dbrd ul {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.prom_dbrd li {
+   padding: 20px 10px;
+   width: 23%;
+   margin: 0 24px 30px 0;
+}
+.prom_dbrd li.dashboard_top_box {
+  margin: 0 24px 30px 0;
+}

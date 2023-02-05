@@ -1,0 +1,35 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <app-dashboard-header [linkName]="linkName" [dashboardURL]="workflowtype===3 ? 'agent-dashboard' : 'project-dashboard'"></app-dashboard-header>
+            <div class="prom_reg_in">
+                <div class="prom_reg_frm stageIIIpage">
+                    <h3 class="text-left mt-2">Alerts/Notifications</h3>
+                    <div class="personal_view_page stage_dv mar-top-15">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                   border="0">
+                                <tr>
+                                    <th width="2%" valign="top" align="left">SL No.</th>
+                                    <th width="10%" valign="top" align="left">Messages.</th>
+                                    <th width="6%" valign="top" align="left">Link.</th>
+                                </tr>
+                                <tr *ngFor="let proj of messages;let i=index;">
+                                    <td valign="top" align="left">{{i + 1}}</td>
+                                    <td valign="top" align="left">{{proj.content}}</td>
+                                    <td valign="top" align="left" (click)="goToNext(proj.type)"><a>Click here to know more</a></td>
+                                    
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<notifier-container></notifier-container>

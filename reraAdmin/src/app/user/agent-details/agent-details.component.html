@@ -1,0 +1,322 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <div class="prom_reg_in">
+                <h3>{{'Agent Registration'}}</h3>
+            </div>
+            <div class="prom_reg_in">
+                <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
+                    <mat-tab *ngFor="let step of stepListShow; let stepPos = index" label="{{step}}"> <!-- [disabled]="!(selectedTabIndex === stepPos)"  -->
+                        <div *ngIf="step !== 'Declaration'">
+                            <div class="resp-tabs-container hor_1 mb-3">
+                                <!--                <h5 class="mt-2 step-name-heading">{{step}}</h5>-->
+                                <div>
+                                    <div class="row">
+                                        <div *ngFor="let obj of this.formDetails[step];let i = index;"
+                                             [ngClass]="obj.groupid != null ? 'col-12' : 'col-' + obj.fieldwidth">
+
+                                            <!-- If group field -->
+                                            <div *ngIf="obj.groupid != null">
+                                                <div *ngFor="let field of obj.fielddetails; let j = index;" class="row border-group">
+                                                    <div *ngIf="step === 'Track Record of the Promoter' && obj.groupid === 16" class="col-12">
+                                                        <h5>{{numberInWords(j+1)}} {{'Project'}}</h5>
+                                                    </div>
+                                                    <div *ngFor="let key of obj.fielddetailskeys[j]; let l = index;"
+                                                         [ngClass]="[field[key] !== undefined && field[key][0].fieldgroupid !== null && field[key][0].fielddetailskeys[0].length > 1 ? 'col-12' : 'col-' + field[key][0].fieldwidth, field[key][0].fieldwidth ? 'col-' + field[key][0].fieldwidth : 'col-4']">
+
+                                                        <div *ngIf="field[key] !== undefined && field[key][0].fieldgroupid === null">
+                                                            <!-- For Text -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 1">
+                                                                <label [id]="'label_' + field[key][0].fielddesc + '_' + j" *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For Combo -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 2">
+                                                                <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For Radio -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 3">
+                                                                <label style="display: block;" *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For Checkbox -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 4">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" [(ngModel)]="field[key][0].fieldvalue" [disabled]="isSubmitted">
+                                                                    <label class="form-check-label">{{field[key][0].fielddisplaydesc}}</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- For Date -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 5">
+                                                                <label>{{field[key][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+
+                                                            <!-- For File -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 6">
+                                                                <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}}
+                                                                    : &nbsp;&nbsp;
+
+                                                                </label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                <p *ngIf="field[key][0].fieldvalue !== ''"
+                                                                   style="display: block;font-size: 13px;color: #555;">
+                                                                    <a (click)="openLink(field[key][0].fieldvalue)">
+                                                                        <img *ngIf="field[key][0].fieldvalue.indexOf('.pdf') == -1" [src]="FILE_ROOT + field[key][0].fieldvalue" [alt]="" #img
+                                                                             (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                        <img *ngIf="field[key][0].fieldvalue.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                                    </a>
+                                                                </p>
+                                                            </div>
+
+                                                            <!-- For Button -->
+
+                                                            <!-- For Heading -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 8">
+                                                                <h5>{{field[key][0].fielddisplaydesc}}</h5>
+                                                            </div>
+
+                                                            <div *ngIf="field[key][0].controltype == 13">
+                                                                <hr>
+                                                            </div>
+
+                                                            <!-- For Textarea -->
+                                                            <div class="form-group" *ngIf="field[key][0].controltype == 9">
+                                                                <label *ngIf="obj.islabelshow == 1">{{field[key][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                <p>{{field[key][0].fieldvalue}}</p>
+                                                            </div>
+                                                            <!-- ******************************************* End ******************************************* -->
+                                                        </div>
+
+                                                        <div *ngIf="field[key][0].fieldgroupid !== null">
+                                                            <div *ngFor="let field2 of field[key][0].fielddetails; let c = index;" class="sub-group-margin row">
+                                                                <div *ngFor="let key1 of field[key][0].fielddetailskeys[c]; let k = index;" [ngClass]=" field[key][0].fielddetailskeys[c].length === 1 ? 'col-12' : 'col-' + field2[key1][0].fieldwidth">
+                                                                    <!-- For Text -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 1">
+                                                                        <label [id]="'label_'+field2[key1][0].fielddesc + '_' + j + '_' + c" *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                        <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                    </div>
+
+                                                                    <!-- For Combo -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 2">
+                                                                        <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                        <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                    </div>
+
+                                                                    <!-- For Radio -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 3">
+                                                                        <label style="display: block;" *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                        <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                    </div>
+
+                                                                    <!-- For Checkbox -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 4">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="checkbox" [(ngModel)]="field2[key1][0].fieldvalue" [disabled]="isSubmitted"
+                                                                                   >
+                                                                            <label class="form-check-label">{{field2[key1][0].fielddisplaydesc}}</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- For Date -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 5">
+                                                                        <label>{{field2[key1][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                        <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                    </div>
+
+                                                                    <!-- For File -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 6">
+                                                                        <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}}
+                                                                            : &nbsp;&nbsp;
+
+                                                                        </label>
+                                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                        <span
+                                                                                style="display: block;font-size: 13px;color: #555;">{{field2[key1][0].fieldvalue}}</span>
+                                                                    </div>
+
+                                                                    <!-- For Button -->
+
+
+                                                                    <!-- For Heading -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 8">
+                                                                        <h5>{{field2[key1][0].fielddisplaydesc}}</h5>
+                                                                    </div>
+
+                                                                    <div *ngIf="field2[key1][0].controltype == 13">
+                                                                        <hr>
+                                                                    </div>
+
+                                                                    <!-- For Textarea -->
+                                                                    <div class="form-group" *ngIf="field2[key1][0].controltype == 9">
+                                                                        <label *ngIf="obj.islabelshow == 1">{{field2[key1][0].fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                                        <p>{{field2[key1][0].fieldvalue}}</p>
+                                                                    </div>
+                                                                    <!-- ******************************************* End ******************************************* -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- If single field -->
+                                            <div>
+                                                <div *ngIf="obj.groupid == null" style="padding-left: 15px;">
+
+                                                    <!-- For Text -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 1">
+                                                        <label [id]="'label_' + obj.fielddetails.fielddesc" *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- For Combo -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 2">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- For Radio -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 3">
+                                                        <label style="display: block;" *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+                                                    <!-- For Radio -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 12">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                        <div class="form-group">
+                                                            <p>{{obj.fielddetails.fieldvalue1}}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- For Checkbox -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 4">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" [(ngModel)]="obj.fielddetails.fieldvalue" [disabled]="isSubmitted"
+                                                            >
+                                                            <label class="form-check-label">{{obj.fielddetails.fielddisplaydesc}}</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- For Date -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 5">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- For File -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 6">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;&nbsp;
+
+                                                        </label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <p *ngIf="obj.fielddetails.fieldvalue !== ''"
+                                                           style="display: block;font-size: 13px;color: #555;">
+                                                            <a (click)="openLink(obj.fielddetails.fieldvalue)">
+                                                                <img *ngIf="obj.fielddetails.fieldvalue.indexOf('.pdf') == -1" [src]="FILE_ROOT + obj.fielddetails.fieldvalue" [alt]="" #img
+                                                                     (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                                <img *ngIf="obj.fielddetails.fieldvalue.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                            </a>
+                                                        </p>
+                                                    </div>
+
+                                                    <!-- For Button -->
+
+                                                    <!-- For Heading -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 8">
+                                                        <h5 [ngClass]="obj.customclass">{{obj.fielddetails.fielddisplaydesc}}</h5>
+                                                    </div>
+
+                                                    <!-- For Horizontal Line -->
+                                                    <div *ngIf="obj.fielddetails.controltype == 13">
+                                                        <hr>
+                                                    </div>
+
+                                                    <!-- For Textarea -->
+                                                    <div class="form-group" *ngIf="obj.fielddetails.controltype == 9">
+                                                        <label *ngIf="obj.islabelshow == 1">{{obj.fielddetails.fielddisplaydesc}} : &nbsp;&nbsp;</label>
+                                                        <label *ngIf="obj.islabelshow == 0">&nbsp;</label>
+                                                        <p>{{obj.fielddetails.fieldvalue}}</p>
+                                                    </div>
+
+                                                    <!-- ******************************************* End ******************************************* -->
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group button_dv mb-2 mr-2 button-action-group">
+                                    <button class="btn btn-primary" *ngIf="stepPos>0" (click)="goToPrevious()">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i> {{'Previous'}}
+                                    </button>
+                                    <button class="btn btn-success" [disabled]="isSubmitted" *ngIf="stepPos < (stepListShow.length - 1) && page !== 'signup'">
+                                        <i class="fa fa-floppy-o" aria-hidden="true" ></i>{{'Save'}}
+                                    </button>
+                                    <button class="btn btn-primary" (click)="goToNext(this.formDetails[step])" *ngIf="stepPos < (stepListShow.length - 1) && page !== 'signup'">
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> {{'Next'}}
+                                    </button>
+                                    <button class="btn btn-success" [disabled]="isSubmitted" (click)="submitForm()" *ngIf="stepPos == (stepListShow.length - 1) || page === 'signup'">
+                                        {{'Submit'}}
+                                    </button>
+                                </div>-->
+                            </div>
+                        </div>
+
+                        <div *ngIf="step === 'Declaration'">
+                            <div class="resp-tabs-container hor_1 mb-3 ml-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input class="form-check-input" type="checkbox" [(ngModel)]="isAccept" [disabled]="isSubmitted">
+                                            {{'[I/We] solemnly affirm and declare that the particulars given herein are correct to [my/our] knowledge and belief and nothing material has been concealed by [me/us] therefrom.'}}
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="signature-container"
+                                             style="width: 244px;margin-left: auto;">
+                                            <div class="signature" style="width: 244px;">
+                                                <img *ngIf="signatureImg !== ''" id="signt" [src]="signatureImg" alt="" style="width:200px">
+                                            </div>
+                                            <label style="margin-left: 4rem;">Signature</label>
+                                            <!--<input type="file" class="form-control" (change)="signatureUpload($event)">
+                                            <span style="font-size: 13px;color: red;">{{'File size should be less than 2MB'}}</span>-->
+
+                                        </div>
+                                    </div>
+                                    <div class="payment_dv col-12">
+                                        <!--<div class="text-center">
+                                            <a class="btn btn-primary text-white"><i aria-hidden="true"
+                                                                                     class="fa fa-eye"></i>
+                                                Preview Entry</a>
+                                        </div>-->
+                                        <div class="play_txt text-center mt-4">
+                                            <p class="pay_cal ">RERA Bihar, Agent Registration Fee is : <strong>₹ <span>{{paymentAmount.toLocaleString('en-IN')}}</span></strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

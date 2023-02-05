@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>RERA Bihar</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="assets/images/rera-logo.png">
+  <meta http-equiv="X-Frame-Options" content="deny">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv265f5fyTXXsvfJPC17oDlKsgcLkM88c"></script>
+<!--  <script type="text/javascript" src="https://www.paynimo.com/Paynimocheckout/server/lib/checkout.js"></script>-->
+
+</head>
+<body class="mat-typography">
+  <app-root></app-root>
+
+  <!--<script src="https://askrera.rerabiharonline.com/dist/js/chatbot.js" id="helper"
+          data-auth="bRuHe1KLM8atfy3hVQS2XxDiJNkafsSKJhbsaAjsda5"></script>-->
+
+<script>
+  // transfers sessionStorage from one tab to another
+  var sessionStorage_transfer = function(event) {
+    if(!event) { event = window.event; } // ie suq
+    if(!event.newValue) return;          // do nothing if no value to work with
+    if (event.key == 'getSessionStorage') {
+      // another tab asked for the sessionStorage -> send it
+      localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+      // the other tab should now have it, so we're done with it.
+      localStorage.removeItem('sessionStorage'); // <- could do short timeout as well.
+    } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+      // another tab sent data <- get it
+      var data = JSON.parse(event.newValue);
+      for (var key in data) {
+        sessionStorage.setItem(key, data[key]);
+      }
+    }
+  };
+
+  // listen for changes to localStorage
+  if(window.addEventListener) {
+    window.addEventListener("storage", sessionStorage_transfer, false);
+  } else {
+    window.attachEvent("onstorage", sessionStorage_transfer);
+  };
+</script>
+</body>
+</html>
+
+
+<!--  -->

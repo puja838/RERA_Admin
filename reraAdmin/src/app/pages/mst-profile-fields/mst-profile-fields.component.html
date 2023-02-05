@@ -1,0 +1,150 @@
+<notifier-container></notifier-container>
+<div class="container-fluid pt-2">
+  <div class="page-header">
+    <h2>Profile Fields</h2>
+    <hr>
+  </div>
+  <div class="page-body">
+    <div class="top-actions" style="display: block ruby;">
+      <button class="float-end" mat-raised-button color="primary" (click)="openModal(0)">Add Field</button>
+    </div>
+    <div style="display: block;">
+      <div class="card mt-5 p-3">
+        <div>
+          <div class="form-group" style="margin-bottom: 20px; width: 20%;">
+            <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="getList(1)" placeholder="Search Fields">
+          </div>
+        </div>
+        <div class="table-responsive" style="height: 70vh;overflow: auto;">
+          <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Display Name</th>
+              <th>Field Name</th>
+              <th>Field Type</th>
+              <th>Control Type</th>
+              <th>Control Value</th>
+              <th>Unique Field</th>
+              <th>Business Unit Type</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let obj of listData; let i = index;">
+              <td>{{(i +1) + this.offset}}</td>
+              <td>{{obj.fielddisplaydesc}}</td>
+              <td>{{obj.fielddesc}}</td>
+              <td>{{fieldTypeDict[obj.fieldtype]}}</td>
+              <td>{{controlTypeDict[obj.controltype]}}</td>
+              <td>{{obj.controlvalue}}</td>
+              <td>
+                <span *ngIf="!obj.projectuniqueid">No</span>
+                <span *ngIf="obj.projectuniqueid">Yes</span>
+              </td>
+              <td>{{obj.businessunittypecode}}</td>
+              <td>
+                <button style="color: blue;" (click)="edit(obj, i)">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button class="m-lg-1" style="color: red;" (click)="openDeleteModal(deleteModal, obj.fieldid, i)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="listData.length === 0">
+              <td colspan="7" class="text-center">No data found.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <button [disabled]="!isNextStep" mat-raised-button color="primary" style="float: right;" (click)="next()">Next</button>
+          <button [disabled]="!isPrevStep" mat-raised-button color="primary" style="float: right;margin-right: 10px;" (click)="previous()">Previous</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">{{modalHeader}} Field</h3>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">Field Display Name:</label>
+        <input type="text" class="form-control" placeholder="Entity Name" [(ngModel)]="fieldDisplay" >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Field Id:</label>
+        <input type="text" class="form-control" placeholder="Entity Name" [(ngModel)]="fieldName" (keyup)="generateFieldId($event)">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Field Type:</label>
+        <select class="form-control" [(ngModel)]="fieldType">
+          <option value="">Select</option>
+          <option *ngFor="let key of fieldTypeKeys" [value]="key">{{fieldTypeDict[key]}}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Control Type:</label>
+        <select class="form-control" [(ngModel)]="controlType">
+          <option value="">Select</option>
+          <option *ngFor="let key of controlTypeKeys" [value]="key">{{controlTypeDict[key]}}</option>
+        </select>
+      </div>
+
+      <div class="mb-3" *ngIf="controlType == '2' || controlType == '3' || controlType == '4' || controlType == '12'">
+        <label class="form-label">Control Value:</label>
+        <input type="text" class="form-control" placeholder="Control Value" [(ngModel)]="controlValue">
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="isUnique">
+        <label class="form-check-label">
+          Unique Field
+        </label>
+      </div>
+
+      <div class="mb-3 mt-2">
+        <label class="form-label">Business Unit Type:</label>
+        <select class="form-control" [(ngModel)]="busnessunittypeid" (change)="onBusinessUnitTypeChange()">
+          <option value="">Select</option>
+          <option *ngFor="let obj of businessUnitType" [value]="obj.id">{{obj.businessunittypecode}}</option>
+        </select>
+      </div>
+
+      <span class="err-msg">{{errMsg}}</span>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Add'" (click)="saveData()">Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Update'" (click)="updateData()">Update
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal>
+  <div class="modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <div class="icon-box">
+          <i class="material-icons">&#xE5CD;</i>
+        </div>
+        <h4 class="modal-title w-100">Are you sure?</h4>
+        <!--        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteData()">Delete</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

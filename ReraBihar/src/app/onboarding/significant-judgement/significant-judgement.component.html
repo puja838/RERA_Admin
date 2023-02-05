@@ -1,0 +1,93 @@
+<div class="main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mt-5">
+                <div class="resp-tabs-container_in">
+                    <div class="page-in-radio">
+                        <div class="sle_ppr">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="configoption" id="flexRadioDefault14" value="Authority" [(ngModel)]="allocatedBench"
+                                       (change)="onRadioChange($event)">
+                                <label class="form-check-label" for="flexRadioDefault14">Authority </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="configoption" id="flexRadioDefault15" value="AO" [(ngModel)]="allocatedBench" (change)="onRadioChange($event)">
+                                <label class="form-check-label" for="flexRadioDefault15">AO </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="order_dv">
+                        <h3>{{allocatedBench | translate}}</h3>
+                        <div class="filtr_div">
+                            <div class="fi_fild src_fld"><input class="form-control" type="text" placeholder="Search">
+                            </div>
+                            <div class="fi_fild selct">
+                                <select class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="complaintant_no">Case No.</option>
+                                    <option value="complaintant_fname">Complainant Name</option>
+                                    <option value="comptype">Complaint Type</option>
+                                    <option value="res_respondent_fname">Respondent Name</option>
+                                    <option value="proj_reg_no">Project Reg No.</option>
+                                    <option value="project_distric">Project District Name</option>
+                                    <option value="created_date">Judgement Date</option>
+                                    <option value="created_date">Bench Type</option>
+                                </select>
+                            </div>
+                            <div class="fi_fild btns">
+                                <button class="btn btn-info">Filter</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive what_new">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                <tr>
+                                    <th align="center" valign="middle">Sl No.</th>
+                                    <th align="left" valign="middle">Case No.</th>
+                                    <th align="left" valign="middle">Complainant Name</th>
+                                    <th align="left" valign="middle">Complaint Type</th>
+                                    <th align="left" valign="middle">Respondent Name</th>
+                                    <th align="left" valign="middle">Project Reg No.</th>
+                                    <th align="left" valign="middle">Project District Name</th>
+                                    <th align="left" valign="middle">Judgement Date</th>
+                                    <th align="center" valign="middle">Bench Type</th>
+                                </tr>
+                                <!--<tr *ngFor="let obj of causeList; let i = index;">
+                                    <td align="center" valign="middle">{{i+1}}</td>
+                                    <td align="left" valign="middle">{{obj.CaseNo}}</td>
+                                    <td align="left" valign="middle">{{obj.project_complainent_details}}</td>
+                                    <td align="left" valign="middle"></td>
+                                    <td align="left" valign="middle">{{obj.project_respondant_details}}</td>
+                                    <td align="left" valign="middle">{{obj.Project_Registration_No}}</td>
+                                    <td align="left" valign="middle">{{obj.Project_District}}</td>
+                                    <td align="left" valign="middle">{{obj.Judgement_date !== null && obj.Judgement_date !== 'Not Scheduled' ? obj.Judgement_date : obj.Judgement_date}}</td>
+                                    <td align="left" valign="middle">{{obj.Current_Status}}</td>
+                                </tr>-->
+
+                                <tr>
+                                   <td class="text-center" colspan="9">
+                                       No data found
+                                   </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="app">
+                            <ul class="page">
+                                <li class="page__btn" (click)="onBtnClick('prev')"><span class="material-icons">chevron_left</span></li>
+                                <li class="page__numbers" *ngFor="let page of getPageList()" [ngClass]="currentPage == page?'active': ''"
+                                    (click)="onPageClick(page)">{{page}}</li>
+                                <li class="page__btn"  (click)="onBtnClick('next')"><span class="material-icons">chevron_right</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>

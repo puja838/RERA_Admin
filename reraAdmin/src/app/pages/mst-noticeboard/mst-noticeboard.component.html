@@ -1,0 +1,169 @@
+<notifier-container></notifier-container>
+<div class="container-fluid pt-2">
+  <div class="page-header">
+    <h2>Notice Board</h2>
+    <hr>
+  </div>
+  <div class="page-body">
+    <div class="top-actions" style="display: block ruby;">
+      <button class="float-end" mat-raised-button color="primary" (click)="openModal(0)">Add Field</button>
+    </div>
+    <div style="display: block;">
+      <div class="card mt-5 p-3">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group" >
+              <input type="text" class="form-control" [(ngModel)]="searchText" (keyup.enter)="getData(1)" placeholder="Search Fields">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <select class="form-control" [(ngModel)]="searchType" (change)="getData(1)">
+              <option value="">Select notice type</option>
+              <option value="notice">Notices</option>
+              <option value="news">News</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-responsive" style="height: 70vh;overflow: auto;">
+          <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Subject</th>
+              <th>Date of notice</th>
+              <th>Document</th>
+              <th>Type</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let obj of listData; let i = index;">
+              <td>{{i + 1}}</td>
+              <td>{{obj.subject}}</td>
+              <td>{{obj.dateofnotice}}</td>
+              <td> <a (click)="openTab(obj.document)">{{obj.document}}</a></td>
+              <td style="text-transform: capitalize;">{{obj.type}}</td>
+              
+              <td>
+                <button style="color: blue;" (click)="edit(obj, i)">
+                    
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button class="m-lg-1" style="color: red;" (click)="openDeleteModal(deleteModal, obj.noticeid, i)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="listData.length === 0">
+              <td colspan="7" class="text-center">No data found.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <button [disabled]="!isNextStep" mat-raised-button color="primary" style="float: right;" (click)="next()">Next</button>
+          <button [disabled]="!isPrevStep" mat-raised-button color="primary" style="float: right;margin-right: 10px;" (click)="previous()">Previous</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal>
+  <div class=" modal-content ">
+    <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">{{modalHeader}} Field</h3>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body" *ngIf="modalHeader == 'Add'">
+      <div class="mb-3" >
+        <label class="form-label">News Subject:</label>
+        <input type="text" class="form-control"  [(ngModel)]="subject" >
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Date of Notice:</label>
+        <input type="date" class="form-control" [(ngModel)]="dateofnotice">
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Bannar Image:</label>
+        <input type="file" class="form-control"  [(ngModel)]="bannarimage" accept="image/png, image/gif, image/jpeg"  (change)="uploadFile($event,'banner')">
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Upload Document:</label>
+        <input type="file" class="form-control"  [(ngModel)]="document" accept="application/pdf" (change)="uploadFile($event,'doc')">
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Notice Type:</label>
+        <select class="form-control" [(ngModel)]="type">
+          <option value="">Select notice type</option>
+          <option value="notice">Notices</option>
+          <option value="news">News</option>
+        </select>
+      </div>
+      <span class="err-msg">{{errMsg}}</span>
+    </div>
+    <div class="modal-body" *ngIf="modalHeader == 'Update'">
+      <div class="mb-3" >
+
+          <label class="form-label">News Subject:</label>
+          <input type="text" class="form-control"  [(ngModel)]="noticeEdit.subject" >
+        
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Date of Notice:</label>
+        <input type="date" class="form-control"  [(ngModel)]="noticeEdit.dateofnotice" >
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Bannar Image:</label>
+        <input type="file" class="form-control"  accept="image/png, image/gif, image/jpeg"  (change)="uploadFile($event,'bannerEdit')">
+        <div class="mt-2 pl-2">
+            <a (click)="openTab(noticeEdit.bannarimage)"><b>{{noticeEdit.bannarimage}}</b></a>
+        </div>
+       
+      </div>
+      <div class="mb-3" >
+        <label class="form-label">Upload Document:</label>
+        <input type="file" class="form-control"  accept="application/pdf"  (change)="uploadFile($event,'docEdit')">
+        <div class="mt-2 pl-2">
+            <a (click)="openTab(noticeEdit.document)"><b>{{noticeEdit.document}}</b></a>
+        </div>
+        </div>
+      <div class="mb-3" >
+        <label class="form-label">Notice Type:</label>
+        <select class="form-control" [(ngModel)]="noticeEdit.type">
+            <option value="">Select notice type</option>
+          <option value="notice">Notices</option>
+          <option value="news">News</option>
+        </select>
+      </div>
+      <span class="err-msg">{{errMsg}}</span>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Add'" (click)="saveData()">Save</button>
+      <button type="button" class="btn btn-primary" *ngIf="modalHeader == 'Update'" (click)="updateData()">Update
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal>
+  <div class="modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <div class="icon-box">
+          <i class="material-icons">&#xE5CD;</i>
+        </div>
+        <h4 class="modal-title w-100">Are you sure?</h4>
+             
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete these records? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteData()">Delete</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

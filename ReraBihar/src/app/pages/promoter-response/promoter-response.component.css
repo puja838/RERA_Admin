@@ -1,0 +1,8 @@
+.close_d {
+    display: flex;
+    align-items: center;
+
+}
+.close_d i{
+    color: red;
+}

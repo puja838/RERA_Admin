@@ -1,0 +1,948 @@
+<div class="main-body">
+    <div class="container">
+        <div class="page-in-sec">
+            <div class="resp-tabs-container_in1">
+                <div class="proj_tppr">
+                    <h5>{{projectname}}</h5>
+                    <div class="proj_fee">
+                        <!--<p>
+                            <strong>₹ 76</strong> Lakh Onwards
+                        </p>-->
+                        <p>
+                            <strong>Project Registration Number :&nbsp;</strong> {{projectregno}}
+                        </p>
+                    </div>
+                </div>
+                <!--<div class="project-slider">
+                    <gallery [items]="images" [loop]="true" [autoPlay]="true" [playerInterval]="4000"
+                             [panSensitivity]="30"></gallery>
+                </div>-->
+                <div class="prom_reg_in proj_dtl_pag">
+                    <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex"
+                                   (selectedTabChange)="onTabChange($event)">
+                        <mat-tab label="Project Profile">
+                            <div class="personal_view_page">
+                                <h5>Project Profile</h5>
+                                <div class="row mt20">
+                                    <div class="col-sm-12 col-md-9 overviewLeft">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Project Name :&nbsp; </label>
+                                                    <p>{{projectname}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Project Type :&nbsp; </label>
+                                                    <p>{{projectType}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Project Status :&nbsp;</label>
+                                                    <p>{{projectStatus}} </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Project Description :&nbsp;</label>
+                                                    <p>{{description}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Reason for delayed :&nbsp;</label>
+                                                    <p>&nbsp;--</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>No. of month (Delayed) :&nbsp;</label>
+                                                    <p>&nbsp;--</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Project Start Date :&nbsp;</label>
+                                                    <p>{{startDate | date:'dd-MM-YYYY'}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Project End Date :&nbsp;</label>
+                                                    <p>{{endDate | date:'dd-MM-YYYY'}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Total Area of Land (Sq. M) :&nbsp;</label>
+                                                    <p>{{landArea}} </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Total Open Area (Sq. M) :&nbsp;</label>
+                                                    <p>{{openarea}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>If development is in phases :&nbsp;</label>
+                                                    <p>&nbsp;false</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>No. of Phases :&nbsp;</label>
+                                                    <p>&nbsp; 0</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Estimated cost of development (Rs) :&nbsp;</label>
+                                                    <p>{{estdevcost}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Estimated cost of land (Rs) :&nbsp;</label>
+                                                    <p>{{estlandcost}}</p>
+                                                </div>
+                                            </div>
+                                            <!--<div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Average Carpet Area of Units (Sq. Ms) :&nbsp;</label>
+                                                    <p>{{carpetAreaUnits}} </p>
+                                                </div>
+                                            </div>-->
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Website :&nbsp;</label>
+                                                    <p>{{projwebsite}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3" *ngIf="certificate !==''">
+                                        <div class="pBroucher sectionPlan">
+                                            <p>RERA Bihar Certificate</p>
+                                            <div class="planImg">
+                                                <a (click)="downloadCertificate(certificate)">
+                                                    <img alt="Floor Plan" src="assets/images/certificate-icon.jpg">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row aboutProperty mt20">
+                                    <div class="col-sm-12">
+                                        <h6>About Property</h6>
+                                        <div class="d-flex justify-content-between align-items-baseline">
+                                            <p class="black moreLinkTd">
+                                                <strong>{{totalunit}} FLATS</strong>
+                                            </p>
+
+                                        </div>
+                                        <ul class="pd">
+                                            <li>
+                                                <p>
+                                                    Total Units
+                                                    <br>
+                                                    <strong>{{totalunit}}</strong>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    Available Units
+                                                    <br>
+                                                    <strong>{{available}}</strong>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    Total No. of Towers/Blocks
+                                                    <br>
+                                                    <strong>{{totalbulding}}</strong>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    Plan Passing Authority
+                                                    <br>
+                                                    <strong>{{authority}}</strong>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    Approved Date
+                                                    <br>
+                                                    <strong>{{approvaltime | date:'dd-MM-YYYY'}}</strong>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="commn_amnits" *ngIf="amenities.length>0">
+                                    <h5>Common Amenities</h5>
+                                    <div class="commn_amnits_in">
+                                        <ul>
+                                            <li *ngFor="let val of amenities;">
+                                                <span><img [src]="val.imagesrc"></span>
+                                                <strong>{{val.fielddisplaydesc}}</strong>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--<div class="proj_map">
+                                    <h5>Distance From Project</h5>
+                                    <iframe
+                                            src="https:&nbsp;//www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115132.86107250556!2d85.0730020106096!3d25.60817557033252!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f29937c52d4f05%3A0x831a0e05f607b270!2sPatna%2C%20Bihar!5e0!3m2!1sen!2sin!4v1665386325447!5m2!1sen!2sin"
+                                            width="100%"
+                                            height="350"
+                                            style="border:&nbsp;0;"
+                                            allowfullscreen=""
+                                            loading="lazy"
+                                            referrerpolicy="no-referrer-when-downgrade"
+                                    ></iframe>
+                                </div>-->
+                                <!--<div class="proj_documnt">
+                                    <h5>Project Documents</h5>
+                                    <div class="proj_documnt_innr">
+                                        <ul>
+                                            <li>
+                                                <a (click)="showDocuments('land')">
+                                                    <span><img src="assets/images/document-icon1.png"></span>
+                                                    <strong>Land Documents</strong>
+                                                </a>
+                                            </li>
+                                            <li><a (click)="showDocuments('noc')">
+                                                <span><img src="assets/images/document-icon2.png"></span>
+                                                <strong>NOC</strong>
+                                            </a>
+                                            </li>
+                                            <li><a href="">
+                                                <span><img src="assets/images/document-icon3.png"></span>
+                                                <strong>Infrastructure Plan</strong>
+                                            </a>
+                                            </li>
+                                            <li><a (click)="showDocuments('sanction')">
+                                                <span><img src="assets/images/document-icon4.png"></span>
+                                                <strong>Approved Building Plan</strong>
+                                            </a>
+                                            </li>
+                                            <li><a (click)="showDocuments('brochure')">
+                                                <span><img src="assets/images/document-icon5.png"></span>
+                                                <strong>Brochure</strong>
+                                            </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>-->
+                                <div class="proj_locn">
+                                    <h5>Project Location</h5>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Project Address :&nbsp;</label>
+                                                <p>{{projectAddress}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>District :&nbsp;</label>
+                                                <p>{{projdistrict}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Sub division :&nbsp;</label>
+                                                <p>{{projsubdiv}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Block :&nbsp;</label>
+                                                <p>{{projblock}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>City/Town/Village :&nbsp;</label>
+                                                <p>{{projcity}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Boundaries (East) :&nbsp;</label>
+                                                <p>{{east}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Boundaries (West) :&nbsp;</label>
+                                                <p>{{west}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Boundaries (North) :&nbsp;</label>
+                                                <p>{{north}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Boundaries (South) :&nbsp;</label>
+                                                <p>{{south}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Latitude of End point of the plot :&nbsp;</label>
+                                                <p>{{latitude}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Longitude of End point of the plot :&nbsp;</label>
+                                                <p>{{longitude}} </p>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Promoter">
+                            <div class="personal_view_page">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Promoter Details</h5>
+                                    </div>
+
+                                    <!--<div class="col-12">
+                                        <div class="profl_pict">
+                                            <img src="assets/images/ppictr.png">
+                                        </div>
+                                    </div>-->
+                                    <!--<div class="col-4">
+                                        <div class="form-group">
+                                            <label>Your Application Number :&nbsp;</label>
+                                            <p>{{projectuid}}</p>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Promoter Type :&nbsp;</label>
+                                            <p>{{entitytypedesc}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="entitytypeid==1">
+                                        <div class="form-group">
+                                            <label>Full Name :&nbsp;</label>
+                                            <p>{{promotername}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="entitytypeid==1">
+                                        <div class="form-group">
+                                            <label>Gender :&nbsp;</label>
+                                            <p>{{gender}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="entitytypeid==1">
+                                        <div class="form-group">
+                                            <label>Father :&nbsp;</label>
+                                            <p>{{guardian}}</p>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-4">
+                                        <div class="form-group">
+                                            <label>Company Registration No. / Deed No. :&nbsp;</label>
+                                            <p>{{regno}}</p>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Name of authorised person :&nbsp;</label>
+                                            <p>{{desname}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Secondary contact No. :&nbsp;</label>
+                                            <p>{{dessecondary}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Designation of contact person :&nbsp;</label>
+                                            <p>{{desg}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Telephone No. :&nbsp;</label>
+                                            <p>{{desmobile}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="entitytypeid==1">
+                                        <div class="form-group">
+                                            <label>Occupation :&nbsp;</label>
+                                            <p>{{occupation}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="entitytypeid==1">
+                                        <div class="form-group">
+                                            <label>Date of Birth :&nbsp;</label>
+                                            <p>{{dob}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="entitytypeid==1">
+                                        <div class="form-group">
+                                            <label>Brief Detail of Promoter :&nbsp;</label>
+                                            <p>{{brief}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Email ID :&nbsp;</label>
+                                            <p>{{email}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Total years of experience as Promoter :&nbsp;</label>
+                                            <p>{{exppromoter}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Total Years of Experience in Bihar :&nbsp;</label>
+                                            <p>{{expbihar}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Total Years of Experience in Other States :&nbsp;</label>
+                                            <p>{{expother}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" *ngIf="directors.length>0">
+                                        <h5>Organisation Director/Member/Partner/Chairman/Trustee Detail</h5>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <th>Image</th>
+                                                <th>Designation</th>
+                                                <th>Name</th>
+                                                <th>Mobile No.</th>
+                                                <th>Address</th>
+                                                <th>State</th>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let director of directors;">
+                                                    <td align="left" valign="middle"><img
+                                                            [src]="director.photo"></td>
+                                                    <td align="left" valign="middle">{{director.designation}}</td>
+                                                    <td align="left" valign="middle">{{director.name}}</td>
+                                                    <td align="left" valign="middle">{{director.mobile}}</td>
+                                                    <td align="left" valign="middle">{{director.addr}}
+                                                    </td>
+                                                    <td align="left" valign="middle">{{director.state}}</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <h5>Parent Company Details</h5>
+                                    </div>
+                                    <div class="col-4" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <div class="form-group">
+                                            <label>Parent Company Name :&nbsp;</label>
+                                            <p>{{parcmp}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <div class="form-group">
+                                            <label>Registered Office Address Line 1 :&nbsp;</label>
+                                            <p>{{paraddr}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <div class="form-group">
+                                            <label>Registered Office Address Line 2 :&nbsp;</label>
+                                            <p>{{paraddr2}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <div class="form-group">
+                                            <label>State :&nbsp;</label>
+                                            <p>{{parstate}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <div class="form-group">
+                                            <label>District :&nbsp;</label>
+                                            <p>{{pardistrict}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <div class="form-group">
+                                            <label>Pin Code :&nbsp;</label>
+                                            <p>{{parpin}}</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-4" *ngIf="parent_details.indexOf(entitytypeid) >-1 ">
+                                        <div class="form-group">
+                                            <label>Website Address :&nbsp;</label>
+                                            <p>{{parwebsite}}</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <h5>Company Details</h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Registration/Shop/Establishment No. :&nbsp;</label>
+                                            <p>{{regno}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Date of Registration :&nbsp;</label>
+                                            <p>{{regdate}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" *ngIf="comcert !=='' ">
+                                        <div class="form-group">
+                                            <label>Registration Certificate Uploaded :&nbsp;</label>
+                                            <div class="planImg prmtr">
+                                                <a (click)="downloadCertificate(comcert)">
+                                                    <img alt="Certificate" src="assets/images/certificate-icon.jpg">
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Address Line 1 :&nbsp;</label>
+                                            <p>{{addr1}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Address Line 2 :&nbsp;</label>
+                                            <p>{{addr2}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>State :&nbsp;</label>
+                                            <p>{{state}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>District :&nbsp;</label>
+                                            <p>{{district}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Pin Code :&nbsp;</label>
+                                            <p>{{pin}}</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>Website Address :&nbsp;</label>
+                                            <p>{{website}}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Project Professionals</h5>
+                                        <div class="personal_view_page_inr">
+
+                                            <div class="prof_dlt">
+                                                <h6>Architect Details</h6>
+                                                <ul *ngFor="let arch of architect;let i=index; ">
+                                                    <li *ngFor="let a of Object.keys(arch) ">{{a}}
+                                                        <strong>{{arch[a]}}</strong></li>
+                                                    <!--                                                    <hr *ngIf ="i/3 === 0">-->
+                                                </ul>
+                                            </div>
+                                            <div class="prof_dlt">
+                                                <h6>Structural Engineer Details</h6>
+                                                <ul *ngFor="let arch of engineer ">
+                                                    <li *ngFor="let a of Object.keys(arch) ">{{a}}
+                                                        <strong>{{arch[a]}}</strong></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="proj_locn personal_view_page mt-4 p-0 border-0">
+                                    <h5>Previous Project Details (Last 5 years only)</h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th align="left" valigh="top" width="10%">Project Name</th>
+                                                <th align="left" valigh="top" width="5%">Current Status</th>
+                                                <th align="left" valigh="top" width="10%">Project Description</th>
+                                                <th align="left" valigh="top" width="9%">Type of Occupancy</th>
+                                                <th align="left" valigh="top" width="5%">Completion Date</th>
+                                                <th align="left" valigh="top" width="5%">Legal Case No.</th>
+                                                <th align="left" valigh="top" width="10%">Address</th>
+                                                <th align="left" valigh="top" width="5%">State</th>
+                                                <th align="left" valigh="top" width="5%">District</th>
+                                                <th align="left" valigh="top" width="9%">Project Completion Certificate
+                                                    Path
+                                                </th>
+                                                <th align="left" valigh="top" width="9%">Reason for completion not
+                                                    available
+                                                </th>
+                                                <th align="left" valigh="top" width="9%">Project Occupancy Certificate
+                                                    Path
+                                                </th>
+                                                <th align="left" valigh="top" width="9%">Reason for occupancy not
+                                                    available
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let project of pastprojects;">
+                                                <td width="10%" valign="middle"
+                                                    align="left">{{project.projectfieldvalue}}</td>
+                                                <td width="5%" valign="middle"
+                                                    align="left">{{project.progressstatus}}</td>
+                                                <td width="10%" valign="middle" align="left">{{project.desc}}</td>
+                                                <td width="9%" valign="middle" align="left">{{project.category}}</td>
+                                                <td width="5%" valign="middle"
+                                                    align="left">{{project.completedate}}</td>
+                                                <td width="5%" valign="middle" align="left">{{project.legal}}</td>
+                                                <td width="10%" valign="middle" align="left">{{project.addr}}
+                                                </td>
+                                                <td width="5%" valign="middle" align="left">{{project.state}}</td>
+                                                <td width="5%" valign="middle" align="left">{{project.dist}}</td>
+                                                <td width="9%" valign="middle" align="left">{{project.comcert}}</td>
+                                                <td width="9%" valign="middle" align="left">{{project.comreason}}</td>
+                                                <td width="9%" valign="middle" align="left">{{project.occucert}}</td>
+                                                <td width="9%" valign="middle" align="left">{{project.ocureason}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Development Details">
+                            <div class="progrs_dv">
+                                <div class="proj_locn personal_view_page p-0 border-0">
+                                    <h5>Project Development Details</h5>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>No. of Garages Available for
+                                                    Sale :&nbsp;</label>
+                                                <p>{{garageAval}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Total Area of Garages (Sq. M) :&nbsp;</label>
+                                                <p>{{garageTotal}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>No. of Open Parking :&nbsp;</label>
+                                                <p>{{openParking}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Total Area of Open Parking (Sq. M) :&nbsp;</label>
+                                                <p>{{totalOpenParking}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>No. of Covered Parking :&nbsp;</label>
+                                                <p>{{coverParking}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Total Area of Covered Parking (Sq. M) :&nbsp;</label>
+                                                <p>{{totalCoverParking}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Total Build Up Area(Sq. M) :&nbsp;</label>
+                                                <p>{{totalbuiltup}}</p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Land Ownership Details :&nbsp;</label>
+                                                <p>&nbsp;--</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Proposed Period of Completion (In Month) :&nbsp;</label>
+                                                <p> &nbsp;--</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Permissible FAR :&nbsp;</label>
+                                                <p>{{permissibleFAR}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Sanctioned FAR :&nbsp;</label>
+                                                <p>{{sanctionedFAR}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Aggregate area of the
+                                                    recreational open space (Sq. M) :&nbsp;</label>
+                                                <p>{{recreationalField}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Architecture/Design standards used :&nbsp;</label>
+                                                <p>{{architecture}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Type of construction
+                                                    technology used :&nbsp;</label>
+                                                <p>{{construction}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Earthquake resistant measures adopted for
+                                                    building and common areas :&nbsp;</label>
+                                                <p>{{earthquake}}</p>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <!--<div class="proj_locn personal_view_page p-0 border-0">
+                                    <h5>External Development Work</h5>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Road System :&nbsp;</label>
+                                                <p>Local Authority</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Water Supply :&nbsp;</label>
+                                                <p>Self Development</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Sewage and Drainage System :&nbsp;</label>
+                                                <p>Self Development </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Electricity Supply Transformer And Sub Station :&nbsp;</label>
+                                                <p>Self Development </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <label>Solid Waste Management and
+                                                    Disposal :&nbsp;</label>
+                                                <p>Local Authority </p>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>-->
+                                <div class="proj_locn personal_view_page p-0 border-0">
+                                    <h5>Building Details</h5>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <th>Name of Building</th>
+                                            <th>Sanctioned No of Floor</th>
+                                            <th>Type of Apartment</th>
+                                            <th>No. of Apartment</th>
+                                            <th>Carpet Area</th>
+                                            <th>Area of exclusive balcony</th>
+                                            <th>Area of exclusive open terrace</th>
+                                            <th>No. of Apartment Booked</th>
+                                            <th>No. of Apartment Sold</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let building of fullbuildings">
+                                                <td align="left" valign="middle">{{building.name}}</td>
+                                                <td align="left" valign="middle">{{building.floor}}</td>
+                                                <td align="left" valign="middle">{{building.unittype}}</td>
+                                                <td align="left" valign="middle">{{building.numberUnit}}</td>
+                                                <td align="left" valign="middle">{{building.totalcarpet}}</td>
+                                                <td align="left" valign="middle">{{building.totalbalcony}}</td>
+                                                <td align="left" valign="middle">{{building.totalterrace}}</td>
+                                                <td align="left" valign="middle">{{building.bookedunit}}</td>
+                                                <td align="left" valign="middle">{{building.soldunit}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--<div class="book_carosl_div">
+                                    <div class="book_carosl owl-carousel">
+                                        <div><img src="images/building-image1.jpg"></div>
+                                        <div><img src="images/building-image2.jpg"></div>
+                                        <div><img src="images/building-image3.jpg"></div>
+                                        <div><img src="images/building-image4.jpg"></div>
+                                        <div><img src="images/building-image2.jpg"></div>
+                                        <div><img src="images/building-image1.jpg"></div>
+                                        <div><img src="images/building-image2.jpg"></div>
+                                        <div><img src="images/building-image3.jpg"></div>
+
+                                    </div>
+                                </div>-->
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Project Documents">
+                            <div class="proj_documnt">
+<!--                                <h5>Project Documents</h5>-->
+                                    <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                                        <div class="card-header weight-500">
+                                            Information Details
+                                        </div>
+                                        <div class="card-body pad-lft-rgt-10">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <th>Document Name</th>
+                                                    <th>Link for file</th>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <tr *ngFor="let doc of projectDocDetails">
+                                                        <td align="left" valign="middle">{{doc.fielddisplaydesc}}
+                                                        </td>
+                                                        <td align="left" valign="middle " class="pointer" (click)="ViewDocument(doc.projectfieldvalue)">{{doc.projectfieldvalue}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                                        <div class="card-header weight-500">
+                                            Financial Details
+                                        </div>
+                                        <div class="card-body pad-lft-rgt-10">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <th>Document Name</th>
+                                                    <th>Financial Year</th>
+                                                    <th>Link for file</th>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <tr *ngFor="let doc of financialDocDetails">
+                                                        <td align="left" valign="middle">{{doc.fielddisplaydesc}}
+                                                        </td>
+                                                        <td align="left" valign="middle">{{doc.year}}</td>
+                                                        <td align="left" valign="middle "class="pointer"  (click)="ViewDocument(doc.projectfieldvalue)">{{doc.projectfieldvalue}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                                        <div class="card-header weight-500">
+                                            Sanction Details
+                                        </div>
+                                        <div class="card-body pad-lft-rgt-10">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <th>Document Name</th>
+                                                    <th>Link for file</th>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <tr *ngFor="let doc of sanctionDocDetails">
+                                                        <td align="left" valign="middle">{{doc.fielddisplaydesc}}
+                                                        </td>
+                                                        <td align="left" valign="middle " class="pointer" (click)="ViewDocument(doc.projectfieldvalue)">{{doc.projectfieldvalue}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #attachcontent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Documents</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <tbody>
+            <tr *ngFor="let attachment of attachments" [hidden]="attachment.projectfieldvalue ==''">
+                <td class="cursor-pointer"
+                    (click)="downloadCertificate(attachment.projectfieldvalue)">{{attachment.fielddisplaydesc}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeAttachment()">Close</button>
+    </div>
+</ng-template>
+<notifier-container></notifier-container>

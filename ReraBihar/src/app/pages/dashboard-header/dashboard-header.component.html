@@ -1,0 +1,27 @@
+<div class="profl_pgese">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [ngStyle]="{'color': linkName ? '#007bff' : ''}" (click)="backDash()">{{'Dashboard' | translate}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page" *ngIf="linkName">{{linkName | translate}}</li>
+        </ol>
+    </nav>
+    <!--<div class="profl" style="margin-bottom: 37px;">
+        <a class="dropdown-toggle" href="javascript:void(0)" role="button" id="dropdownMenuLink2"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                class="fa fa-user"></i>{{'Welcome' | translate}}: {{name}}</a>
+
+        <div class="prof_div dropdown-menu" aria-labelledby="dropdownMenuLink2">
+            &lt;!&ndash;<a class="dropdown-item" (click)="goToAnnualReport()"><i class="fa fa-pencil-square-o"
+                                                                     aria-hidden="true"></i> {{'Annual Report' | translate}}
+            </a>
+            <a class="dropdown-item" (click)="goToProfile()"><i class="fa fa-pencil-square-o"
+                                                                aria-hidden="true"></i> {{'Edit Profile' | translate}}
+            </a>&ndash;&gt;
+            <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"
+                                                           aria-hidden="true"></i> {{'Logout' | translate}}</a>
+        </div>
+
+    </div>-->
+    <strong>{{'Welcome' | translate}}: {{name}}</strong>
+    <a class="logout_btn"(click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+</div>

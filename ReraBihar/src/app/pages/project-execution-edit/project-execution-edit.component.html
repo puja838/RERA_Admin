@@ -1,0 +1,877 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <div class="profl_pgese">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/pages/project-dashboard">{{'Dashboard' | translate}}</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/pages/project-execution/'+ projectId + '/1/' + projectuid">{{'QPR' | translate}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">OPR Details</li>
+                    </ol>
+                </nav>
+                <strong>{{'Welcome' | translate}}: {{name}}</strong>
+                <a class="logout_btn"(click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+            </div>
+
+            <div class="dev_tabl dev_wrk prev_tabl mb-3 p-0">
+                <div class="personal_view_page stage_dv">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>{{'QPR for Quarter' | translate}} {{quoterName}}</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Registration No.' | translate}} : &nbsp; </label>
+                                <p>{{projectDetails.projectuid}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Name' | translate}} : &nbsp; </label>
+                                <p>{{projectDetails.projectName}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Address' | translate}} : &nbsp; </label>
+                                <p>{{projectDetails.projectAddress}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Name of Promoter' | translate}} : &nbsp; </label>
+                                <p>{{projectDetails.promoterName}}</p>
+                            </div>
+                        </div>
+
+                        <!--<div class="col-4">
+                            <div class="form-group">
+                                <label>Name of Co-promoter : </label>
+                                <p>{{projectDetails.copromoterName}}</p>
+                            </div>
+                        </div>-->
+
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Registration is valid up to' | translate}} : &nbsp; </label>
+                                <p>{{projectDetails.validatyenddate}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Starting date of Project' | translate}} : &nbsp; </label>
+                                <p>{{projectDetails.projectStartDate}} </p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Type of Project' | translate}} : &nbsp;</label>
+                                <p>{{projectDetails.projectType}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Period of validity' | translate}} : &nbsp;</label>
+                                <p>{{projectDetails.periodOfValidityDate}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button class="btn btn-dark" (click)="goToProjectDetails()">{{'View Project Details' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prom_reg_in">
+                <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex"
+                               (selectedTabChange)="onTabChange($event)" >
+                    <mat-tab *ngFor="let tab of tabList; let stepPos = index;" label="{{tab | translate}}"> <!-- [disabled]="!(selectedTabIndex === stepPos+1)" -->
+                        <div class="resp-tabs-container hor_1 mb-3">
+
+                            <!-- Booking Update -->
+                            <div *ngIf="tab == 'Booking Update'">
+                                <div class="add_bldngs">
+                                    <h5>{{'Disclosure of Sold/Booked Inventory of Apartments' | translate}}</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Building / Block' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Apartment Type' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'Carpet Area (sq mtr)' | translate}}</th>
+                                                <th width="18%" valign="top" align="left">{{'Total # of sanctioned apartments' | translate}}
+                                                </th>
+                                                <th width="18%" valign="top" align="left">{{'Total No. of units in Promoter Share' | translate}}
+                                                </th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Booked' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Sold' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Booked in this quarter' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Sold in this quarter' | translate}}</th>
+                                            </tr>
+                                            <tr *ngFor="let building of inventoryData.building; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{building.build}}</td>
+                                                <td valign="top" align="left">{{building.utype}}</td>
+                                                <td valign="top" align="left">{{building.care}}</td>
+                                                <td valign="top" align="left">{{building.sapart}}</td>
+                                                <td valign="top" align="left">{{building.sprom}}</td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.bookedunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.berr ? building.berr : ''"
+                                                               [(ngModel)]="building.bookedunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.soldunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.serr ? building.serr : ''"
+                                                               [(ngModel)]="building.soldunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.quarterbookedunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.qberr ? building.qberr : ''"
+                                                               [(ngModel)]="building.quarterbookedunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.quartersoldunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.qserr ? building.qserr : ''"
+                                                               [(ngModel)]="building.quartersoldunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <div class="add_bldngs mt-3">
+                                    <h5>{{'Disclosure of Sold/Booked Inventory of Shops' | translate}}</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Building / Block' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Shop Type' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'Carpet Area (sq mtr)' | translate}}</th>
+                                                <th width="18%" valign="top" align="left">{{'Total # of sanctioned shops' | translate}}
+                                                </th>
+                                                <th width="18%" valign="top" align="left">{{'Total No. of units in Promoter Share' | translate}}
+                                                </th>
+                                                <th width="12%" valign="top" align="left">{{'No of Shops Booked' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Shops Sold' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Booked in this quarter' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Sold in this quarter' | translate}}</th>
+                                            </tr>
+                                            <tr *ngFor="let building of inventoryData.commercial; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{building.build}}</td>
+                                                <td valign="top" align="left">{{building.utype}}</td>
+                                                <td valign="top" align="left">{{building.care}}</td>
+                                                <td valign="top" align="left">{{building.sapart}}</td>
+                                                <td valign="top" align="left">{{building.sprom}}</td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.bookedunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.berr ? building.berr : ''"
+                                                               [(ngModel)]="building.bookedunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.soldunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.serr ? building.serr : ''"
+                                                               [(ngModel)]="building.soldunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.quarterbookedunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.qberr ? building.qberr : ''"
+                                                               [(ngModel)]="building.quarterbookedunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.quartersoldunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.qserr ? building.qserr : ''"
+                                                               [(ngModel)]="building.quartersoldunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <div class="add_bldngs mt-3">
+                                    <h5>{{'Disclosure of Sold/Booked Inventory of Garages' | translate}}</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Building / Block' | translate}}</th>
+                                                <th width="18%" valign="top" align="left">{{'Total # of sanctioned garage' | translate}}
+                                                </th>
+                                                <th width="18%" valign="top" align="left">{{'Total No. of units in Promoter Share' | translate}}
+                                                </th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Booked' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Sold' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Booked in this quarter' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Sold in this quarter' | translate}}</th>
+                                            </tr>
+                                            <tr *ngFor="let building of inventoryData.garage; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{building.build}}</td>
+                                                <td valign="top" align="left">{{building.garage}}</td>
+                                                <td valign="top" align="left">{{building.gprom}}</td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.bookedunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.berr ? building.berr : ''"
+                                                               [(ngModel)]="building.bookedunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.soldunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.serr ? building.serr : ''"
+                                                               [(ngModel)]="building.soldunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.quarterbookedunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.qberr ? building.qberr : ''"
+                                                               [(ngModel)]="building.quarterbookedunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{building.quartersoldunit}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" [ngClass]="building.qserr ? building.qserr : ''"
+                                                               [(ngModel)]="building.quartersoldunit"
+                                                               placeholder="Enter" (keydown)="onlyNumber($event)">
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="text-right">
+                                    <button class="btn btn-primary"
+                                            [hidden]="selectedTabIndex==0"
+                                            (click)="goToPrevTab()">
+                                        {{'Previous' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3" *ngIf="isSubmitted" (click)="goToNext()">Next</button>
+                                    <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                            (click)="submitInventoryData()">
+                                        {{'Save' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                            (click)="submitInventoryData('next')">
+                                        {{'Save & Next' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Construction Progress Update-->
+                            <div *ngIf="tab === 'Construction Progress Update'">
+                                <h5>{{'Construction Progress Update' | translate}}</h5>
+                                <div class="radio_buildng">
+                                    <mat-radio-group [(ngModel)]="selectedBuilding">
+                                        <mat-radio-button *ngFor="let building of buildingList;"
+                                                          value="{{building.buildingName}}"
+                                                          (change)="onBuildingChange(building)">{{building.buildingName}}</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+                                <div class="table-responsive">
+
+                                    <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <th width="10%" valign="top" align="left">{{'Construction Stage' | translate}}</th>
+                                            <th width="35%" valign="top" align="left">{{'Task / Activity' | translate}}</th>
+                                            <th width="10%" valign="top" align="left">{{'Planned Completion MM-YYYY' | translate}}</th>
+                                            <th width="10%" valign="top" align="left">{{'% of actual work done' | translate}}</th>
+                                            <th width="20%" valign="top" align="left">{{'Delay if any Ask to fill reason for delay' | translate}}</th>
+                                            <th width="10%" valign="top" align="left">{{'Likely Date of Completion (MM-YYYY)' | translate}}</th>
+                                        </tr>
+                                        <tr *ngFor="let obj of constructionProgressList;">
+                                            <td valign="top" align="left">Stage 1</td>
+                                            <td valign="top" align="left">{{obj.fielddesc}}</td>
+                                            <td valign="top" align="left">{{obj.enddate}}</td>
+                                            <td valign="top" align="left">
+
+                                                <div *ngIf="isSubmitted">
+                                                    <p class="viewmode-txt">
+                                                        {{obj.work_done}}
+                                                    </p>
+                                                </div>
+                                                <div *ngIf="!isSubmitted">
+                                                    <input type="text" class="form-control" placeholder="80" [(ngModel)]="obj.work_done" [ngClass]="obj.perErr"
+                                                           (keydown)="onlyNumber($event)" (keyup)="validateWorkProgress(obj)">
+                                                </div>
+
+                                            </td>
+                                            <td valign="top" align="left">
+                                                <div *ngIf="isSubmitted">
+                                                    <p class="viewmode-txt">
+                                                        {{obj.delay_reason ? obj.delay_reason : 'NA'}}
+                                                    </p>
+                                                </div>
+                                                <div *ngIf="!isSubmitted">
+                                                    <textarea class="form-control" placeholder="Enter Reason" [(ngModel)]="obj.delay_reason" [disabled]="obj.isDisable"
+                                                              [ngClass]="obj.resonErr"></textarea>
+                                                </div>
+                                            </td>
+                                            <td valign="top" align="left">
+
+                                                <div *ngIf="isSubmitted">
+                                                    <p class="viewmode-txt">
+                                                        {{obj.estimate_completion ? obj.estimate_completion : 'NA'}}
+                                                    </p>
+                                                </div>
+                                                <div *ngIf="!isSubmitted" [ngClass]="obj.cmpdErr">
+                                                    <app-calender
+                                                            [dateShow]="obj.estimate_completion"
+                                                            [isFormSubmitted]="obj.isDisable"
+                                                            (dateSelect)="onCustomDateSelect($event, obj)"></app-calender>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-right">
+                                    <button class="btn btn-primary"
+                                            [hidden]="selectedTabIndex==0"
+                                            (click)="goToPrevTab()">
+                                        {{'Previous' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3" *ngIf="isSubmitted" (click)="goToNext()">Next</button>
+                                    <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                            (click)="submitConstructionData()">
+                                        {{'Save' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                            (click)="submitConstructionData('next')">
+                                        {{'Save & Next' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Common Amenities Update -->
+                            <div *ngIf="tab === 'Common Amenities Update'">
+                                <div class="add_bldngs mt-4">
+                                    <h5>{{'Common Amenities Update' | translate}}</h5>
+
+                                    <div class="table-responsive">
+
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="35%" valign="top" align="left">{{'Common Amenity' | translate}}</th>
+                                                <th width="20%" valign="top" align="left">{{'Planned Completion MM-YYYY' | translate}}</th>
+                                                <th width="7%" valign="top" align="left">{{'% of actual work done' | translate}}</th>
+                                                <th width="30%" valign="top" align="left">{{'Delay if any Ask to fill reason for delay' | translate}}</th>
+                                                <th width="8%" valign="top" align="left">{{'Completion (MM-YYYY)' | translate}}</th>
+                                            </tr>
+                                            <tr *ngFor="let obj of commonAmenities;">
+                                                <td valign="top" align="left">{{obj.fielddisplaydesc}}</td>
+                                                <td valign="top" align="left">{{obj.enddate}}</td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{obj.work_done ? obj.work_done : 'NA'}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="80" [(ngModel)]="obj.work_done" [ngClass]="obj.perErr"
+                                                               (keydown)="onlyNumber($event)" (keyup)="validateWorkProgress(obj)">
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{obj.delay_reason ? obj.delay_reason : 'NA'}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <textarea class="form-control" placeholder="Enter Reason" [(ngModel)]="obj.delay_reason" [disabled]="obj.isDisable"
+                                                                  [ngClass]="obj.resonErr"></textarea>
+                                                    </div>
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{obj.estimate_completion ? obj.estimate_completion : 'NA'}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted" [ngClass]="obj.cmpdErr">
+                                                        <app-calender
+                                                                [dateShow]="obj.estimate_completion"
+                                                                [isFormSubmitted]="obj.isDisable"
+                                                                (dateSelect)="onCustomDateSelect($event, obj)"></app-calender>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button class="btn btn-primary"
+                                            [hidden]="selectedTabIndex==0"
+                                            (click)="goToPrevTab()">
+                                        {{'Previous' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3" *ngIf="isSubmitted" (click)="goToNext()">Next</button>
+                                    <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                            (click)="submitAmenitiesData()">
+                                        {{'Save' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                            (click)="submitAmenitiesData('next')">
+                                        {{'Save & Next' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Photographs -->
+                            <div *ngIf="tab === 'Photographs'">
+                                <div class="add_bldngs mt-4">
+                                    <h5> {{'Photographs' | translate}}</h5>
+<!--                                    <div class="pr_note"><p><strong>{{'Note' | translate}} : </strong>{{'Go to Mobile App and Login as Promoter to capture and upload images of the project' | translate}}</p></div>-->
+                                    <div class="radio_buildng">
+                                        <mat-radio-group [(ngModel)]="selectedBuildingForPhoto">
+                                            <mat-radio-button *ngFor="let building of buildingList;"
+                                                              value="{{building.buildingName}}"
+                                                              (change)="onBuildingChangeForPhoto(building)">{{building.buildingName}}</mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                    <div class="photo-upload-container" *ngIf="!isSubmitted">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label>Particulars</label>
+                                                    <select class="form-control" [(ngModel)]="particularId">
+                                                        <option value="">Select Particulars</option>
+                                                        <option *ngFor="let obj of photoParticulars;" [value]="obj.id">{{obj.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Upload Photograph</label>
+                                                    <input type="file" class="form-control" id="buildingphotograph"
+                                                           accept="image/jpeg,image/png,application/pdf,image/x-eps">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <label>&nbsp;</label>
+                                                <button class="btn btn-primary mt-3" (click)="uploadPhotoParticulars()">Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th valign="top" align="left">{{'Particulars' | translate}}</th>
+                                                <th valign="top" align="left">{{'Quarter' | translate}}  </th>
+                                                <th valign="top" align="left">{{'Photographs' | translate}}</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                            <tr *ngFor="let obj of buildingPhotoList; let pind = index;">
+                                                <td>{{pind + 1}}</td>
+                                                <td>{{obj.particularName}}</td>
+                                                <td>{{quoterName}} </td>
+                                                <td>
+                                                    <a (click)="showImageFullScreen(obj.imageName)"><img [src]="FILE_ROOT + obj.imageName" alt="" style="height: 40px;"></a>
+                                                </td>
+                                                <td>
+                                                    <a *ngIf="!isSubmitted" (click)="removePhotograph(obj.id, pind)">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color: red;"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="buildingPhotoList.length === 0">
+                                                <td class="text-center" colspan="5">
+                                                    No data found.
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary"
+                                                [hidden]="selectedTabIndex==0"
+                                                (click)="goToPrevTab()">
+                                            Previous
+                                        </button>
+                                        <button class="btn btn-success ml-3" (click)="goToNext()">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Financial Update -->
+                            <div *ngIf="tab === 'Financial Update'">
+                                <div class="add_bldngs mt-4">
+                                    <div class="table-responsive">
+                                        <h5> {{'Financial Progress of the Project' | translate}}</h5>
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="35%" valign="top" align="left">{{'Particulars' | translate}}</th>
+                                                <th width="8%" valign="top" align="left">{{'Amount (Rs. in Lakh)' | translate}}</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>{{'Project Account No.' | translate}}</td>
+                                                <td>{{financialDetails.projectaccountno}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>{{'Estimated Cost of the Project including land cost at the start of the Quarter' | translate}}
+                                                </td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{financialDetails.estimatedcost}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="financialDetails.estimatedcost">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>{{'Amount received during the Quarter' | translate}}</td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{financialDetails.amtrecquoter}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="financialDetails.amtrecquoter">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>{{'Actual Cost Incurred during the Quarter' | translate}}</td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{financialDetails.actiualcost}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="financialDetails.actiualcost">
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>{{'Net amount at end of the Quarter' | translate}}</td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{financialDetails.netamount}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="financialDetails.netamount">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td>{{'Total expenditure on Project till date' | translate}}</td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{financialDetails.totalexpenditure}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="financialDetails.totalexpenditure">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td>{{'Details of Mortgage or Charge, if any, created on the Land and the projects' | translate}}
+                                                </td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{financialDetails.mortgagecharge}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="financialDetails.mortgagecharge">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="btn btn-primary"
+                                                [hidden]="selectedTabIndex==0"
+                                                (click)="goToPrevTab()">
+                                            {{'Previous' | translate}}
+                                        </button>
+                                        <button class="btn btn-success ml-3" *ngIf="isSubmitted" (click)="goToNext()">Next</button>
+                                        <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                                (click)="addFinancialDetails()">
+                                            {{'Save' | translate}}
+                                        </button>
+                                        <button class="btn btn-success ml-3" *ngIf="!isSubmitted"
+                                                (click)="addFinancialDetails('next')">
+                                            {{'Save & Next' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Legal & Miscellaneous -->
+                            <div *ngIf="tab === 'Legal & Miscellaneous'">
+                                <div class="add_bldngs mt-4">
+                                    <div class="table-responsive">
+                                        <h5>{{'A. List of Legal Cases (if any)' | translate}} </h5>
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <thead>
+                                            <tr>
+                                                <th width="10%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="35%" valign="top" align="left">{{'Case No.' | translate}}  </th>
+                                                <th width="35%" valign="top" align="left">{{'Name of Parties'}}</th>
+                                                <th valign="top" align="left">&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let val of legalCase;let i = index;">
+                                                <td>{{i+1}}</td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{val.caseno}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter No." [(ngModel)]="val.caseno">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div *ngIf="isSubmitted">
+                                                        <p class="viewmode-txt">
+                                                            {{val.partyname}}
+                                                        </p>
+                                                    </div>
+                                                    <div *ngIf="!isSubmitted">
+                                                        <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="val.partyname">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger" *ngIf="legalCase.length > 1 && !isSubmitted"
+                                                            (click)="removeItem(i)">
+                                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                    <div class="addmr_bt text-right" *ngIf="!isSubmitted"><button class="btn btn-dark" (click)="addMoreCases()">{{'Add More' | translate}}</button></div>
+                                    <p>&nbsp;</p>
+                                    <div class="table-responsive">
+                                        <h5> B. {{'Sale/Agreement for Sale during the Quarter' | translate}}  </h5>
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="30%" valign="top" align="left">{{'Particulars' | translate}}  </th>
+                                                <th width="11%" valign="top" align="left">&nbsp;</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>{{'Sale Deed' | translate}} </td>
+                                                <td>
+                                                    <input type="text" (keydown)="onlyNumber($event)" [(ngModel)]="saledeed" class="form-control" *ngIf="!isSubmitted">
+                                                    <p class="viewmode-txt" *ngIf="isSubmitted">
+                                                        {{saledeed}}
+                                                        <!--<a (click)="openLink(saledeed)">
+                                                            <span *ngIf="!isSubmitted">{{saledeed}}</span>
+                                                        <img *ngIf="saledeed.indexOf('.pdf') == -1 && isSubmitted" [src]="FILE_ROOT + saledeed" [alt]="" #img
+                                                             (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                        <img *ngIf="saledeed.indexOf('.pdf') > -1 && isSubmitted" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                                        </a>-->
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>{{'Agreement for Sale' | translate}} </td>
+                                                <td><input type="text" (keydown)="onlyNumber($event)" class="form-control" [(ngModel)]="saleagreement" *ngIf="!isSubmitted">
+                                                    <p class="viewmode-txt" *ngIf="isSubmitted">
+                                                        {{saleagreement}}
+                                                    </p>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="undrtakes">
+                                    <h5>{{'Undertaking' | translate}}</h5>
+                                    <p><input type="checkbox" class="" [(ngModel)]="isAcceptDeclaration" [disabled]="isSubmitted">&nbsp; {{'I/we solemnly affirm, declare and undertake that all the details stated above are true to the best of my/our knowledge and nothing material has been concealed here from. I am/we are executing this undertaking to attest to the truth of all the foregoing and to apprise the Authority of such facts as mentioned as well as for whatever other legal purposes this undertaking may serve.' | translate}} </p>
+                                    <div class="sign_dv">
+                                        <div>
+                                            <div *ngIf="isSubmitted">
+                                                <p class="viewmode-txt">
+                                                    {{'Name' | translate}}: {{submitPersonName}}
+                                                </p>
+                                            </div>
+                                            <div *ngIf="!isSubmitted">
+                                                <p>{{'Name' | translate}} :
+
+                                                    <input type="text" placeholder="Enter you name" [(ngModel)]="submitPersonName">
+                                                </p>
+                                            </div>
+                                            <!--                                            <p>Date : 17-10-2022</p>-->
+                                        </div>
+                                        <div class="prom_sign">
+                                            <img #img [src]="FILE_ROOT + signatureFile" (error)="img.src='assets/images/signature-ico.png'" style="height: 50px;width: 180px;border: 1px solid gray;">
+                                            <p>{{'Signature of Promoter' | translate}}</p>
+                                            <input type="file" class="form-control" style="margin-bottom: 0 !important;" (change)="uploadFile($event, 'signature')" *ngIf="!isSubmitted"
+                                                   accept="image/jpeg,image/png,image/x-eps">
+                                            <span style="font-size: 13px;color: red;margin-bottom: 25px;display: block;">{{'File size should be less than 2MB' | translate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button class="btn btn-primary"
+                                            [hidden]="selectedTabIndex==0"
+                                            (click)="goToPrevTab()">
+                                        {{'Previous' | translate}}
+                                    </button>
+                                    <button *ngIf="!isSubmitted" class="btn btn-success ml-3" (click)="addLegalCase()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                                                                  fill="currentColor" class="bi bi-arrow-up-square" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 9.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
+                                    </svg> {{'Submit' | translate}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="fullscreen-view hide-elem" id="fullscrn">
+    <div class="text-right">
+        <a (click)="closeFullScreenView()">
+            <i class="fa fa-times" aria-hidden="true" style="padding-right: 16px;padding-top: 20px;font-size: 23px; color: #ffffff"></i>
+        </a>
+    </div>
+    <div style="padding: 0 20px 0 20px;text-align: center">
+        <img [src]="fullscreenImage" alt="">
+    </div>
+</div>

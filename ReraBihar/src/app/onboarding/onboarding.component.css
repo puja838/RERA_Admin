@@ -1,0 +1,25 @@
+.changLang{
+    border: none;
+}
+
+.changLang:focus {
+    /* color: white !important; */
+    box-shadow: none !important;
+}
+
+
+.regst_data::before {
+    content: "";
+    position: absolute;
+    height: 300px;
+    border-left: 1px solid #c4c5c6;
+    left: -48px;
+    top: 15px;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1302px !important;
+    }
+}
+

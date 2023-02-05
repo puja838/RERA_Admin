@@ -1,0 +1,87 @@
+<div class="promot_regs">
+    <div class="container">
+        <app-dashboard-header [linkName]="linkName" (onDashboardClick)="backDash()"></app-dashboard-header>
+
+        <div class="prom_reg_in">
+            <mat-tab-group dynamicHeight
+                           (selectedTabChange)="onTabChange($event)">
+                <mat-tab label="{{'Project List' | translate}}">
+                    <div class="resp-tabs-container hor_1">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>{{'Sr No.' | translate}}</th>
+                                    <th>{{'Registration No.' | translate}}</th>
+                                    <th>{{'Validity Date' | translate}}</th>
+                                    <th>{{'Days Remaining' | translate}}</th>
+                                    <th>{{'Promoter Name' | translate}}</th>
+                                    <th>{{'Project Name' | translate}}</th>
+                                    <th>{{'Extension No.' | translate}}</th>
+                                    <th>{{'Current Certificate' | translate}}</th>
+                                    <th>{{'View/Edit' | translate}}</th>
+                                </tr>
+                                <tr *ngFor="let obj of projectList; let i = index;">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{obj.registrationno}}</td>
+                                    <td>{{obj.validatyenddate}}</td>
+                                    <td>{{obj.remainingDays}}</td>
+                                    <td>{{obj.promoterName}}</td>
+                                    <td>{{obj.projectName}}</td>
+                                    <td>{{obj.extensionno}}</td>
+                                    <td class="text-center">
+                                        <a *ngIf="obj.certificate" (click)="viewCertificateFile(obj.certificate)">
+                                            <i class="fa fa-certificate" aria-hidden="true" style="font-size: 25px;"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a (click)="goToExtension(obj.id, obj.projectuid, 0)">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="{{'Extension Application Status' | translate}}">
+                    <div class="resp-tabs-container hor_1">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{'Sr No.' | translate}}</th>
+                                        <th>{{'Registration No.' | translate}}</th>
+                                        <th>{{'Extension Period Date' | translate}}</th>
+                                        <th>{{'Days Remaining' | translate}}</th>
+                                        <th>{{'Project Name' | translate}}</th>
+                                        <th>{{'Extension Certificate' | translate}}</th>
+                                        <th>{{'View Application' | translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let obj of projectExtensionList; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{obj.registrationno}}</td>
+                                        <td>{{obj.projectextexsionperiod}}</td>
+                                        <td>{{obj.remainingDays}}</td>
+                                        <td>{{obj.projectName}}</td>
+                                        <td class="text-center">
+                                            <a *ngIf="obj.certificate" (click)="viewCertificateFile(obj.certificate)">
+                                                <i class="fa fa-certificate" aria-hidden="true" style="font-size: 25px;"></i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a (click)="goToExtension(obj.projectid, obj.projectuid, obj.id)">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,165 @@
+<div class="container pt-2">
+    <div class="dashbrde">
+        <h2>Agent Dashboard</h2>
+
+
+        <!-- <div class="profl">
+
+
+            <a class="dropdown-toggle" href="javascript:void(0)" role="button" id="dropdownMenuLink2"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>Welcome:
+                {{name}}</a>
+            <div class="prof_div dropdown-menu" aria-labelledby="dropdownMenuLink2">
+                <a class="dropdown-item" href="project-registration-edit.html"><i class="fa fa-newspaper-o"
+                        aria-hidden="true"></i> Creat New Project</a>
+                <a class="dropdown-item" href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i> Project
+                    Status</a>
+                <a class="dropdown-item" (click)="goToProfile()"><i class="fa fa-pencil-square-o"
+                        aria-hidden="true"></i> Edit Profile</a>
+                <a class="dropdown-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Apply for renewal</a>
+                <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+
+            </div>
+
+        </div> -->
+        <strong>{{'Welcome' | translate}}: {{name}}</strong>
+        <a class="logout_btn" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="regNo !== ''">
+            <p class="text-center">RERA Bihar Registration No. : <strong>{{regNo}}</strong> | Expiry Date : <strong>
+                    {{expDate}}</strong></p>
+        </div>
+    </div>
+    <div class="row mt-3 mb-3">
+        <!-- <div class="col-lg-3 col-md-6 mb-3">
+            <div class="bg-blu shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+
+                <div class="col-auto d-block">
+                    <h2 class="text-white"><i class="fa fa-building" aria-hidden="true"></i> 2</h2>
+                    <h4> Apply for renewal</h4>
+                </div>
+            </div>
+        </div> -->
+
+
+        <div class="col-lg-9 col-md-6 mb-3" style="padding: 0%;">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <button class="btn col-lg-12 d-flex align-items-center bg-yylo" (click)="goToProfile('profile')">
+                        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View your Application
+                    </button>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <button class="bg-dblu btn col-lg-12 d-flex align-items-center">
+                        <i class="fa fa-users" aria-hidden="true"></i>&nbsp;File a Complaint
+                    </button>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <button class="btn btn-primary col-lg-12 d-flex align-items-center"
+                        (click)="goToProfile('renewal')">
+                        <i class="fa fa-building" aria-hidden="true"></i>&nbsp;Apply for Renewal
+                    </button>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <button class="bg-blu btn col-lg-12 d-flex align-items-center">
+                        <i class="fa fa-users" aria-hidden="true"></i>&nbsp;File for Correction
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="bg-sky shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+
+                        <div class="col-auto d-block cursor-pointer" (click)="goToQuery()">
+                            <h2 class="text-white"><i class="fa fa-users" aria-hidden="true"></i> {{queryCount}}</h2>
+                            <h4> Respond to Queries by RERA</h4>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="bg-grn shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+
+                        <div class="col-auto d-block">
+                            <h2 class="text-white"><i class="fa fa-building" aria-hidden="true"></i> 0</h2>
+                            <h4> File for Correction in information</h4>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="bg-red shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+
+                        <div class="col-auto d-block cursor-pointer" (click)="goToAlert()">
+                            <h2 class="text-white"><i class="fa fa-info-circle" aria-hidden="true"></i> {{renualCount}}
+                            </h2>
+                            <h4> View Alerts/Notifications</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-md-6 mb-3">
+                    <div class="bg-yylo shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+
+                        <div class="col-auto d-block">
+                            <h2 class="text-white"><i class="fa fa-users" aria-hidden="true"></i> 0</h2>
+                            <h4> File a Complaint</h4>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="shadow-lg py-3 px-3 rounded-3 dashboard_top_box">
+
+                        <div class="col-auto d-block cursor-pointer">
+                            <h2 class="" (click)="downloadCertificate(certificate)"><i class="fa fa-certificate"
+                                    aria-hidden="true" style="color: red;"></i></h2>
+                            <!-- <h4> View RERA Certificate</h4> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="impo_new">
+                <h4 class="mb-2">Updates and Important Notices</h4>
+                <div class="impo_new_caro">
+                    <ul class="impo_new_in">
+                        <li class="updates" (click)="goToLogin('imp_notic')"><a>Click Here For Importent Notice</a></li>
+                        <li class="updates" (click)="goToLogin('latest_news')"><a>Click Here For Latest News</a></li>
+                    </ul>
+                    <!-- <div class="text-center">
+                        <span>Notice not available yet.</span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div>
+        <div class="book_carosl_div mb-5">
+            <h4 class="mb-2">New Projects Launched</h4>
+            <carousel [loop]="true" [autoplay]="true" [cellsToShow]="6" [height]="240" [autoplayInterval]="2000"
+                [lightDOM]="true">
+                <div class="carousel-cell ddb_car" *ngFor="let obj of newProjectList;"
+                    (click)="goToProject(obj.projectuid)">
+                    <img src="assets/images/no-preview.png">
+                    <strong><i class="fa fa-building-o" aria-hidden="true"></i>
+                        {{obj.projectName}}
+                    </strong>
+                    <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        {{obj.address}}
+                    </p>
+                </div>
+            </carousel>
+        </div>
+    </div>
+</div>

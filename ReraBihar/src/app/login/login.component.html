@@ -1,0 +1,46 @@
+<notifier-container></notifier-container>
+<section class="login-block">
+    <img src="assets/images/Web-login-img.png"/>
+    <div class="container">
+        <div class="row ">
+            <div class="col login-sec">
+        <div class="log-hdr">
+            <strong>{{'Login' | translate}}</strong>
+            <img src="assets/images/login-logo.png"/>
+        </div>
+                <div class="login-form">
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="panNumber" name="panNumber" class="form-control"
+                            placeholder="{{'PAN Number' | translate}}" (keyup)="panNumberFun()">
+                    <span class="span_error">{{panNumberErr}}</span>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="input-group">
+                            <input [type]="hide ? 'password' : 'text'" [(ngModel)]="userPassword" name="userPassword"
+                                class="form-control" placeholder="{{'Password' | translate}}" (keyup)="passwordFun()">
+                            <div class="input-group-append" style="cursor: pointer;">
+                                <span class="input-group-text" (click)="passfun()">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <span class="span_error">{{userPasswordErr}}</span>
+                    </div>
+                    <div class="form-group">
+                        <span class="span_error">{{loginErr}}</span>
+                    </div>
+                    <div class="form-check">
+                        <button type="submit" class="btn btn-success log_bt" (click)="onSubmit()">{{'Login' | translate}}</button>
+                    </div>
+                    <div class="text-center mt-4" style="font-size: 14px;text-decoration: underline;color: gray">
+                      <a (click)="createAccount()">{{'Create your account' | translate}}</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

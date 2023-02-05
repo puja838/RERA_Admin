@@ -1,0 +1,28 @@
+.cnt223 a{
+    text-decoration: none;
+}
+.cnt223 h4{
+    clear: both;
+    color: #000000;
+    /* text-align: justify; */
+    font-size: 22px;
+    font-family: sans-serif;
+}
+.cnt223 p a{
+    color: #d91900;
+    font-weight: bold;
+}
+.cnt223 p{
+    color: #5e5a5c;
+}
+.cnt223 .x{
+    float: right;
+    height: 35px;
+    left: 22px;
+    position: relative;
+    top: -25px;
+    width: 34px;
+}
+.cnt223 .x:hover{
+    cursor: pointer;
+}

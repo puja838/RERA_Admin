@@ -1,0 +1,268 @@
+<div class="main-body">
+  <div class="promot_regs">
+    <div class="container">
+      <div class="container">
+        <div class="dashbrde">
+          <div></div>
+          <div class="profl">
+
+
+            <!-- <a class="dropdown-toggle" role="button" id="dropdownMenuLink2"
+    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="profileDetail()"><i class="fa fa-user"></i>Welcome:
+    Hussain</a>
+  <div class="prof_div dropdown-menu" aria-labelledby="dropdownMenuLink2" [ngStyle]="{'display':isProfile}">
+    <a class="dropdown-item" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+      Profile</a>
+    <a class="dropdown-item" href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>
+      Logout</a>
+
+  </div> -->
+
+          </div>
+        </div>
+        <h2 style="text-align: center; font-size: 22px; margin-bottom: 10px;">{{rolename}}</h2>
+        <div class="row mt-3 mb-3 das_top_sec chmem_das_top" *ngIf="roletype != 7 && roletype != 4">
+          <div class="col-lg-3 col-md-6 mb-3">
+            <button
+              class="bg-blu btn btn-primary col-lg-12 d-flex align-items-center font-size-13">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                <path
+                  d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z">
+                </path>
+              </svg>&nbsp; Project Application Reaching TAT
+            </button>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3" *ngIf="roletype != 2 && roletype != 5">
+            <button
+              class="bg-blu btn btn-primary col-lg-12 d-flex align-items-center font-size-13">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                <path
+                  d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z">
+                </path>
+              </svg>&nbsp; Complaints Reaching TAT
+            </button>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3">
+            <button
+              class="bg-blu btn btn-primary col-lg-12 d-flex align-items-center font-size-13">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                <path
+                  d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z">
+                </path>
+              </svg>&nbsp; Agent Application Reaching TAT
+            </button>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3" *ngIf="roletype != 2 && roletype != 5">
+            <button
+              class="bg-blu btn btn-primary col-lg-12 d-flex align-items-center font-size-13">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-file-text-fill" viewBox="0 0 16 16">
+                <path
+                  d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1z">
+                </path>
+              </svg>&nbsp; Execution Cases
+            </button>
+          </div>
+        </div>
+
+        <div class="prom_dbrd chmem_das sechod_das">
+          <ul>
+            <li class="bg-blu shadow-lg rounded-3 dashboard_top_box"  *ngIf="roletype != 7  && roletype != 4">
+              <a>
+                <div class="con_dv_pd">
+                  <h2 class="text-white"><i class="fa fa-bell" aria-hidden="true"></i> 0</h2>
+                  <h4> Alerts & Notifications</h4>
+
+                </div>
+              </a>
+            </li>
+            <li class="bg-sky shadow-lg rounded-3 dashboard_top_box">
+              <a (click)="changeRouting(1)">
+                <div class="con_dv_pd">
+                  <h2 class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                         height="30" fill="currentColor" class="bi bi-file-earmark-check-fill"
+                         viewBox="0 0 16 16">
+                      <path
+                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                    </svg>
+                    {{regcount}}</h2>
+                  <h4> Project Registration Application</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-grn shadow-lg rounded-3 dashboard_top_box">
+              <a (click)="changeRouting(3)">
+                <div class="con_dv_pd">
+                  <h2 class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                         height="30" fill="currentColor" class="bi bi-file-earmark-ruled-fill"
+                         viewBox="0 0 16 16">
+                      <path
+                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1H6v2h7v1H6v2H5v-2H3v-1h2v-2H3V9z"/>
+                    </svg>
+                    {{agentcount}}</h2>
+                  <h4> Agent Registration Application</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-blk shadow-lg rounded-3 dashboard_top_box">
+              <a (click)="changeRouting(2)">
+                <div class="con_dv_pd">
+                  <h2 class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                         height="30" fill="currentColor" class="bi bi-file-earmark-ruled-fill"
+                         viewBox="0 0 16 16">
+                      <path
+                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1H6v2h7v1H6v2H5v-2H3v-1h2v-2H3V9z"/>
+                    </svg>
+                    {{extcount}}</h2>
+                  <h4> Project Extension Application</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-yylo shadow-lg rounded-3 dashboard_top_box">
+              <a (click)="changeRouting(4)">
+                <div class="con_dv_pd">
+                  <h2 class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                         height="30" fill="currentColor" class="bi bi-file-earmark-check-fill"
+                         viewBox="0 0 16 16">
+                      <path
+                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                    </svg>
+                    {{agentRenewalCount}}
+                  </h2>
+                  <h4> Agent Renewal Application</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-dgr shadow-lg rounded-3 dashboard_top_box" *ngIf="roletype != 7  && roletype != 4">
+              <a >
+                <div class="con_dv_pd">
+                  <h2 class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30"
+                         height="30" fill="currentColor" class="bi bi-file-earmark-text-fill"
+                         viewBox="0 0 16 16">
+                      <path
+                        d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+                    </svg>
+                    0
+                  </h2>
+                  <h4> Application for Correction</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-red5 shadow-lg rounded-3 dashboard_top_box" *ngIf="roletype != 7  && roletype != 4">
+              <a (click)="changeRoute(4)">
+                <div class="con_dv_pd">
+                  <h2 class="text-white"><i class="fa fa-briefcase" aria-hidden="true"></i> {{regprojcount}}
+                  </h2>
+                  <h4> Project Registered</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-red1 shadow-lg rounded-3 dashboard_top_box" *ngIf="roletype != 7  && roletype != 4">
+              <a (click)="changeRoute(5)">
+                <div class="con_dv_pd">
+                  <h2 class="text-white"><i class="fa fa-briefcase" aria-hidden="true"></i> {{regusrcount}}
+                  </h2>
+                  <h4> Agent Registered</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-red shadow-lg rounded-3 dashboard_top_box" *ngIf="roletype != 2 && roletype != 5 && roletype != 7  && roletype != 4">
+              <a>
+                <div class="con_dv_pd">
+                  <h2 class="text-white"><i class="fa fa-briefcase" aria-hidden="true"></i> 0
+                  </h2>
+                  <h4> Total No. of Cases</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-red2 shadow-lg rounded-3 dashboard_top_box" *ngIf="roletype != 2 && roletype != 5 && roletype != 7  && roletype != 4">
+              <a >
+                <div class="con_dv_pd">
+                  <h2 class="text-white"><i class="fa fa-briefcase" aria-hidden="true"></i> 0
+                  </h2>
+                  <h4> Upcoming Hearings</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-red3 shadow-lg rounded-3 dashboard_top_box" *ngIf="roletype != 7  && roletype != 4">
+              <a (click)="changeRoute(6)">
+                <div class="con_dv_pd">
+                  <h2 class="text-white"><i class="fa fa-briefcase" aria-hidden="true"></i> {{pendingqprscount}}
+                  </h2>
+                  <h4> Pending QPRs</h4>
+                </div>
+              </a>
+            </li>
+            <li class="bg-red4 shadow-lg rounded-3 dashboard_top_box" *ngIf="roletype != 7  && roletype != 4">
+              <a >
+                <div class="con_dv_pd">
+                  <h2 class="text-white"><i class="fa fa-briefcase" aria-hidden="true"></i> 0
+                  </h2>
+                  <h4> Items Pending for Approval</h4>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="charmn_lils_db" *ngIf="roletype != 2 && roletype != 5 && roletype != 7  && roletype != 4">
+          <ul>
+            <li>
+              <div class="regs_in"><span><img
+                src="../../../assets/images/count-icn1.png"></span>
+                <div class="regs_in_co"><strong>{{regproquacount}}</strong>
+                  <p>Registered Projects in this Quater</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="regs_in"><span><img
+                src="../../../assets/images/count-icn2.png"></span>
+                <div class="regs_in_co"><strong>{{regagentquacount}}</strong>
+                  <p>Registered Agent in this Quater </p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="regs_in"><span><img
+                src="../../../assets/images/count-icn3.png"></span>
+                <div class="regs_in_co"><strong>₹ 0</strong>
+                  <p>Revenue generated in this Quater</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="regs_in"><span><img
+                src="../../../assets/images/count-icn3.png"></span>
+                <div class="regs_in_co"><strong>₹ {{totalrevenue}}</strong>
+                  <p>Total Revenue generated</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="regs_in"><span><img
+                src="../../../assets/images/count-icn4.png"></span>
+                <div class="regs_in_co"><strong>{{totalrevenuequater}}</strong>
+                  <p>Total Complaints Resolved</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<notifier-container></notifier-container>

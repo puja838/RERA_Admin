@@ -1,0 +1,54 @@
+
+
+
+<!--<div style="position: relative;">
+    <input type="text" class="form-control checkdate" placeholder="MM-YYYY" (focus)="onTextFocus()" [(ngModel)]="dateShow"
+           [disabled]="isSubmitted" readonly>
+    <div class="calender-container" *ngIf="isCalenderOpen">
+        <div class="row p-2">
+            <div class="col-4 text-left">
+                <a class="float-left checkdate" (click)="onPrevYear()">
+                    <i style="font-size: 20px;" class="fa fa-angle-double-left checkdate" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="col-4 text-center checkdate">
+                <b>{{selectedYear}}</b>
+            </div>
+            <div class="col-4 text-right checkdate">
+                <a class="float-right checkdate" (click)="onNextYear()">
+                    <i style="font-size: 20px;" class="fa fa-angle-double-right checkdate" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div>
+            <div class="row checkdate">
+                <div class="col-4 checkdate" *ngFor="let month of monthNames;let i = index;">
+                    <div class="month-show pt-3 checkdate" [ngClass]="selectedMonth == month.value ? 'active' : ''" (click)="onMonthClick(month.value)">
+                        <a >{{month.name}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<mat-form-field class="mmyycalender">
+    <input
+            [disabled]="isFormSubmitted"
+            matInput
+            [matDatepicker]="dp"
+            placeholder="Month and Year"
+            [(ngModel)]="date"
+            readonly
+    />
+    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker
+        #dp
+        startView="multi-year"
+        (yearSelected)="chosenYearHandler($event)"
+        (monthSelected)="chosenMonthHandler($event, dp)"
+        panelClass="example-month-picker"
+    >
+    </mat-datepicker>
+</mat-form-field>

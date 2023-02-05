@@ -1,0 +1,574 @@
+<div class="head-part">
+    <div class="tofst">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 top_se_in">
+                    <div class="socle"><strong>{{'Follow Us on' | translate}} :</strong>
+                        <ul>
+                            <li class="fbk liStyle"><a href="https://www.facebook.com/RERABihar/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            </li>
+                            <!--<li class="twtr liStyle"><a ><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            </li>
+                            <li class="istg liStyle"><a ><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            </li>-->
+                        </ul>
+                    </div>
+                    <div class="srce_sec">
+                        <input type="text" [(ngModel)]="keyword" (keyup.enter)="searchKeyword()"
+                               placeholder="{{'Promoter' | translate}}, {{'Project' | translate}}, {{'Agent' | translate}}"/>
+                        <button type="button" class="src_btn" (click)="searchKeyword()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="text_siz">
+                        <ul>
+                            <li>
+                                <button (click)="onChangeSize(1)" [ngClass]="selectedSize === 1 ? 'active' : ''">A<sup>-</sup></button>
+                                <button (click)="onChangeSize(2)" [ngClass]="selectedSize === 2 ? 'active' : ''">A</button>
+                                <button (click)="onChangeSize(3)" [ngClass]="selectedSize === 3 ? 'active' : ''">A<span>+</span></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lang eng">
+                        <ul>
+                            <!-- <li><a id="about-link" class="" href="#">हिंदी</a></li>
+                            <li><a id="events-link">English</a></li> -->
+                            <select class=" changLang" #selectedLang (change)="switchLang(selectedLang.value)"
+                                    style="background-color: unset">
+                                <option *ngFor="let language of languageList" [value]="language.id"
+                                        [selected]="language.id === translate.currentLang">
+                                    {{ language.name }}
+                                </option>
+                            </select>
+                        </ul>
+
+                    </div>
+                    <div style="margin-right: 20px;">
+
+                        <!-- <a [routerLink]="['/header/whats-new']">What’s New</a> -->
+
+                        <a (click)="whatsNewFun('/whats-new')" style="color: blue; cursor: pointer;">What’s New</a>
+
+                    </div>
+                    <div class="logn_sc">
+                        <div class="lon_bn_hv">
+                            <a class="login_btn" href="javascript:void(0)" [matMenuTriggerFor]="loginmenu"><i class="fa fa-lock"
+                                                                              aria-hidden="true"></i> {{'Login' | translate}}
+                            </a>
+                            <mat-menu #loginmenu="matMenu">
+                                <button mat-menu-item (click)="redirectTo('', 'admin')">{{'Admin' | translate}}</button>
+                                <button mat-menu-item [matMenuTriggerFor]="officers">{{'Officers' | translate}}</button>
+                            </mat-menu>
+                            <mat-menu #officers="matMenu">
+                                <button mat-menu-item (click)="redirectTo('', 'admin')">Registration</button>
+                                <button mat-menu-item (click)="redirectTo('', 'legal')">Legal</button>
+                                <button mat-menu-item (click)="redirectTo('', 'grievance_login')">Grievance</button>
+                            </mat-menu>
+                            <!--<ul>
+                                <li><a (click)="goTo('http://20.219.31.104:8092')"><i
+                                        class="fa fa-caret-right"></i> {{'Admin' | translate}}</a>
+                                </li>
+                                &lt;!&ndash; <li><a (click)="goTo('login')"><i class="fa fa-caret-right"></i> Promoter</a></li> &ndash;&gt;
+                                &lt;!&ndash; <li><a ><i class="fa fa-caret-right"></i> Agent</a></li> &ndash;&gt;
+                                <li><a (click)="goTo('http://20.219.31.104:8092')"><i
+                                        class="fa fa-caret-right"></i> {{'Officers' | translate}}</a>
+                                </li>
+                            </ul>-->
+                        </div>
+
+                        <!-- <div class="sign_bn_hv">
+                          <a class="signup_btn" (click)="goTo('pages/registration')" >Sign Up</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head_midd">
+        <div class="container">
+            <div class="rera-logo home-pg">
+                <a (click)="indexFun()"><img src="assets/images/rera-logo.png"/></a>
+            </div>
+            <div class="logo_rt">
+                <div class="mbre">
+                    <span><img src="assets/images/mbr-img1.png"/></span>
+                    <strong>{{'Shri Nitish Kumar' | translate}}</strong>
+                    <p>{{'Hon’ble Chief Minister of Bihar' | translate}}</p>
+                </div>
+                <div class="rera_txte">{{'Real Estate Regulatory Authority, Bihar' | translate}}</div>
+                <div class="mbre">
+                    <span><img src="assets/images/mbr-img2.png"/></span>
+                    <strong>{{'Shri Phagu Chauhan' | translate}}</strong>
+                    <p>{{'Hon’ble Governor of Bihar' | translate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="use_feedbck">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="use_feedbck_in">
+<!--                        <div><button (click)="redirectTo('', 'userguide')" class="btn btn-primary btn-md">{{'User Guide' | translate}}</button></div>-->
+                        <div class="mrwu_dv">
+                            <strong style="font-size: 15px;">{{'Please Note' | translate}} :</strong>
+                            <marquee scrollamount="3" direction="left" behavior="scroll" style="color: red;font-size: 15px;">
+                                {{'This is Beta Version of New System, only for Promoters to sign up and create new Project Application for Registration and Allottees to file new Complaints. Other functionalities is coming shortly. Please read the User Guide' | translate}}
+                            </marquee>
+                        </div>
+<!--                        <div><button class="btn btn-primary btn-md" (click)="redirectTo('', 'feedback')">{{'Enter Feedback' | translate}}</button></div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-2">
+            <p style="margin-top: 18px;">
+                <a class="feedback-btn">Enter Feedback</a>
+            </p>
+        </div>
+        <div class="col-2">Please Note: </div>
+        <div class="col-6">
+            <marquee direction="right"
+                     behavior="alternate" style="color: red; background-color: white;font-size: 18px;">
+                It is beta version of new system for UAT purpose
+            </marquee>
+        </div>
+        <div class="col-2">
+            <p style="margin-top: 18px;">
+                <a class="feedback-btn">Enter Feedback</a>
+            </p>
+        </div>
+    </div>-->
+    <div>
+
+    </div>
+    <div class="nav-secn head-menu-part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 top_prr">
+
+
+                    <div id="cssmenu" class="cssmenu">
+                        <ul>
+                            <li> <a (click)="indexFun()">{{'Home'  | translate}}</a> </li>
+                            <li *ngFor="let item of navItems; let i = index">
+                                <a [ngClass]="{'arow':item.children.length> 0}" class="cursor_pointer {{item.selectedClass}}"
+                                   (click)="item.children.length== 0 && navFun3(item.menuId, item)">{{item.name  | translate}}</a>
+                                <ul>
+
+                                    <li [ngClass]="{'active':openBlock==item.menuId}"
+                                        *ngFor="let oitem of item.children; let j = index">
+                                        <a [ngClass]="{'arow':oitem.children.length> 0}"
+                                           (click)="oitem.children.length== 0 && navFun(item.children, oitem.menuId, item)"
+                                           class="cursor_pointer">{{oitem.name  | translate}}</a>
+
+                                        <ul>
+                                            <li *ngFor="let ooitem of oitem.children; let k = index">
+                                                <a class="cursor_pointer"
+                                                   (click)="navFun2(item.children, oitem, oitem.children, ooitem.menuId, item)">{{ooitem.name  | translate}}</a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="hide">
+    <div class="banner-part">
+        <div class="container-fluid p-0">
+
+
+            <div class="banner-secn">
+                <ul class="rslides" id="slider1">
+                    <li><img src="assets/images/banner-image1.png" alt=""></li>
+                    <li><img src="assets/images/banner-image2.png" alt=""></li>
+                    <li><img src="assets/images/banner-image3.png" alt=""></li>
+                    <li><img src="assets/images/banner-image4.png" alt=""></li>
+                    <li><img src="assets/images/banner-image5.png" alt=""></li>
+                    <li><img src="assets/images/banner-image6.png" alt=""></li>
+                    <li><img src="assets/images/banner-image7.png" alt=""></li>
+                    <li><img src="assets/images/banner-image8.png" alt=""></li>
+                    <li><img src="assets/images/banner-image9.jpg" alt=""></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="main-body">
+        <div class="catgery_sec">
+            <div class="container">
+                <div class="catgery_sec_in grne">
+                    <div class="cat_top"><span><img src="assets/images/cat-icn1.png"/></span>
+                        <strong>{{'Projects' | translate}}</strong>
+                        <button><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catgery_sec_in_ho">
+                        <ul>
+                            <li><a><i class="fa fa-chevron-right"
+                                      aria-hidden="true"></i> {{'Residential' | translate}}</a>
+                                <ul>
+                                    <li><a (click)="searchProject('Residential Apartment (G+3)')"><i class="fa fa-chevron-right"
+                                                                                                     aria-hidden="true"></i> {{'Up to' | translate}} 4<sup>th</sup>
+                                        Storey</a>
+                                    </li>
+                                    <li><a (click)="searchProject('Residential Apartment (4 - 8 Floors)')"><i class="fa fa-chevron-right"
+                                                                                                              aria-hidden="true"></i> {{'Up to' | translate}} 8<sup>th</sup>
+                                        Storey</a>
+                                    </li>
+                                    <li><a (click)="searchProject('Residential Multistoried Apartment (8+ Floors)')"><i class="fa fa-chevron-right"
+                                                                                                                        aria-hidden="true"></i> {{'More than' | translate}} 8<sup>th</sup>
+                                        Storey</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a (click)="searchProject('Commercial Project')"><i class="fa fa-chevron-right"
+                                                                                    aria-hidden="true"></i> {{'Commercial' | translate}}</a></li>
+                            <li><a ><i class="fa fa-chevron-right"
+                                       aria-hidden="true"></i> {{'Mixed' | translate}}</a>
+                                <ul>
+                                    <li><a (click)="searchProject('Mixed Development Project')"><i class="fa fa-chevron-right"
+                                                                                                   aria-hidden="true"></i> {{'Commercial' | translate}} </a></li>
+                                    <li><a (click)="searchProject('Mixed Development Project')"><i class="fa fa-chevron-right"
+                                                                                                   aria-hidden="true"></i> {{'Residential' | translate}}</a></li>
+                                </ul>
+                            </li>
+                            <li><a (click)="searchProject('Plotted Development Project')"><i class="fa fa-chevron-right"
+                                                                                             aria-hidden="true"></i> {{'Plots' | translate}}</a></li>
+                            <li><a (click)="searchKeyword()"><i class="fa fa-chevron-right"
+                                                                aria-hidden="true"></i> {{'Project Search' | translate}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="catgery_sec_in blu">
+                    <div class="cat_top"><span><img src="assets/images/cat-icn2.png"/></span>
+                        <strong>{{'Promoters' | translate}}</strong>
+                        <button><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catgery_sec_in_ho">
+                        <ul>
+                            <li><a (click)="goTo('pages/registration')"><i class="fa fa-chevron-right"
+                                                                           aria-hidden="true"></i> {{'Sign Up' | translate}}
+                            </a></li>
+                            <li><a routerLink="/login"><i class="fa fa-chevron-right"
+                                                          aria-hidden="true"></i> {{'Login' | translate}}</a></li>
+                            <!-- <li> <a ><i class="fa fa-chevron-right" aria-hidden="true"></i> QPR</a> </li> -->
+                            <!--<li><a ><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'Updates' | translate}}</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="catgery_sec_in rde">
+                    <div class="cat_top"><span><img src="assets/images/cat-icn3.png"/></span>
+                        <strong>{{'Complaints' | translate}}</strong>
+                        <button><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catgery_sec_in_ho">
+                        <ul>
+                            <li><a ><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'File a Complaint' | translate}}</a>
+                                <ul>
+                                    <li><a (click)="redirectTo('', 'CGM')"><i
+                                            class="fa fa-chevron-right"
+                                            aria-hidden="true"></i> {{'Allottee' | translate}}</a>
+                                    </li>
+                                    <!--<li><a ><i class="fa fa-chevron-right"
+                                                      aria-hidden="true"></i> {{'Promoter' | translate}}</a></li>
+                                    <li><a ><i
+                                            class="fa fa-chevron-right"
+                                            aria-hidden="true"></i> {{'Agent' | translate}}</a>
+                                    </li>
+                                    <li><a ><i class="fa fa-chevron-right"
+                                                      aria-hidden="true"></i> {{'Any Other' | translate}}</a>
+                                        <div class="any_src">
+                                            <input type="text" placeholder="Enter text">
+                                            <a
+                                               class="oka">{{'Click' | translate}}</a>
+                                        </div>
+                                    </li>-->
+                                </ul>
+
+                            </li>
+                            <!--<li><a ><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'File Execution' | translate}}</a></li>
+                            <li><a ><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'Complaint Status' | translate}}</a></li>
+                            <li><a ><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'Significant Orders' | translate}}</a></li>-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="catgery_sec_in ylow">
+                    <div class="cat_top"><span><img src="assets/images/cat-icn4.png"/></span>
+                        <strong>{{'Agents' | translate}}</strong>
+                        <button><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catgery_sec_in_ho">
+                        <ul>
+                            <li><a routerLink="/pages/agent-registration"><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'Sign Up' | translate}}</a></li>
+                            <li><a (click)="goToWithParam('/login', {t: 'agent'})"><i class="fa fa-chevron-right"
+                                                          aria-hidden="true"></i> {{'Login' | translate}}</a></li>
+                            <li><a ><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'Search Agent' | translate}}</a></li>
+                            <li><a ><i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i> {{'Agent Updates' | translate}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="map_sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 col-sm-12">
+                        <div class="map_pi">
+                            <!-- <img src="assets/images/map-img.png"/> -->
+                            <app-map></app-map>
+                            <div class="scale"><img src="assets/images/scl-img.png"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-12">
+                        <div class="regst_data">
+                            <h2>{{'Registered Projects' | translate}}: <strong>{{regProjectCount}}</strong></h2>
+                            <div class="regst_data_ls" style="min-height: 275px;">
+                                <ul>
+                                    <li *ngFor="let obj of projectCountDist"><i class="fa fa-map-marker" aria-hidden="true"></i> {{obj.projectfieldvalue | translate}}:
+                                        <strong>{{obj.totalCount}}</strong></li>
+                                    <!--<li><i class="fa fa-map-marker"
+                                           aria-hidden="true"></i> {{'Muzaffarpur' | translate}}: <strong>83</strong>
+                                    </li>
+                                    <li><i class="fa fa-map-marker" aria-hidden="true"></i> {{'Gaya' | translate}}:
+                                        <strong>76</strong></li>
+                                    <li><i class="fa fa-map-marker" aria-hidden="true"></i> {{'Bhagalpur' | translate}}:
+                                        <strong>73</strong></li>
+                                    <li><i class="fa fa-map-marker" aria-hidden="true"></i> {{'Darbhanga' | translate}}:
+                                        <strong>34</strong></li>-->
+                                </ul>
+                                <p style="text-align: right;color: #063486;">
+                                    <a class="anker-hover">{{'More' | translate}}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="proj_regs">
+            <div class="container">
+                <div class="proj_regs_in">
+                    <div class="regs_in"><span><img src="assets/images/count-icn1.png"/></span>
+                        <div class="regs_in_co"><strong>{{regProjectCount}}</strong>
+                            <p>{{'Registered Projects' | translate}} </p>
+                        </div>
+                    </div>
+                    <div class="regs_in"><span><img src="assets/images/count-icn2.png"/></span>
+                        <div class="regs_in_co"><strong>{{regAgent}}</strong>
+                            <p>{{'Registered Agent' | translate}} </p>
+                        </div>
+                    </div>
+
+                    <div class="regs_in"><span><img src="assets/images/count-icn3.png"/></span>
+                        <div class="regs_in_co"><strong>{{completedProject}}</strong>
+                            <p>{{'Completed Projects' | translate}}</p>
+                        </div>
+                    </div>
+
+                    <div class="regs_in"><span><img src="assets/images/count-icn4.png"/></span>
+                        <div class="regs_in_co"><strong>{{complaintsResolved}}</strong>
+                            <p>{{'Complaints Resolved' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="imp_notic" id="imp_notic">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>{{'IMPORTANT NOTICES' | translate}} </h2>
+                    <carousel [loop]="true" [autoplay]="true" [cellsToShow]="4" [height]="240"
+                              [autoplayInterval]="2000">
+                        <div class="carousel-cell" *ngFor="let obj of noticeList">
+                            <a (click)="openFile(obj.file)">
+                                <div class="imp_notic_in">
+                                    <span>{{obj.date}} </span>
+                                    <p *ngIf="obj.content.length <= 90" [title]="obj.content">{{obj.content | translate}}</p>
+                                    <p *ngIf="obj.content.length > 90" [title]="obj.content">{{obj.content.substring(0, 90) + '...' | translate}}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="latest_news" id="latest_news">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>{{'Latest News' | translate}}</h2>
+                    <carousel [loop]="true" [autoplay]="true" [cellsToShow]="4" [height]="580"
+                              [autoplayInterval]="2000">
+                        <div class="carousel-cell" *ngFor="let obj of newsList">
+                            <div class="latst_new_in">
+                                <span>{{obj.date.split(' ')[0]}} <strong>{{obj.date.split(' ')[1]}}</strong> {{obj.date.split(' ')[2]}} </span> <img
+                                    [src]="FILE_URL + 'news/' + obj.img"/>
+                                <p>{{obj.content}}</p>
+                                <a (click)="openFile(obj.file)">{{'view More' | translate}}</a></div>
+                        </div>
+                        <!--<div class="carousel-cell">
+                            <div class="latst_new_in"><span>09 <strong>{{'Apr' | translate}}</strong> 2022 </span> <img
+                                    src="assets/images/news-lat-img2.png"/>
+                                <p>{{'The period of validity for registration and completion of such projects is extended by Nine Months.' | translate}}</p>
+                                <a >{{'view More' | translate}}</a></div>
+                        </div>
+                        <div class="carousel-cell">
+                            <div class="latst_new_in"><span>09 <strong>{{'Apr' | translate}}</strong> 2022 </span> <img
+                                    src="assets/images/news-lat-img3.png"/>
+                                <p>{{'The documents submitted without case number and before and the office hours would not be entertained.' | translate}}</p>
+                                <a >{{'view More' | translate}}</a></div>
+                        </div>
+                        <div class="carousel-cell">
+                            <div class="latst_new_in"><span>09 <strong>{{'Apr' | translate}}</strong> 2022 </span> <img
+                                    src="assets/images/news-lat-img4.png"/>
+                                <p>{{'The period of validity for registration and completion of such projects is extended by Nine Months.' | translate}}</p>
+                                <a >{{'view More' | translate}}</a></div>
+                        </div>-->
+                    </carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div *ngIf="hide2">
+
+  <div class="banner-part">
+    <div class="container-fluid p-0">
+
+
+      <div class="banner-secn">
+        <ul>
+          <li> <img src="assets/images/iner-bannr-img1.png" alt=""> </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="main-body">
+    <div class="container">
+
+      <div class="page-in-sec">
+        <div class="row">
+          <div class="col-md-3">
+            <nav class='animated bounceInDown' [hidden]="sideItem.length==0">
+              <ul class="asidenav">
+
+                <li [ngClass]="openBlock==item.menuId && openBlockChild== '' ? 'active': ''" *ngFor="let item of sideItem; let i = index">
+
+
+                  <!-- <a class="cursor_pointer" (click)="item.children.length ==0 && menuItem(item.menuId)">  -->
+                  <a class="cursor_pointer" (click)="item.children.length ==0 ? menuItem(item.menuId) : menuItem2(item.menuId)">
+
+
+
+                    <!-- <i class="fa fa-key white_color" aria-hidden="true"></i>  -->
+
+                    <i [class]="'fa '+item.icon+ ' white_color'" aria-hidden="true"></i>
+
+                    <span class="white_color">{{item.name}}</span>
+
+
+                    <div class='fa arow fa-caret-down right' [hidden]="item.children.length == 0"></div></a>
+
+
+                  <ul [ngClass]="{'displayBlock':openBlock==item.menuId}" *ngFor="let oitem of item.children; let j = index">
+
+
+                    <li [ngClass]="{'active':openBlockChild==oitem.menuId}">
+
+                      <a class="cursor_pointer" (click)="menuItemChild(oitem.menuId, item.menuId)">
+
+                        <!-- <i class="fa fa-wpforms white_color" aria-hidden="true"></i>  -->
+
+                        <i [class]="'fa '+oitem.icon+ ' white_color'" aria-hidden="true"></i>
+
+                        <span class="white_color">{{oitem.name}}</span>
+
+                      </a></li>
+                  </ul>
+                </li>
+
+
+
+              </ul>
+            </nav>
+          </div>
+
+
+
+
+          <div class="col-md-9">
+            <div id="container_div" class="resp-tabs-container" *ngIf="!isDemoShow">
+              <div class="resp-tabs-container_in active" [hidden]="!htmlContent">
+
+                <div [innerHTML]="htmlContent"></div>
+
+              </div>
+            </div>
+          <div class=" active" *ngIf="isDemoShow">
+              <app-demo></app-demo>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+<div *ngIf="hide3">
+  <div class="banner-part">
+    <div class="container-fluid p-0">
+
+
+      <div class="banner-secn">
+        <ul>
+          <li> <img src="assets/images/iner-bannr-img1.png" alt=""> </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
+
+<app-footer></app-footer>
+
+<div id="toTop"><img src="assets/images/back-to-top-icon.png"/></div>
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

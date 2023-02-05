@@ -1,0 +1,899 @@
+<notifier-container></notifier-container>
+<div class="main-body">
+  <div class="promot_regs preview_list">
+    <div class="container">
+      <div class="prom_reg_in">
+        <div class="appl_no">
+          <!-- <p>NAME- Project Application Registration Scrutiny Checklist</p> -->
+        </div>
+        <h3 class="header">{{header}}</h3>
+        <div class="app_hdng">
+          <h2 class="offset-md-4 col-sm-4 userheader">Welcome {{username}}</h2>
+          <p *ngIf="workflowtype!=3"><strong>Project Name</strong> : &nbsp; {{projectname}}</p>
+          <p *ngIf="workflowtype==3"><strong>Agent Name</strong> : &nbsp; {{agentname}}</p>
+          <p *ngIf="workflowtype!=3"><strong>Promoter Name</strong> : &nbsp; {{promotername}}</p>
+          <p *ngIf="workflowtype==1"><strong>Application No.</strong> : &nbsp; {{applicationno}}</p>
+          <p *ngIf="workflowtype==2"><strong>Registration No.</strong> : &nbsp; {{regno}}</p>
+          <p *ngIf="workflowtype==3"><strong>User No.</strong> : &nbsp; {{userno}}</p>
+          <p><strong>Date of Submission</strong> : &nbsp; {{submitiontime | date:'dd/MM/yyyy'}}</p>
+          <!--<p><strong>Application Approval Stage</strong> : &nbsp; {{username}}</p>
+          <p><strong>Role </strong> : &nbsp; {{rolename}}</p>-->
+        </div>
+        <div class="prom_reg_frm checklist" *ngIf="showPromoter">
+          <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
+            <mat-tab label="View Promoter Profile" *ngIf="workflowtype !==AGENT_TYPE">
+              <app-profile-view [userID]="promotorid"></app-profile-view>
+            </mat-tab>
+            <mat-tab label="View Agent Profile" *ngIf="workflowtype ===AGENT_TYPE">
+              <app-agent-details [userID]="agentId" [entityTypeId]="entitytypeid"></app-agent-details>
+            </mat-tab>
+            <mat-tab label="View Registration Details" *ngIf="workflowtype===EXTENSION_TYPE">
+              <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex1"
+                             (selectedTabChange)="onTabChange1($event)">
+                <mat-tab label="View Application">
+                  <app-project-details [projectId]="projectId" [entitytypeid]="entitytypeid"
+                                       [userId]="promotorid"></app-project-details>
+                </mat-tab>
+                <mat-tab class="" *ngFor="let step of tabs; let stepPos = index" label="{{step.tabname}}"
+                         [disabled]="false">
+                  <div class="ckeckview tabletab" *ngFor="let tab of tabdetails1; let i = index">
+                    <h5>{{tab.groupname}}</h5>
+                    <div *ngIf="!tab.isnested">
+                      <div class="table-responsive">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                          <tr>
+                            <th align="left" valign="middle">SL No.</th>
+                            <th align="left" valign="middle">Check List Item</th>
+                            <th align="left" valign="middle">Information Provided by Promoter</th>
+                            <th align="left" valign="middle">Verified by System</th>
+                            <th align="left" valign="middle">System verification Result</th>
+                            <th align="left" valign="middle"
+                                *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                              Observation
+                            </th>
+                          </tr>
+                          <tr *ngFor="let tabval of tab.details; let j = index">
+                            <td align="left" valign="middle">{{j + 1}}</td>
+                            <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                            <td align="left" *ngIf="tabval.showIcon == false"
+                                valign="middle">{{tabval.projectfieldvalue}}
+                            </td>
+                            <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                                (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                                title="View Uploaded File"><i
+                              class="fa fa-eye"></i></a></td>
+                            <td align="left" valign="middle">
+                              {{tabval.systemchecked}}
+                            </td>
+                            <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                              {{tabval.systemcheckedresult}}
+                            </td>
+                            <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                              <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div *ngIf="tab.isnested">
+                      <div class="ckeckview tabletab" *ngFor="let group of tab.details; let i = index">
+                        <h5>{{group.groupposition + 1}}</h5>
+                        <div class="table-responsive">
+                          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                            <tr>
+                              <th align="left" valign="middle">SL No.</th>
+                              <th align="left" valign="middle">Check List Item</th>
+                              <th align="left" valign="middle">Information Provided by Promoter</th>
+                              <th align="left" valign="middle">Verified by System</th>
+                              <th align="left" valign="middle">System verification Result</th>
+                              <th align="left" valign="middle"
+                                  *ngFor="let tab1 of group.details[0].olddata;">{{tab1.rolename}}
+                                Observation
+                              </th>
+                            </tr>
+                            <tr *ngFor="let tabval of group.details; let j = index">
+                              <td align="left" valign="middle">{{j + 1}}</td>
+                              <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                              <td align="left" *ngIf="tabval.showIcon == false"
+                                  valign="middle">{{tabval.projectfieldvalue}}
+                              </td>
+                              <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                                  (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                                  title="View Uploaded File"><i
+                                class="fa fa-eye"></i></a></td>
+                              <td align="left" valign="middle">
+                                {{tabval.systemchecked}}
+                              </td>
+                              <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                                {{tabval.systemcheckedresult}}
+                              </td>
+                              <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                                <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                              </td>
+                              <!--<td align="left" valign="middle"><input class="form-control" type="file" id="file{{i}}"
+                                                                      style="padding-bottom: 37px;"
+                                                                      (change)="uploadFile($event,i,'c',j)"/></td>-->
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-tab>
+                <mat-tab label="Notes and Queries">
+                  <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                    <div class="card-header">
+                      Internal Note
+                    </div>
+                    <div class="card-body pad-lft-rgt-10">
+                      <div class="table-responsive">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                               class="table  table-striped table-hover">
+                          <tr>
+                            <th align="left" valign="middle" width="15%">SL No.</th>
+                            <th align="left" valign="middle" width="20%">Note By</th>
+                            <th align="left" valign="middle" width="65%">Remarks</th>
+                          </tr>
+                          <tr *ngFor="let note of regnotes;let i=index;">
+                            <td align="left" valign="middle">{{i + 1}}.</td>
+                            <td align="left" valign="middle" width="20%">{{note.username}}.</td>
+                            <td align="left" valign="middle" width="65%">{{note.notes}}.</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                    <div class="card-header">
+                      Queries Raised
+                    </div>
+                    <div class="card-body pad-lft-rgt-10">
+                      <div class="tabletab qreye">
+                        <div class="table-responsive">
+                          <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                 class="table  table-striped">
+                            <tr>
+                              <th align="left" valign="middle">SL No.</th>
+                              <th align="left" valign="middle">Query to Promoter</th>
+                              <th align="left" valign="middle">Raised By</th>
+                              <th align="left" valign="middle">Time Given to Respond (Days)</th>
+                              <th align="left" valign="middle">Additional Document Asked</th>
+                              <th align="left" valign="middle">Accepted</th>
+                              <th align="left" valign="middle">Comments of HOR</th>
+                              <th align="left" valign="middle"></th>
+                              <!--                              <th align="left" valign="middle" *ngIf="stepseqno===HOR_STEP_SEQ">Accept (yes/No)</th>-->
+                            </tr>
+                            <tr *ngFor="let q of regqueryanswerdetails;let j=index;">
+                              <td colspan="7">
+                                <table width="100%">
+                                  <tr>
+                                    <td align="middle" valign="middle">{{j + 1}}</td>
+                                    <td align="middle" valign="middle">{{q.query}}</td>
+                                    <td align="middle" valign="middle"> {{q.username}} </td>
+                                    <td align="middle" valign="middle">{{q.permissibletime}}</td>
+                                    <td align="middle" valign="middle">{{q.comments}} </td>
+                                    <td align="middle" valign="middle">{{q.accepted}} </td>
+                                    <td align="middle" valign="middle">{{q.answer}}</td>
+                                    <td *ngIf=" q.isvalidquery ===0 " align="center"
+                                        valign="middle">
+                                      <i
+                                        class="fa fa-times text-danger"></i></td>
+
+                                  </tr>
+                                  <tr *ngIf="q.details.length>0">
+                                    <td colspan="7">
+                                      <div class="comm_div">
+                                        <!--                                    <h5 style="font-size: 18px; margin: 20px 0;">Comment against Query </h5>-->
+                                        <ul>
+                                          <li *ngFor="let val of q.details;">
+
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                   class="table  table-striped table-hover">
+
+                                              <tbody>
+                                              <tr>
+                                                <td align="left" valign="middle" width="8%">&nbsp;</td>
+                                                <td align="left" valign="middle" width="35%"
+                                                    style="vertical-align: middle">
+                                                  <div class="reply_an"><strong>Promoter's Answer</strong>
+                                                    <p>Date:{{val.dateofanswer | date:'medium'}} </p></div>
+                                                </td>
+                                                <td align="label" valign="middle" width="40%"
+                                                    style="vertical-align: middle"><p
+                                                  style="padding: 0; margin: 0">{{val.answer}}</p></td>
+                                                <td align="left" valign="middle" width="10%"
+                                                    style="vertical-align: middle">
+                                                  <i *ngIf="val.filedesc !==null "
+                                                     class="fa fa-file-image-o pointer" aria-hidden="true"
+                                                     (click)="openAttachment(val.filepath)">&nbsp;&nbsp;{{val.filedesc}}</i>
+                                                </td>
+                                              </tr>
+                                              </tbody>
+                                            </table>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+
+                            </tr>
+
+
+                          </table>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-tab>
+            <mat-tab label="View Application" *ngIf="workflowtype===REGISTRATION_TYPE">
+              <app-project-details [projectId]="projectId" [entitytypeid]="entitytypeid"
+                                   [userId]="promotorid"></app-project-details>
+            </mat-tab>
+            <mat-tab label="View Extension" *ngIf="workflowtype===EXTENSION_TYPE">
+              <app-project-entesion-dtl [projectId]="projectId" [userId]="promotorid"></app-project-entesion-dtl>
+
+            </mat-tab>
+            <mat-tab label="Project Ranking">
+              PROJECT RANKING DETAILS
+            </mat-tab>
+            <mat-tab class="" *ngFor="let step of tabs; let stepPos = index" label="{{step.tabname}}"
+                     [disabled]="false">
+              <div class="ckeckview tabletab" *ngFor="let tab of tabdetails; let i = index">
+                <h5>{{tab.groupname}}</h5>
+                <div *ngIf="!tab.isnested">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                      <tr>
+                        <th align="left" valign="middle">SL No.</th>
+                        <th align="left" valign="middle">Check List Item</th>
+                        <th align="left" valign="middle">Information Provided by Promoter</th>
+                        <th align="left" valign="middle">Verified by System</th>
+                        <th align="left" valign="middle">System verification Result</th>
+                        <!--<th align="left" valign="middle" *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                          Attachment
+                        </th>-->
+                        <th align="left" valign="middle" *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                          Observation
+                        </th>
+                        <th align="left" valign="middle" *ngIf="stepworkid===1">{{rolename}} Comment Yes/No</th>
+                        <th align="left" valign="middle" *ngIf="stepworkid===1">{{rolename}} Observation</th>
+                        <!--                      <th align="left" valign="middle">{{rolename}} Attachment</th>-->
+                      </tr>
+                      <tr *ngFor="let tabval of tab.details; let j = index">
+                        <td align="left" valign="middle">{{j + 1}}</td>
+                        <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                        <td align="left" *ngIf="tabval.showIcon == false" valign="middle">{{tabval.projectfieldvalue}}
+                        </td>
+                        <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                            (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                            title="View Uploaded File"><i
+                          class="fa fa-eye"></i></a></td>
+                        <td align="left" valign="middle">
+                          {{tabval.systemchecked}}
+                        </td>
+                        <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                          {{tabval.systemcheckedresult}}
+                        </td>
+                        <!--<td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+
+                          <a class="blue" (click)="openAttachment(tab1.filepath)">{{tab1.filedesc}}</a>
+                        </td>-->
+                        <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                          <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                        </td>
+                        <td align="left" valign="middle" *ngIf="stepworkid===1">
+                          <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                            <mat-radio-button value="1">Yes</mat-radio-button>
+                            <mat-radio-button value="0">No</mat-radio-button>
+                          </mat-radio-group>
+
+                        </td>
+                        <td align="left" valign="middle" *ngIf="stepworkid===1">
+                          <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                        </td>
+                        <!--<td align="left" valign="middle"><input class="form-control" type="file" id="file{{i}}"
+                                                                style="padding-bottom: 37px;"
+                                                                (change)="uploadFile($event,i,'c',j)"/></td>-->
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div *ngIf="tab.isnested">
+                  <div class="ckeckview tabletab" *ngFor="let group of tab.details; let i = index">
+                    <h5>{{group.groupposition + 1}}</h5>
+                    <div class="table-responsive">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table  table-hover">
+                        <tr>
+                          <th align="left" valign="middle">SL No.</th>
+                          <th align="left" valign="middle">Check List Item</th>
+                          <th align="left" valign="middle">Information Provided by Promoter</th>
+                          <th align="left" valign="middle">Verified by System</th>
+                          <th align="left" valign="middle">System verification Result</th>
+                          <!--<th align="left" valign="middle" *ngFor="let tab of tab.details[0].olddata;">{{tab.rolename}}
+                            Attachment
+                          </th>-->
+                          <th align="left" valign="middle"
+                              *ngFor="let tab1 of group.details[0].olddata;">{{tab1.rolename}}
+                            Observation
+                          </th>
+                          <th align="left" valign="middle" *ngIf="stepworkid===1">{{rolename}} Comment Yes/No</th>
+                          <th align="left" valign="middle" *ngIf="stepworkid===1">{{rolename}} Observation</th>
+                          <!--                      <th align="left" valign="middle">{{rolename}} Attachment</th>-->
+                        </tr>
+                        <tr *ngFor="let tabval of group.details; let j = index">
+                          <td align="left" valign="middle">{{j + 1}}</td>
+                          <td align="left" valign="middle">{{tabval.checklistname}}</td>
+                          <td align="left" *ngIf="tabval.showIcon == false" valign="middle">{{tabval.projectfieldvalue}}
+                          </td>
+                          <td align="left" *ngIf="tabval.showIcon == true" valign="middle"><a class="ved_eye"
+                                                                                              (click)="openAttachment(tabval.projectfieldvalue)"
+                                                                                              title="View Uploaded File"><i
+                            class="fa fa-eye"></i></a></td>
+                          <td align="left" valign="middle">
+                            {{tabval.systemchecked}}
+                          </td>
+                          <td align="left" valign="middle" [ngClass]="tabval.systemchecked=='Yes'?'green':'red' ">
+                            {{tabval.systemcheckedresult}}
+                          </td>
+                          <!--<td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+
+                            <a class="blue" (click)="openAttachment(tab1.filepath)">{{tab1.filedesc}}</a>
+                          </td>-->
+                          <td align="left" valign="middle" *ngFor="let tab1 of tabval.olddata;">
+                            <textarea [(ngModel)]="tab1.comment" [disabled]="true">{{tab1.comment}}</textarea>
+                          </td>
+                          <td align="left" valign="middle" *ngIf="stepworkid===1">
+                            <mat-radio-group [(ngModel)]="tabval.checklistcommentchecked">
+                              <mat-radio-button value="1">Yes</mat-radio-button>
+                              <mat-radio-button value="0">No</mat-radio-button>
+                            </mat-radio-group>
+
+                          </td>
+                          <td align="left" valign="middle" *ngIf="stepworkid===1">
+                            <textarea [(ngModel)]="tabval.comment">{{tabval.comment}}</textarea>
+                          </td>
+                          <!--<td align="left" valign="middle"><input class="form-control" type="file" id="file{{i}}"
+                                                                  style="padding-bottom: 37px;"
+                                                                  (change)="uploadFile($event,i,'c',j)"/></td>-->
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group button_dv pprov_btndv" *ngIf="stepworkid == 1"
+                   style="margin: 12px;">
+                <button type="submit" class="btn btn-success" (click)="saveDetails()"><i class="fa fa-floppy-o"
+                                                                                         aria-hidden="true"></i> Save
+                </button>
+              </div>
+            </mat-tab>
+            <mat-tab label="Submit" *ngIf="stepseqno===SCRUTINY1_STEP_SEQ">
+              <div class="form-group row mar-left-right-0" *ngFor="let ques of questions">
+                <label class="col-sm-6 col-md-6 col-form-label">{{ques.question}}</label>
+                <div class="col-sm-6 col-md-6">
+                  <textarea class="form-control" [(ngModel)]="ques.answer"></textarea>
+                </div>
+              </div>
+              <!--              <button (click)="">Click</button>-->
+              <div class="form-group button_dv pprov_btndv">
+                <div class="form-group col-sm-3">
+                  <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid" (change)="onStateChange()">
+                    <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-3" *ngIf="stepusers.length>1">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid"
+                          (change)="onUserChange($event)">
+                    <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                  </select>
+
+                </div>
+                <div class="col-sm-3">
+                  <button type="button" class="btn btn-primary radius-0 btn-block font-13"
+                          (click)="submitAnswerAndChangeStep(nextstepid)">
+                    Send
+                  </button>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="{{querystepname}}" [disabled]="disabledQuery" *ngIf="isdisplaynotequerytab">
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  Internal Note
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           class="table  table-striped table-hover">
+                      <tr>
+                        <th align="left" valign="middle" width="15%">SL No.</th>
+                        <th align="left" valign="middle" width="20%">Note By</th>
+                        <th align="left" valign="middle" width="65%">Remarks</th>
+                      </tr>
+                      <tr *ngFor="let note of notes;let i=index;">
+                        <td align="left" valign="middle">{{i + 1}}.</td>
+                        <td align="left" valign="middle" width="20%">{{note.username}}.</td>
+                        <td align="left" valign="middle" width="65%">{{note.notes}}.</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="form-group row mar-left-right-0">
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" placeholder="Write Internal Note"
+                                [(ngModel)]="internalNote" [maxLength]="2000"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2" (click)="insertinternalnotes(1)">Add
+                      Notes
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  Queries Raised
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="tabletab qreye">
+                    <div class="table-responsive">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                             class="table  table-striped sub_tab_tr">
+                        <thead style="background: inherit; color: inherit;">
+                        <tr>
+                          <th align="left" valign="middle">SL No.</th>
+                          <th align="left" valign="middle">Query to Promoter</th>
+                          <th align="left" valign="middle">Raised By</th>
+                          <th align="left" valign="middle">Time Given to Respond (Days)</th>
+                          <th align="left" valign="middle">Additional Document Asked</th>
+                          <th align="left" valign="middle" *ngIf="stepseqno !== HOR_STEP_SEQ">Accepted</th>
+                          <th align="left" valign="middle">Comments of HOR</th>
+                          <th align="left" valign="middle" *ngIf="stepseqno !== HOR_STEP_SEQ"></th>
+                          <th align="left" valign="middle" *ngIf="stepseqno===HOR_STEP_SEQ">Accept (yes/No)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let q of queryanswerdetails;let j=index;">
+                          <td colspan="8" style="padding: 0">
+                            <table width="100%" class="sub_tab_td">
+                              <tr>
+                                <td align="left" valign="middle">{{j + 1}}</td>
+                                <td align="left" valign="middle" style="width: 160px;">{{q.query}}</td>
+                                <td align="left" valign="middle"> {{q.username}} </td>
+                                <td align="middle" valign="middle">{{q.permissibletime}}</td>
+                                <td align="middle" valign="middle">{{q.comments}} </td>
+                                <td align="left" valign="middle"
+                                    *ngIf="stepseqno !== HOR_STEP_SEQ">{{q.accepted}} </td>
+                                <td align="middle" valign="middle"
+                                    *ngIf="stepseqno===HOR_STEP_SEQ && q.isvalidquery===null; else elseBlock "><textarea
+                                  [(ngModel)]="q.answer">{{q.answer}}</textarea></td>
+                                <ng-template #elseBlock>
+                                  <td align="middle" valign="middle">{{q.answer}}</td>
+                                </ng-template>
+                                <!--<td *ngIf=" q.isvalidquery ===0 && stepseqno !== HOR_STEP_SEQ" align="center"
+                                    valign="middle">
+                                  <i
+                                    class="fa fa-times text-danger"></i></td>-->
+
+                                <td align="middle" valign="middle"
+                                    *ngIf="stepseqno===HOR_STEP_SEQ && q.isvalidquery===null">
+                                  <a class="pointer" (click)="invalidateQuery(q,1)"><i
+                                    class="fa fa-check text-success"></i>
+                                  </a> / <a class="pointer" (click)="invalidateQuery(q,0)"><i
+                                  class="fa fa-times text-danger"></i>
+                                </a></td>
+                                <td align="middle" valign="middle"
+                                    *ngIf="stepseqno===HOR_STEP_SEQ && q.isvalidquery===1">
+                                  <i
+                                    class="fa fa-check text-success"></i>
+                                </td>
+                                <td align="middle" valign="middle"
+                                    *ngIf="stepseqno===HOR_STEP_SEQ && q.isvalidquery===0">
+                                  <i
+                                    class="fa fa-times text-danger"></i>
+                                </td>
+                              </tr>
+                              <tr *ngIf="q.details.length>0">
+                                <td colspan="7">
+                                  <div class="comm_div">
+                                    <!--                                    <h5 style="font-size: 18px; margin: 20px 0;">Comment against Query </h5>-->
+                                    <ul>
+                                      <li *ngFor="let val of q.details;">
+
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                               class="table  table-striped table-hover">
+
+                                          <tbody>
+                                          <tr>
+                                            <td align="left" valign="middle" width="8%">&nbsp;</td>
+                                            <td align="left" valign="middle" width="35%" style="vertical-align: middle">
+                                              <div class="reply_an"><strong>Promoter's Answer</strong>
+                                                <p>Date:{{val.dateofanswer | date:'medium'}} </p></div>
+                                            </td>
+                                            <td align="label" valign="middle" width="40%"
+                                                style="vertical-align: middle"><p
+                                              style="padding: 0; margin: 0">{{val.answer}}</p></td>
+                                            <td align="left" valign="middle" width="10%" style="vertical-align: middle">
+                                              <i *ngIf="val.filedesc !==null "
+                                                 class="fa fa-file-image-o pointer" aria-hidden="true"
+                                                 (click)="openAttachment(val.filepath)">&nbsp;&nbsp;{{val.filedesc}}</i>
+                                            </td>
+                                            <td align="label" valign="middle" width="20%"
+                                                style="vertical-align: middle" ><p
+                                              style="padding: 0; margin: 0"><textarea placeholder="Enter your comment" [(ngModel)]="val.comments" [disabled]="val.commentid !==0" (keyup.enter)="submitAnswer(val)" ></textarea> <button class="btn cmmntBtn" *ngIf="val.commentid ===0" (click)="submitAnswer(val)"><i class="fa fa-paper-plane text-success"></i></button></p></td>
+                                          </tr>
+                                          </tbody>
+                                        </table>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+
+                        </tr>
+
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-body pad-lft-rgt-10">
+                  <mat-checkbox [(ngModel)]="raiseQuery"><span class="query-label">Do you want to raise a query ?</span>
+                  </mat-checkbox>
+
+                  <div class="tabletab qreye" [hidden]="!raiseQuery">
+                    <div class="table-responsive">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                             class="table  table-striped table-hover">
+                        <tr>
+                          <th align="left" valign="middle" width="5%">SL No.</th>
+                          <th align="left" valign="middle" width="35%">Query To Promoter</th>
+                          <th align="left" valign="middle" width="15%">Document Required</th>
+                          <th align="left" valign="middle" width="25%">Document Name if Yes</th>
+                          <th align="left" valign="middle" width="20%">Time to Respond (Days)</th>
+                          <th align="left" valign="middle" width="5%"></th>
+                        </tr>
+                        <tr *ngFor="let query of queries;let i=index;">
+                          <td align="left" valign="middle">{{i + 1}}.</td>
+                          <td align="left" valign="middle" width="35%"><textarea [(ngModel)]="query.query"
+                                                                                 [disabled]="hasValidQueryValue && roletype=='4'"></textarea>
+                          </td>
+                          <td align="label" valign="middle">
+                            <div class="sle_ppr ">
+                              <mat-radio-group [(ngModel)]="query.docsrequired">
+                                <mat-radio-button value="1">Yes</mat-radio-button>&nbsp;&nbsp;
+                                <mat-radio-button value="0">No</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                          </td>
+                          <td align="center" valign="middle" width="25%"><input class="form-control" type="text"
+                                                                                [(ngModel)]="query.docs"
+                                                                                [readOnly]="hasValidQueryValue && roletype=='4'"/>
+                          </td>
+                          <!--<td align="left" valign="middle" width="10%"><input class="form-control" type="file" id="file{{i}}"
+                                                                              style="padding-bottom: 37px;" (change)="uploadFile($event,i,'q')"/></td>-->
+                          <td align="center" valign="middle" width="15%"><input class="form-control" type="text"
+                                                                                [readOnly]="hasValidQueryValue && roletype=='4'"
+                                                                                [(ngModel)]="query.time"
+                                                                                placeholder=""/>
+                          </td>
+                          <td align="center" valign="middle" class="pad-top-19"><a class="font-18"
+                                                                                   [hidden]="hasValidQueryValue && roletype=='4'"
+                                                                                   (click)="deleteQuery(i)"><i
+                            class="fa fa-times text-danger"></i></a></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <button class="btn btn-primary pull-right radius-0 font-13 mb-2" *ngIf="!canApprove"
+                            [disabled]="hasValidQueryValue && roletype=='4'"
+                            (click)="addMoreQuery()"><i
+                      class="fa fa-plus" aria-hidden="true "></i> Add More
+                    </button>
+                    <div class="clear"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <mat-radio-group [(ngModel)]="workflowbutton" (change)="moveStepChange()">
+
+                        <mat-radio-button value="1">Send to next step</mat-radio-button> &nbsp;
+                        <mat-radio-button value="2" *ngIf="currentstepusers.length>1">Send to user</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="form-group col-sm-3" *ngIf="workflowbutton === '2'">
+                      <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="currentstepuserid"
+                              (change)="onCurrentUserChange($event)">
+                        <option *ngFor="let b of currentstepusers" [value]="b.userid">{{b.username}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2" *ngIf="workflowbutton === '2'">
+                      <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                              (click)="onCurrentStepUserChange()">
+                        Send
+                      </button>
+                    </div>
+                    <div class="form-group col-sm-3" *ngIf="workflowbutton === '1'">
+                      <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid"
+                              (change)="onStateChange()">
+                        <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-sm-3" *ngIf="stepusers.length>1 && workflowbutton === '1'">
+                      <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid"
+                              (change)="onUserChange($event)">
+                        <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-2" *ngIf="workflowbutton === '1'">
+                      <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                              (click)="onStepChange()">
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </mat-tab>
+            <mat-tab label="{{notestepname}}" [disabled]="disabledQuery" *ngIf="isdisplaynotetab">
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  {{noteheadername}}
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           class="table  table-striped table-hover">
+                      <tr>
+                        <th align="left" valign="middle" width="15%">SL No.</th>
+                        <th align="left" valign="middle" width="20%">Note By</th>
+                        <th align="left" valign="middle" width="65%">Remarks</th>
+                      </tr>
+                      <tr *ngFor="let note of notes;let i=index;">
+                        <td align="left" valign="middle">{{i + 1}}.</td>
+                        <td align="left" valign="middle" width="20%">{{note.username}}.</td>
+                        <td align="left" valign="middle" width="65%">{{note.notes}}.</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="form-group row mar-left-right-0"
+                       *ngIf="stepseqno===INTERN_STEP_SEQ || stepseqno===HOR_STEP_SEQ">
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" placeholder="Write  Note"
+                                [(ngModel)]="internalNote" [maxLength]="2000"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2" (click)="addNotes()">Add
+                      Notes
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15"
+                   *ngIf="stepseqno !==HOR_STEP_SEQ && stepseqno !==INTERN_STEP_SEQ">
+                <div class="card-header">
+                  Approval / Rejection Notes
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           class="table  table-striped table-hover">
+                      <tr>
+                        <th align="left" valign="middle" width="10%">SL No.</th>
+                        <th align="left" valign="middle" width="20%">Remarks By</th>
+                        <th align="left" valign="middle" width="50%">Remarks</th>
+                        <th align="left" valign="middle" width="20%">Decision</th>
+                      </tr>
+                      <tr *ngFor="let note of approvalnotes;let i=index;">
+                        <td align="left" valign="middle">{{i + 1}}.</td>
+                        <td align="left" valign="middle" width="20%">{{note.username}}</td>
+                        <td align="left" valign="middle" width="50%">{{note.comment}}</td>
+                        <td align="left" valign="middle" width="20%">{{note.type}}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15" [hidden]="isDecisionDone">
+                <div class="card-header">
+                  Decision on the Proposal
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                      <mat-radio-group [(ngModel)]="approvaltypeid">
+                        <mat-radio-button *ngFor="let type of approvalTypes" value="{{type.id}}">{{type.type}}&nbsp;&nbsp;</mat-radio-button>
+                        &nbsp;&nbsp;
+                      </mat-radio-group>
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                      <textarea class="form-control" placeholder="Write Approval Note"
+                                [(ngModel)]="approvalNote" [maxLength]="2000"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2" (click)="addApprovalNotes()">Confirm
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="row ">
+                <div class="form-group col-sm-3">
+                  <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid"
+                          (change)="onStateChange()">
+                    <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-3" *ngIf="stepusers.length>1 ">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid"
+                          (change)="onUserChange($event)">
+                    <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                          (click)="onStepChangeFromProposal()">
+                    Send
+                  </button>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Issue Certificate" [disabled]="disabledQuery" *ngIf="isdisplayceotab">
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  <span class="query-label">Approval Status:</span> {{approvedStatus}}
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15">
+                <div class="card-header">
+                  Approval / Rejection Notes
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           class="table  table-striped table-hover">
+                      <tr>
+                        <th align="left" valign="middle" width="10%">SL No.</th>
+                        <th align="left" valign="middle" width="20%">Remarks By</th>
+                        <th align="left" valign="middle" width="50%">Remarks</th>
+                        <th align="left" valign="middle" width="20%">Decision</th>
+                      </tr>
+                      <tr *ngFor="let note of approvalnotes;let i=index;">
+                        <td align="left" valign="middle">{{i + 1}}.</td>
+                        <td align="left" valign="middle" width="20%">{{note.username}}</td>
+                        <td align="left" valign="middle" width="50%">{{note.comment}}</td>
+                        <td align="left" valign="middle" width="20%">{{note.type}}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15"
+                   *ngIf="certificate !==null ">
+                <div class="card-header">
+                  <a class="query-label" (click)="openCertificate()">Click here to view the certificate</a>
+                  <!--                  <span class="query-label">Approval Status:</span> {{approvedStatus}}-->
+                </div>
+              </div>
+
+              <div class="row mar-left-right-0" *ngIf="stepseqno===SECRETARY_STEP_SEQ">
+                <div class="col-sm-12 col-md-12">
+                  <mat-radio-group [(ngModel)]="suggesttypeid">
+                    <mat-radio-button value="1">Suggest Changes&nbsp;&nbsp;</mat-radio-button>
+                    &nbsp;&nbsp;
+                    <mat-radio-button value="2">Issue Certificate/Notice&nbsp;&nbsp;</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15"
+                   *ngIf="suggesttypeid=='1' && certificate !==null">
+                <div class="card-header">
+                  Suggest Change in Certificate /Notice
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="table-responsive">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           class="table  table-striped table-hover">
+                      <tr>
+                        <th align="left" valign="middle" width="15%">SL No.</th>
+                        <th align="left" valign="middle" width="20%">Suggested By</th>
+                        <th align="left" valign="middle" width="65%">Changes Suggestion</th>
+                      </tr>
+                      <tr *ngFor="let note of notes;let i=index;">
+                        <td align="left" valign="middle">{{i + 1}}.</td>
+                        <td align="left" valign="middle" width="20%">{{note.username}}.</td>
+                        <td align="left" valign="middle" width="65%">{{note.notes}}.</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="form-group row mar-left-right-0"
+                       *ngIf="stepseqno !==CEO_STEP_SEQ">
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" placeholder="Write  Suggestion"
+                                [(ngModel)]="internalNote" [maxLength]="2000"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2" (click)="insertinternalnotes(3)">
+                      More
+                      Suggestion
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15"
+                   *ngIf="stepseqno=== CEO_STEP_SEQ && certificate !==null">
+                <div class="card-header">
+                  <a class="query-label">Edit Certificate</a>
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <!--<ck-editor name="editor1" [(ngModel)]="modifiedCert" skin="moono-lisa" language="en"
+                             [fullPage]="true" [config]="config"></ck-editor>-->
+                  <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="modifiedCert"></angular-editor>
+                  <button type="button" class="btn btn-primary col-sm-2 col-md-2 mar-top-15"
+                          (click)="updateCertificate()">Save
+
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 col-sm-12 pad-left-right-0 mar-bot-15" *ngIf="suggesttypeid=='2'">
+                <div class="card-header">
+                  Issue Certificate
+                </div>
+                <div class="card-body pad-lft-rgt-10">
+                  <div class="form-group row mar-left-right-0">
+                    <div class="col-sm-5 col-md-5">
+                      <textarea class="form-control" placeholder="Write  Comments"
+                                [(ngModel)]="issueComment" [maxLength]="2000"></textarea>
+                    </div>
+                    <div class="col-sm-5 col-md-5"
+                         *ngIf="approvedid == APPROVED_TYPE_NO || approvedid==COND_APPROVE_TYPE_NO">
+                      <textarea class="form-control" placeholder="{{regplaceholder}}"
+                                [(ngModel)]="regno" [maxLength]="2000"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary col-sm-2 col-md-2" (click)="approval()">
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row ">
+                <div class="form-group col-sm-3">
+                  <select class="custom-select nextSteps font-13" [(ngModel)]="nextstepid"
+                          (change)="onStateChange()">
+                    <option *ngFor="let b of nextSteps" [value]="b.id">{{b.stepname}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-3" *ngIf="stepusers.length>1 ">
+                  <select class="custom-select radius-0 font-13 form-control" [(ngModel)]="stepuserid"
+                          (change)="onUserChange($event)">
+                    <option *ngFor="let b of stepusers" [value]="b.workflowuserid">{{b.username}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" class="btn btn-primary btn-block radius-0 font-13"
+                          (click)="onStepChangeWithoutComment()">
+                    Send
+                  </button>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

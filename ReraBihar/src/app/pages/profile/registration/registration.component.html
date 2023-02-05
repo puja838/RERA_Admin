@@ -1,0 +1,185 @@
+<div class="main-body">
+  <div class="promot_regs">
+    <div class="container">
+      <div class="logi_dv_pg">
+        <div class="container">
+          <section class="h-100 gradient-form">
+            <div class="logi_dv">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-11">
+                  <div class="card rounded-3 text-black">
+                    <div class="card-body mx-md-4">
+                      <div class="text-center log_fme mb-3">
+                        <h4 style="font-size: 1.5rem;"> {{'Promoter' | translate}} {{'Sign Up' | translate}} </h4>
+                      </div>
+                      <div class="mobile_otp_sc">
+                        <div class="mob_log">
+                          <div class="sle_ppr proj_lo mt-0">
+                            <!--<div class="form-check">
+                              <input class="form-check-input" type="radio" name="configoption[14]" value="2"
+                                     [(ngModel)]="userType" [ngModelOptions]="{standalone: true}"
+                                     id="flexRadioDefault14">
+                              <label class="form-check-label" for="flexRadioDefault14">Agent </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="configoption[14]" value="1"
+                                     [(ngModel)]="userType" [ngModelOptions]="{standalone: true}"
+                                     id="flexRadioDefault15" checked="">
+                              <label class="form-check-label" for="flexRadioDefault15">Promoter</label>
+                            </div>-->
+                          </div>
+                          <div class="tw_dv">
+                            <div class="form-outline mb-4">
+                              <label>  {{'Promoter Type' | translate}}   <span style="color: #f00;">*</span></label>
+                              <select class="form-control" (change)="onPromotorTypeChange()"
+                                      [(ngModel)]="selectedPromotorType">
+                                <option value="">  {{'Select Promoter Type' | translate}}  </option>
+                                <option *ngFor="let obj of entityTypeList"
+                                        [value]="obj.entitytypeid">{{obj.entitytypedesc}}</option>
+
+                              </select>
+
+                            </div>
+                          </div>
+                          <div class="common box">
+
+                            <div class="tw_dv">
+                              <div class="form-outline mb-4">
+                                <label class="form-label"><i class="fa fa-user-o"
+                                                             aria-hidden="true"></i>  {{'Name as per PAN Card' | translate}}  <span style="color:#f00">*</span></label>
+                                <input type="email" class="form-control" [(ngModel)]="userName"
+                                       [ngModelOptions]="{standalone: true}"
+                                       placeholder="{{'Name as per PAN Card' | translate}}"onkeypress="return String.fromCharCode(event.charCode).match(/[^a-zA-Z' ']/g) === null" 
+                                       (focusout)="nameValidation()" [disabled]="isPanVerify"/>
+                                <span style="color: red;">{{userNameErr}}</span>  
+                              </div>
+                              <div class="form-outline mb-4 pan_v">
+                                <label class="form-label"><i class="fa fa-user-o"
+                                                             aria-hidden="true"></i>   {{'PAN No. (User ID)' | translate}}   <span style="color:#f00">*</span></label>
+                                <input type="text" class="form-control" [(ngModel)]="userPanNo"
+                                       [ngModelOptions]="{standalone: true}"
+                                       placeholder="{{'Enter PAN No.' | translate}}"  onkeypress="return String.fromCharCode(event.charCode).match(/[^a-zA-Z0-9]/g) === null"
+                                       (focusout)="validPAN()" [disabled]="isPanVerify" (keydown)="checkPanLength($event)"/>
+                                <button type="submit" id="Verify_Pan" class="btn btn-primary" (click)="onButtonClick('Verify_Pan')">  {{'Verify PAN' | translate}}  </button>
+                                <span style="color: red;display: inline-block;">{{panerr}}</span>
+                              </div>
+
+                            </div>
+                            <div class="thre_dv">
+
+                              <div>
+                                <div class="form-outline mb-4 emle">
+                                  <label class="form-label"><i class="fa fa-envelope-o"
+                                                               aria-hidden="true"></i>   {{'Email Id' | translate}}   <span
+                                    style="color:#f00">*</span></label>
+                                  <input id="Email_ID" type="email" class="form-control mt-1" [(ngModel)]="userEmail"
+                                         [ngModelOptions]="{standalone: true}" placeholder="{{'Email Id' | translate}}"(focusout)="ValidateEmail()" [disabled]="isEmailVerify"/>
+                                  <span style="color: red;">{{emailerr}}</span>         
+                                </div>
+                                <div class="prom_inr_com form-group verify_ot_dv">
+                                  <label>&nbsp;</label>
+                                  <button id="Verify_Email_Id" type="submit" class="btn btn-primary verify_ot_dv" (click)="onButtonClick('Verify_Email_Id')" [disabled]="isEmailVerify">  {{'Verify Email Id' | translate}}  </button>
+                                </div>
+                              </div>
+
+                              <div>
+                                <div class="prom_inr_com form-group entotp">
+                                  <label>  {{'Email Verification Code' | translate}} <span
+                                    style="color:#f00">*</span> </label>
+                                  <input id="Email_Verification_Code" class="form-control" type="text" [(ngModel)]="userEmailVarifyCode"
+                                         [ngModelOptions]="{standalone: true}"
+                                         placeholder="{{'Enter Verification Code sent to Email Id' | translate}}" [disabled]="isEmailVerify">
+                                </div>
+                                <div class="prom_inr_com form-group">
+                                  <label>&nbsp;</label>
+                                  <button id="Verify_Code_Email" type="submit" class="btn btn-primary verify_ot" (click)="onButtonClick('Verify_Code_Email')" [disabled]="isEmailVerify">  {{'Verify Code' | translate}}  </button>
+                                </div>
+                                <div class="prom_inr otp_dv">
+                                  <div class="req_op">
+                                    <strong id="label_Resend_Code_Email">&nbsp;</strong>
+                                    <button id="Resend_Code_Email" type="submit" class="btn btn-info" (click)="onButtonClick('Resend_Code_Email')" [disabled]="isEmailVerify">  {{'Resend Code' | translate}}  </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="thre_dv">
+
+                              <div>
+                                <div class="form-outline mb-4 emle">
+                                  <label class="form-label"><i class="fa fa-phone"
+                                                               aria-hidden="true"></i>   {{'Mobile Number' | translate}}  
+                                    <span style="color:#f00">*</span></label>
+                                  <input id="Mobile_Number" type="text" class="form-control mt-1" [(ngModel)]="userMobileNo"
+                                         [ngModelOptions]="{standalone: true}" onkeypress="return String.fromCharCode(event.charCode).match(/[^0-9]/g) === null"
+                                         (keydown)="checkMobileLength($event)" placeholder="{{'Mobile Number' | translate}}"
+                                         (focusout)="validMobile()" [disabled]="isPhnNumVerify"/>
+                                  <span style="color: red;">{{mobileerr}}</span>         
+
+                                </div>
+                                <div class="prom_inr_com form-group verify_ot_dv">
+                                  <label>&nbsp;</label>
+                                  <button id="Request_For_OTP_Mobile" type="submit" class="btn btn-primary" (click)="onButtonClick('Request_For_OTP_Mobile')" [disabled]="isPhnNumVerify">  {{'Request for OTP' | translate}}  </button>
+                                </div>
+                              </div>
+
+                              <div>
+                                <div class="prom_inr_com form-group entotp">
+                                  <label>  {{'Enter Mobile OTP' | translate}} <span
+                                    style="color:#f00">*</span> </label>
+                                  <input id="Enter_Mobile_OTP" class="form-control" type="text" [(ngModel)]="userMobileOTP"
+                                         [ngModelOptions]="{standalone: true}" placeholder="{{'Enter OTP' | translate}}" [disabled]="isPhnNumVerify">
+                                </div>
+                                <div class="prom_inr_com form-group">
+                                  <label>&nbsp;</label>
+                                  <button id="Verify_OTP_Mobile" type="submit" class="btn btn-primary verify_ot" (click)="onButtonClick('Verify_OTP_Mobile')" [disabled]="isPhnNumVerify">  {{'Verify OTP' | translate}}  </button>
+                                </div>
+                                <div class="prom_inr otp_dv">
+                                  <div class="req_op">
+                                    <strong id="label_Resend_OTP_Mobile">&nbsp;</strong>
+                                    <button id="Resend_OTP_Mobile" type="submit" class="btn btn-info" (click)="onButtonClick('Resend_OTP_Mobile')" [disabled]="isPhnNumVerify">  {{'Resend OTP' | translate}}  </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="crt_pass">
+
+                              <div id="myDiv" class="prom_inr_com form-group">
+
+                                <div id="pop" data-toggle="popover" data-content="tooltip" title="">
+                                    {{'Note:Your password should be 8 - 13 characters long. For security reasons it should contain atleast one alphabet, numeric and a special (!@#$%^&*) character and one alphabet in upper case.' | translate}}  
+
+                                </div>
+                                <label>   {{'Password' | translate}}   <span style="color: #f00;">*</span></label>
+                                <input class="form-control" type="password" [(ngModel)]="userPassword"
+                                       [ngModelOptions]="{standalone: true}" placeholder="{{'Password' | translate}}"/>
+                                <span style="color: red;">{{passworderr}}</span>
+                              </div>
+                              <div class="prom_inr_com form-group">
+                                <label>  {{'Confirm Password' | translate}}   <span style="color: #f00;">*</span></label>
+                                <input class="form-control" type="password" [(ngModel)]="userConfirmPassword"
+                                       [ngModelOptions]="{standalone: true}" placeholder="{{'Confirm Password' | translate}}"/>
+                              </div>
+                              <div class="prom_inr_com form-group">
+                                <label style="display: block;">&nbsp;</label>
+                                <button type="submit" class="btn btn-primary crt_pas" (click)="signUp()"><a
+                                  class="text-white">  {{'Sign Up' | translate}}  </a></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

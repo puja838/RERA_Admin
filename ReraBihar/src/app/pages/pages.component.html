@@ -1,0 +1,35 @@
+<div class="head-part">
+  <div class="head_midd">
+    <div class="container">
+      <div class="rera-logo">
+        <a routerLink="/"><img src="assets/images/rera-logo.png"/></a>
+      </div>
+      <div class="logo_rt">
+        <div class="mbre">
+          <span><img src="assets/images/mbr-img1.png"/></span>
+          <strong>{{'Shri Nitish Kumar' | translate}}</strong>
+          <p>{{'Hon’ble Chief Minister of Bihar' | translate}}</p>
+        </div>
+        <div class="rera_txte">{{'Real Estate Regulatory Authority, Bihar' | translate}}</div>
+        <div class="mbre">
+          <span><img src="assets/images/mbr-img2.png"/></span>
+          <strong>{{'Shri Phagu Chauhan' | translate}}</strong>
+          <p>{{'Hon’ble Governor of Bihar' | translate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div>
+<router-outlet></router-outlet>
+</div>
+
+<app-footer></app-footer>
+
+
+
+
+<notifier-container></notifier-container>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

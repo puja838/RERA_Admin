@@ -1,0 +1,23 @@
+<div style="position: relative;">
+  <input type="text" class="form-control" placeholder="MM-YYYY" (focus)="onTextFocus()" [(ngModel)]="dateShow" [disabled]="isSubmitted">
+  <div class="calender-container" *ngIf="isCalenderOpen">
+    <div class="row">
+      <div class="col-6 scrollsection" style="height: 240px; overflow-y:scroll">
+        <ul class="list-group cal-elem" style="list-style-type: none;" *ngIf="!isSubmitted">
+          <li class="list-group-item elem-item" *ngFor="let month of monthNames;let i = index;" (click)="onMonthClick(i+1)"
+              [ngClass]="selectedMonth == (i + 1) ? 'active' : ''">{{month}}</li>
+        </ul>
+      </div>
+      <div class="col-6 scrollsection" style="height: 240px; overflow-y:scroll">
+        <ul class="list-group cal-elem" style="list-style-type: none;" *ngIf="!isSubmitted">
+          <li class="list-group-item elem-item" *ngFor="let year of yearList;let i = index;" (click)="onYearClick(year)"
+              [ngClass]="selectedYear === year ? 'active' : ''">{{year}}</li>
+        </ul>
+      </div>
+      <div class="col-12 pt-2">
+        <button class="float-left" style="background-color: white;padding: 4px 10px;" [disabled]="isSubmitted" (click)="onTextFocusOut()">Cancel</button>
+        <button class="float-right" style="background-color: blue;color: white;padding: 4px 10px;margin-right: 10px;" [disabled]="isSubmitted" (click)="saveDate()">Okay</button>
+      </div>
+    </div>
+  </div>
+</div>

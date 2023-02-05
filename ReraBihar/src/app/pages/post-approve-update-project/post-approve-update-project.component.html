@@ -1,0 +1,614 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <div class="profl_pgese" *ngIf="!viewMod">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/pages/project-dashboard">{{'Dashboard' | translate}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{'Update Project Details' | translate}}</li>
+                    </ol>
+                </nav>
+                <strong>{{'Welcome' | translate}}: {{name}}</strong>
+                <a class="logout_btn"(click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+            </div>
+
+            <div class="dev_tabl dev_wrk prev_tabl mb-3 p-0" *ngIf="!viewMod">
+                <div class="personal_view_page stage_dv">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>{{'Project Details' | translate}}</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Registration No.' | translate}} : </label>
+                                <p>{{projectDetails.projectuid}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Name' | translate}} : </label>
+                                <p>{{projectDetails.projectName}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Address' | translate}} : </label>
+                                <p>{{projectDetails.projectAddress}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Name of Promoter' | translate}} : </label>
+                                <p>{{projectDetails.promoterName}}</p>
+                            </div>
+                        </div>
+
+                        <!--<div class="col-4">
+                            <div class="form-group">
+                                <label>Name of Co-promoter : </label>
+                                <p>{{projectDetails.copromoterName}}</p>
+                            </div>
+                        </div>-->
+
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Project Registration is valid up to' | translate}} : </label>
+                                <p>{{projectDetails.validatyenddate}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Starting date of Project' | translate}} : </label>
+                                <p>{{projectDetails.projectStartDate}} </p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Type of Project' | translate}} : </label>
+                                <p>{{projectDetails.projectType}}</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>{{'Period of validity' | translate}} : </label>
+                                <p>{{projectDetails.periodOfValidityDate}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button class="btn btn-dark" (click)="goToProjectDetails()">{{'View Project Details' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prom_reg_in">
+                <mat-tab-group dynamicHeight [(selectedIndex)]="selectedTabIndex"
+                               (selectedTabChange)="onTabChange($event)">
+                    <mat-tab *ngFor="let obj1 of formDetailsList;" label="{{obj1.stepdesc | translate}}">
+                        <div class="resp-tabs-container hor_1 mb-3">
+
+                            <!-- Information update -->
+                            <div *ngIf="obj1.stepdesc === 'Information Update'">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>{{'Information Update' | translate}}</h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class=" form-group">
+                                            <label>{{'Web Page Link of the Project' | translate}} </label>
+                                            <input class="form-control" type="text" placeholder="Enter webpage link"
+                                                   [(ngModel)]="webPageLink" [disabled]="viewMod">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class=" form-group">
+                                            <label>{{'Project Brochure / Prospectus' | translate}}
+                                                <span [matTooltip]="fileUploadToolTip">
+                                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                            </span>
+                                            </label>
+                                            <input class="form-control" type="file" placeholder="Enter"
+                                                   accept="image/jpeg,image/png,application/pdf,image/x-eps"
+                                                   (change)="uploadFile($event, 'Prospectus')" [disabled]="viewMod">
+                                        </div>
+                                        <p *ngIf="projectProspectus !== ''"
+                                           style="display: block;font-size: 13px;color: #555;">
+                                            <a (click)="openLink(projectProspectus)">
+                                                <img *ngIf="projectProspectus.indexOf('.pdf') == -1" [src]="FILE_ROOT + projectProspectus" [alt]="" #img
+                                                     (error)="img.src='assets/images/image-ico.png'" style="height: 40px;"/>
+                                                <img *ngIf="projectProspectus.indexOf('.pdf') > -1" [src]="'assets/images/pdf-ico.png'" [alt]="" style="height: 40px;"/>
+                                            </a>
+                                            <a class="cross-ico file-rm-ico" (click)="projectProspectus = ''" ><i
+                                                    class="fa fa-times" aria-hidden="true"></i></a>
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class=" form-group">
+                                            <label>{{'Project Design Images' | translate}}
+                                                <span [matTooltip]="fileUploadToolTip">
+                                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                            </span>
+                                            </label>
+                                            <input class="form-control" type="file" placeholder="Enter" [disabled]="viewMod"
+                                                   accept="image/jpeg,image/png,application/pdf,image/x-eps"
+                                                   (change)="uploadFile($event, 'designImg')">
+                                        </div>
+                                        <div class="uplod_list" *ngIf="projectDesignImg !== ''">
+                                            <ol>
+                                                <li *ngFor="let file of projectDesignImg.split(','); let findx = index;">
+                                                    <a><img
+                                                            [src]="FILE_ROOT + file" [alt]=""></a>
+                                                    <a class="cross-ico" (click)="removeImage(findx)"><i
+                                                            class="fa fa-times" aria-hidden="true"></i></a>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="row">
+                                        <div *ngFor="let obj of projectInformationDtl;let i = index;"
+                                             [ngClass]="obj.groupid != null ? 'col-12' : 'col-' + obj.fieldwidth">
+                                            <h5>{{obj.name | translate}}</h5>
+                                            <div *ngFor="let field of obj.fielddetails; let j = index;"
+                                                 class="sub-group-margin row" [id]="'grp_' + obj.groupid">
+                                                <div *ngFor="let key of obj.fielddetailskeys[j]; let l = index;"
+                                                     [ngClass]="[field[key] !== undefined && field[key][0].fieldgroupid !== null && field[key][0].fielddetailskeys[0].length > 1 ? 'col-12' : 'col-' + field[key][0].fieldwidth, field[key][0].fieldwidth ? 'col-' + field[key][0].fieldwidth : 'col-4']">
+                                                    <!-- For Text -->
+                                                    <div class="form-group"
+                                                         *ngIf="field[key][0].controltype == 1">
+                                                        <label *ngIf="field[key][0].islabelshow == 1">{{field[key][0].fielddisplaydesc | translate}}
+                                                            <span
+                                                                    *ngIf="field[key][0].isrequired == 1"
+                                                                    style="color: #f00;">*</span></label>
+                                                        <label *ngIf="field[key][0].islabelshow == 0">&nbsp;</label>
+                                                        <input class="form-control" type="text"
+                                                               [disabled]="viewMod"
+                                                               placeholder="Enter {{field[key][0].fielddisplaydesc}}"
+                                                               [(ngModel)]="field[key][0].fieldvalue"
+                                                               [id]="field[key][0].fielddesc + '_' + j"
+                                                               [attr.data-fieldID]="field[key][0].fieldid"
+                                                               [attr.data-stepID]="obj.stepid"
+                                                                (keydown)="validateInputEntry($event, field[key][0])"/>
+                                                        <span style="color: red;">{{field[key][0].valideerr}}</span>
+                                                    </div>
+
+                                                    <!-- For Combo -->
+                                                    <div class="form-group"
+                                                         *ngIf="field[key][0].controltype == 2">
+                                                        <label *ngIf="field[key][0].islabelshow == 1">{{field[key][0].fielddisplaydesc | translate}}
+                                                            <span
+                                                                    *ngIf="field[key][0].isrequired == 1"
+                                                                    style="color: #f00;">*</span></label>
+                                                        <label *ngIf="field[key][0].islabelshow == 0">&nbsp;</label>
+                                                        <select class="form-control"
+                                                                [disabled]="viewMod"
+                                                                [(ngModel)]="field[key][0].fieldvalue"
+                                                                (focus)="onFocusDropdown(field, key)"
+                                                                (change)="onDropdownChange(field, key)"
+                                                                [id]="field[key][0].fielddesc + '_' + j">
+                                                            <option *ngFor="let d of field[key][0].controlvalue.split('|')"
+                                                                    [value]="d">{{d == '' ? 'Select' : d}}</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- For Button -->
+                                                    <div class="form-group"
+                                                         style="display: inline; margin-right: 10px;"
+                                                         *ngIf="field[key][0].controltype == 7 && obj.fielddetails.length > 1">
+                                                        <button class="btn btn-danger" [hidden]="viewMod"
+                                                                style="margin-bottom: 10px;"
+                                                                [ngStyle]="{'margin-top': (obj.fielddetailskeys[j].length - 1) % 3 !== 0 ? '24px' : 'unset'}"
+                                                                (click)="removeItemBtn(obj, j)"
+                                                        >
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="form-group" style="display: inline"
+                                                         *ngIf="field[key][0].controltype == 7 && obj.fielddetails.length >= 1 && obj.fielddetails.length == (j + 1)">
+                                                        <button class="btn btn-warning" [hidden]="viewMod"
+                                                                style="margin-bottom: 10px;"
+                                                                [ngStyle]="{'margin-top': (obj.fielddetailskeys[j].length - 1) % 3 !== 0 ? '24px' : 'unset'}"
+                                                                (click)="addMoreBtn(obj, j, obj.stepid, obj.groupid, -1, field[key][0].fielddesc)"
+                                                                [id]="field[key][0].fielddesc">
+                                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                                            {{field[key][0].fielddisplaydesc | translate}}
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- For Heading -->
+                                                    <!--<div class="form-group"
+                                                         *ngIf="field[key][0].controltype == 8">
+                                                        <h5>{{field[key][0].fielddisplaydesc | translate}}</h5>
+                                                    </div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right" *ngIf="!viewMod">
+                                    <button class="btn btn-success ml-3"
+                                            (click)="submitProjectInformation()">
+                                        {{'Save' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3"
+                                            (click)="submitProjectInformation('next')">
+                                        {{'Save & Next' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Inventory Update -->
+                            <div *ngIf="obj1.stepdesc == 'Inventory Update'">
+                                <div class="add_bldngs">
+                                    <h5>{{'Disclosure of Sold/Booked Inventory of Apartments' | translate}}</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Building / Block' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Apartment Type' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'Carpet Area (sq mtr)' | translate}}</th>
+                                                <th width="18%" valign="top" align="left">{{'Total # of sanctioned apartments' | translate}}
+                                                </th>
+                                                <th width="18%" valign="top" align="left">{{'Total No. of units in Promoter Share' | translate}}
+                                                </th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Booked' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Sold' | translate}}</th>
+                                            </tr>
+                                            <tr *ngFor="let building of inventoryData.building; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{building.build}}</td>
+                                                <td valign="top" align="left">{{building.utype}}</td>
+                                                <td valign="top" align="left">{{building.care}}</td>
+                                                <td valign="top" align="left">{{building.sapart}}</td>
+                                                <td valign="top" align="left">{{building.sprom}}</td>
+                                                <td valign="top" align="left">
+                                                    <input type="text" class="form-control" [ngClass]="building.berr ? building.berr : ''"
+                                                           [(ngModel)]="building.bookedunit"
+                                                           placeholder="Enter" (keydown)="onlyNumber($event)" [disabled]="viewMod">
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <input type="text" class="form-control" [ngClass]="building.serr ? building.serr : ''"
+                                                           [(ngModel)]="building.soldunit"
+                                                           placeholder="Enter" (keydown)="onlyNumber($event)" [disabled]="viewMod">
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="add_bldngs mt-3">
+                                    <h5>{{'Disclosure of Sold/Booked Inventory of Shops' | translate}}</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Building / Block' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Shop Type' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'Carpet Area (sq mtr)' | translate}}</th>
+                                                <th width="18%" valign="top" align="left">{{'Total # of sanctioned shops' | translate}}
+                                                </th>
+                                                <th width="18%" valign="top" align="left">{{'Total No. of units in Promoter Share' | translate}}
+                                                </th>
+                                                <th width="12%" valign="top" align="left">{{'No of Shops Booked' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Shops Sold' | translate}}</th>
+                                            </tr>
+                                            <tr *ngFor="let building of inventoryData.commercial; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{building.build}}</td>
+                                                <td valign="top" align="left">{{building.utype}}</td>
+                                                <td valign="top" align="left">{{building.care}}</td>
+                                                <td valign="top" align="left">{{building.sapart}}</td>
+                                                <td valign="top" align="left">{{building.sprom}}</td>
+                                                <td valign="top" align="left">
+                                                    <input type="text" class="form-control" [ngClass]="building.berr ? building.berr : ''"
+                                                           [(ngModel)]="building.bookedunit"
+                                                           placeholder="Enter" (keydown)="onlyNumber($event)" [disabled]="viewMod">
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <input type="text" class="form-control" [ngClass]="building.serr ? building.serr : ''"
+                                                           [(ngModel)]="building.soldunit"
+                                                           placeholder="Enter" (keydown)="onlyNumber($event)" [disabled]="viewMod">
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="add_bldngs mt-3">
+                                    <h5>{{'Disclosure of Sold/Booked Inventory of Garages' | translate}}</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0" cellpadding="0"
+                                               border="0">
+                                            <tbody>
+                                            <tr>
+                                                <th width="5%" valign="top" align="left">{{'SL No.' | translate}}</th>
+                                                <th width="10%" valign="top" align="left">{{'Building / Block' | translate}}</th>
+                                                <th width="18%" valign="top" align="left">{{'Total # of sanctioned garage' | translate}}
+                                                </th>
+                                                <th width="18%" valign="top" align="left">{{'Total No. of units in Promoter Share' | translate}}
+                                                </th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Booked' | translate}}</th>
+                                                <th width="12%" valign="top" align="left">{{'No of Apartments Sold' | translate}}</th>
+                                            </tr>
+                                            <tr *ngFor="let building of inventoryData.garage; let i = index;">
+                                                <td valign="top" align="left">{{i + 1}}</td>
+                                                <td valign="top" align="left">{{building.build}}</td>
+                                                <td valign="top" align="left">{{building.garage}}</td>
+                                                <td valign="top" align="left">{{building.gprom}}</td>
+                                                <td valign="top" align="left">
+                                                    <input type="text" class="form-control" [ngClass]="building.berr ? building.berr : ''"
+                                                           [(ngModel)]="building.bookedunit"
+                                                           placeholder="Enter" (keydown)="onlyNumber($event)" [disabled]="viewMod">
+                                                </td>
+                                                <td valign="top" align="left">
+                                                    <input type="text" class="form-control" [ngClass]="building.serr ? building.serr : ''"
+                                                           [(ngModel)]="building.soldunit"
+                                                           placeholder="Enter" (keydown)="onlyNumber($event)" [disabled]="viewMod">
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="text-right" *ngIf="!viewMod">
+                                    <button class="btn btn-primary"
+                                            [disabled]="selectedTabIndex==0"
+                                            (click)="goToPrevTab()">
+                                        {{'Previous' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3"
+                                            (click)="submitInventoryData()">
+                                        {{'Save' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3"
+                                            (click)="submitInventoryData('next')">
+                                        {{'Save & Next' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Common Amenities Plan -->
+                            <div *ngIf="obj1.stepdesc === 'Common Amenities Plan'">
+                                <div *ngFor="let amenitiesObj of obj1.formDetails;">
+                                    <div *ngIf="amenitiesObj.relationtype === 'group'">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{'Sr No' | translate}}</th>
+                                                    <th>{{amenitiesObj.fielddisplaydesc | translate}}</th>
+                                                    <th>{{'Start Date' | translate}}</th>
+                                                    <th>{{'End Date' | translate}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let fieldObj of amenitiesObj.fielddetails; let j = index;">
+                                                    <td>{{j + 1}}</td>
+                                                    <td>{{fieldObj.fielddisplaydesc | translate}}</td>
+                                                    <td>
+                                                        <div class="form-group" *ngIf="!viewMod">
+                                                            <!--<input type="month" class="form-control" (focusout)="onBlurElement(amenitiesObj.relationid, amenitiesObj.stagetwofieldid, fieldObj)"
+                                                                   [(ngModel)]="fieldObj.startdate">-->
+                                                            <app-calender
+                                                                    [dateShow]="fieldObj.startdate"
+                                                                    [isFormSubmitted]="false"
+                                                                    (dateSelect)="onCustomDateSelect($event, 'start', amenitiesObj.relationid, amenitiesObj.stagetwofieldid, fieldObj)"></app-calender>
+                                                        </div>
+                                                        <div class="form-group" *ngIf="viewMod">
+                                                            <input type="text" [disabled]="viewMod" class="form-control" [(ngModel)]="fieldObj.startdate" placeholder="MM-YYYY">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group" *ngIf="!viewMod">
+                                                            <!--<input type="date" class="form-control"
+                                                                   [(ngModel)]="fieldObj.enddate" (focusout)="onBlurElement(amenitiesObj.relationid, amenitiesObj.stagetwofieldid, fieldObj)">-->
+                                                            <app-calender
+                                                                    [dateShow]="fieldObj.enddate"
+                                                                    [isFormSubmitted]="false"
+                                                                    (dateSelect)="onCustomDateSelect($event, 'end', amenitiesObj.relationid, amenitiesObj.stagetwofieldid, fieldObj)"></app-calender>
+                                                        </div>
+                                                        <div class="form-group" *ngIf="viewMod">
+                                                            <input type="text" [disabled]="viewMod" class="form-control" [(ngModel)]="fieldObj.enddate" placeholder="MM-YYYY">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right" *ngIf="!viewMod">
+                                    <button class="btn btn-primary"
+                                            [disabled]="selectedTabIndex==0"
+                                            (click)="goToPrevTab()">
+                                        {{'Previous' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3"
+                                            (click)="goToNextTab(obj1.stepdesc)">
+                                        {{'Save' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3"
+                                            (click)="goToNextTab(obj1.stepdesc, 'next')">
+                                        {{'Save & Next' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Building development plan -->
+                            <div *ngIf="obj1.stepdesc === 'Building Development Plan'">
+                                <div class="radio_buildng">
+                                    <mat-radio-group [(ngModel)]="selectedBuilding">
+                                        <mat-radio-button *ngFor="let building of obj1.formDetails;"
+                                                          value="{{building.buildingName}}"
+                                                          (change)="onBuildingChange(building)">{{building.buildingName}}</mat-radio-button>
+                                    </mat-radio-group>
+
+                                </div>
+                                <div *ngFor="let building of selectedBuildingInfo;">
+                                    <h3 class="building-heading">{{'Building' | translate}} : {{selectedBuilding}}</h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>{{'Sr No' | translate}}</th>
+                                                <th style="max-width: 200px;word-wrap: break-word;">{{'Task/Activity' | translate}}</th>
+                                                <th>{{'Proposed' | translate}}</th>
+                                                <th>{{'Start Date' | translate}}</th>
+                                                <th>{{'End Date' | translate}}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let obj of building.fielddetails; let j = index;">
+                                                <td>{{j + 1}}</td>
+                                                <td style="max-width: 200px;word-wrap: break-word;">{{obj.fielddisplaydesc | translate}}</td>
+                                                <td>
+                                                    <div>
+                                                        <div class="form-group"
+                                                             *ngIf="obj.isproposed == 1">
+                                                            <div class="form-check form-check-inline">
+                                                                <input type="radio" class="form-control"
+                                                                       [disabled]="viewMod"
+                                                                       name="{{obj.fielddesc}}" value="Yes"
+                                                                       [(ngModel)]="obj.fieldproposedvalue"
+                                                                       (focusout)="onBlurElement(obj.relationid, obj.stagetwofieldid, obj, building.groupid, building.fieldid, building.groupposition)">
+                                                                <label class="form-check-label">{{'Yes' | translate}}</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input type="radio" class="form-control"
+                                                                       [disabled]="viewMod"
+                                                                       name="{{obj.fielddesc}}" value="No"
+                                                                       [(ngModel)]="obj.fieldproposedvalue"
+                                                                       (focusout)="onBlurElement(obj.relationid, obj.stagetwofieldid, obj, building.groupid, building.fieldid, building.groupposition)">
+                                                                <label class="form-check-label">{{'No' | translate}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group" *ngIf="obj.daterange === 1 && !viewMod">
+                                                        <!--<input type="date" class="form-control" [(ngModel)]="obj.startdate" [disabled]="obj.fieldproposedvalue === 'No'"
+                                                               (focusout)="onBlurElement(obj.relationid, obj.stagetwofieldid, obj, building.groupid, building.fieldid, building.groupposition)">-->
+                                                        <app-calender
+                                                                [dateShow]="obj.startdate"
+                                                                [isFormSubmitted]="obj.fieldproposedvalue === 'No'"
+                                                                (dateSelect)="onCustomDateSelect($event, 'start', obj.relationid, obj.stagetwofieldid, obj, building.groupid, building.fieldid, building.groupposition)"></app-calender>
+                                                    </div>
+
+                                                    <div class="form-group" *ngIf="viewMod">
+                                                        <input type="text" [disabled]="viewMod" class="form-control" [(ngModel)]="obj.startdate" placeholder="MM-YYYY">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group" *ngIf="obj.daterange === 1 && !viewMod">
+                                                        <!--<input type="date" class="form-control" [(ngModel)]="obj.enddate" [disabled]="obj.fieldproposedvalue === 'No'"
+                                                               (focusout)="onBlurElement(obj.relationid, obj.stagetwofieldid, obj, building.groupid, building.fieldid, building.groupposition)">-->
+                                                        <app-calender
+                                                                [dateShow]="obj.enddate"
+                                                                [isFormSubmitted]="obj.fieldproposedvalue === 'No'"
+                                                                (dateSelect)="onCustomDateSelect($event, 'end', obj.relationid, obj.stagetwofieldid, obj, building.groupid, building.fieldid, building.groupposition)"></app-calender>
+                                                    </div>
+                                                    <div class="form-group" *ngIf="viewMod">
+                                                        <input type="text" [disabled]="viewMod" class="form-control" [(ngModel)]="obj.enddate" placeholder="MM-YYYY">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="text-right" *ngIf="!viewMod">
+                                    <button class="btn btn-primary"
+                                            [disabled]="selectedTabIndex==0"
+                                            (click)="goToPrevTab()">
+                                        {{'Previous' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3"
+                                            (click)="goToNextTab(obj1.stepdesc)">
+                                        {{'Save' | translate}}
+                                    </button>
+                                    <button class="btn btn-success ml-3"
+                                            (click)="goToNextTab(obj1.stepdesc, 'next')">
+                                        {{'Save & Next' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Declaration -->
+                            <div *ngIf="obj1.stepdesc === 'Declaration'">
+
+                                <div class="undrtakes">
+                                    <h5>{{'Undertaking' | translate}}</h5>
+                                    <p><input type="checkbox" class="" [(ngModel)]="isAcceptDeclaration" [disabled]="viewMod">&nbsp; {{'I/we solemnly affirm, declare and undertake that all the details stated above are true to the best of my/our knowledge and nothing material has been concealed here from. I am/we are executing this undertaking to attest to the truth of all the foregoing and to apprise the Authority of such facts as mentioned as well as for whatever other legal purposes this undertaking may serve.' | translate}} </p>
+                                    <div class="sign_dv">
+                                        <div>
+                                            <p>{{'Name' | translate}} :
+                                                <input type="text" placeholder="Enter you name"
+                                                       [(ngModel)]="submitPersonName" [disabled]="viewMod">
+                                            </p>
+                                            <!--                                            <p>Date : 17-10-2022</p>-->
+                                        </div>
+                                        <div class="prom_sign">
+                                            <img #img [src]="FILE_ROOT + signatureFile"
+                                                 (error)="img.src='assets/images/signature-ico.png'"
+                                                 style="height: 50px;width: 180px;border: 1px solid gray;">
+                                            <p>{{'Signature of Promoter' | translate}}</p>
+                                            <input type="file" class="form-control" [disabled]="viewMod"
+                                                   accept="image/jpeg,image/png,image/x-eps"
+                                                   (change)="uploadFile($event, 'signature')">
+                                            <span style="font-size: 13px;color: red;">{{'File size should be less than 2MB' | translate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button_dv lms_dv" *ngIf="!viewMod">
+                                    <button class="btn btn-success" (click)="submitForm()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                             fill="currentColor" class="bi bi-arrow-up-square" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 9.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                        </svg>
+                                        {{'Submit' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="action-container">
+                             <button class="btn btn-success"
+                                     [disabled]="selectedTabIndex==0"
+                                     (click)="goToPrevTab()">
+                                 Previous
+                             </button>
+                             <button class="btn btn-success ml-3"
+                                     [hidden]="selectedTabIndex=== (formDetailsList.length - 1)"
+                                     (click)="goToNextTab()">
+                                 Next
+                             </button>
+                             <button class="btn btn-primary ml-3"
+                                     [hidden]="selectedTabIndex !== (formDetailsList.length - 1)"
+                                     (click)="submitForm()">
+                                 Submit
+                             </button>
+                         </div>-->
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

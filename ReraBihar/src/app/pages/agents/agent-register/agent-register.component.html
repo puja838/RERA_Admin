@@ -1,0 +1,20 @@
+<div class="promot_regs">
+    <div class="container">
+        <div class="profl_pgese">
+            <div class="dashbrde">
+                <!-- <a class="dropdown-toggle" [matMenuTriggerFor]="promoter"><i class="fa fa-bars"></i></a> -->
+                <h2>{{'Agent Registration' | translate}}</h2>
+            </div>
+
+            <strong>{{'Welcome' | translate}}: {{name}}</strong>
+            <a class="logout_btn"(click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+        </div>
+        <div class="agen_reg_msg">
+            <h4 style="font-size: 1.5rem;">Welcome to RERA Bihar Agent Registration Portal</h4>
+            <p>“You are not yet RERA Registered Agent. Do you want to apply for Registration”</p>
+            <button class="btn btn-primary" (click)="goTo('/pages/agent-registration-application')">Click here to Register</button>
+        </div>
+    </div>
+</div>
+
+

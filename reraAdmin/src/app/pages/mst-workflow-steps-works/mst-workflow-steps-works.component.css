@@ -1,0 +1,66 @@
+.workflow{
+    padding: 0%;
+}
+
+.workflowHeader{
+    margin: 0%;
+}
+
+.workflowData{
+    border: 1px solid rgba(0,0,0,1.125);
+    border-radius: 0.25rem;
+    width: 25%;
+    padding: 2%;
+    margin-bottom: 2%;
+    margin-right: 27px;
+    display: inline;
+}
+
+.workflowName{
+    color: black;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 16px;
+}
+
+
+.workflowDialog {
+  max-height: calc(100vh - 210px);
+  overflow-x: auto;
+}
+
+.workflowSelcect{
+  width: 50%;
+  display: inline-block;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+}
+li {
+  padding: 10px 25px;
+  border: 1px solid black;
+  margin: 0 25px;
+  position: relative;
+}
+li:not(:last-child):after {
+  content: '';
+  height: 1px;
+  background: black;
+  width: 50px;
+  position: absolute;
+  right: -50px;
+  top: 50%;
+}
+li:not(:last-child):before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 50%;
+  border-style: solid;
+  border-width: 7px 0 7px 20px;
+  border-color: transparent transparent transparent black;
+  right: -50px;
+  transform: translateY(-50%);
+}

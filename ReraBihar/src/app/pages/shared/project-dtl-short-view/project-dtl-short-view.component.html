@@ -1,0 +1,70 @@
+<div class="dev_tabl dev_wrk prev_tabl mb-3 p-0">
+    <div class="personal_view_page stage_dv">
+        <div class="row">
+            <div class="col-12">
+                <h5>{{'Project Details' | translate}}</h5>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Project Registration No.' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.projectuid}}</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Project Name' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.projectName}}</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Project Address' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.projectAddress}}</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Name of Promoter' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.promoterName}}</p>
+                </div>
+            </div>
+
+            <!--<div class="col-4">
+                <div class="form-group">
+                    <label>Name of Co-promoter : </label>
+                    <p>{{projectDetails.copromoterName}}</p>
+                </div>
+            </div>-->
+
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Project Registration is valid up to' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.validatyenddate}}</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Starting date of Project' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.projectStartDate}} </p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Type of Project' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.projectType}}</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label>{{'Period of validity' | translate}} : &nbsp; </label>
+                    <p>{{projectDetails.periodOfValidityDate}}</p>
+                </div>
+            </div>
+
+            <div class="col-12 text-right">
+                <button class="btn btn-dark" (click)="goToProjectDetails()">{{'View Project Details' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

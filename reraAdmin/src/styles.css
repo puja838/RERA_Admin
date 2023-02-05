@@ -1,0 +1,381 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~angular-notifier/styles";
+@import "~angular-notifier/styles/core.css";
+@import "~angular-notifier/styles/themes/theme-material.css";
+@import "~angular-notifier/styles/types/type-error.css";
+@import "~angular-notifier/styles/types/type-success.css";
+@import "~angular-notifier/styles/types/type-default.css";
+@import "~angular-notifier/styles/types/type-info.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "assets/css/stylesheet.css";
+@import "assets/css/bootstrap.min.css";
+@import "assets/css/responsive.css";
+@import "assets/css/easy-responsive-tabs.css";
+/* @import "assets/css/all.min.css"; */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #f5f5f5;
+}
+
+.main-container {
+  height: 100vh;
+}
+
+a {
+  cursor: pointer !important;
+}
+
+.nav-item {
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer !important;
+}
+
+.nav-item:hover,
+.nav-item:hover a {
+  background: blue !important;
+  color: white !important;
+}
+
+.table thead {
+  background: #0d6efd;
+  color: white;
+}
+
+.err-msg {
+  color: red;
+  font-size: 13px;
+}
+
+.mat-accordion .mat-expansion-panel {
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.modal-confirm {
+  color: #636363;
+  /*width: 400px;*/
+}
+
+.modal-confirm .modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+  text-align: center;
+  font-size: 14px;
+}
+
+.modal-confirm .modal-header {
+  border-bottom: none;
+  position: relative;
+}
+
+.modal-confirm h4 {
+  text-align: center;
+  font-size: 26px;
+  margin: 30px 0 -10px;
+}
+
+.modal-confirm .close {
+  position: absolute;
+  top: -5px;
+  right: -2px;
+}
+
+.modal-confirm .modal-body {
+  color: #999;
+}
+
+.modal-confirm .modal-footer {
+  border: none;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 13px;
+  padding: 10px 15px 25px;
+}
+
+.modal-confirm .modal-footer a {
+  color: #999;
+}
+
+.modal-confirm .icon-box {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  border-radius: 50%;
+  z-index: 9;
+  text-align: center;
+  border: 3px solid #f15e5e;
+}
+
+.modal-confirm .icon-box i {
+  color: #f15e5e;
+  font-size: 46px;
+  display: inline-block;
+  margin-top: 13px;
+}
+
+.modal-confirm .btn,
+.modal-confirm .btn:active {
+  color: #fff;
+  border-radius: 4px;
+  background: #60c7c1;
+  text-decoration: none;
+  transition: all 0.4s;
+  line-height: normal;
+  min-width: 120px;
+  border: none;
+  min-height: 40px;
+  border-radius: 3px;
+  margin: 0 5px;
+}
+
+.modal-confirm .btn-secondary {
+  background: #c1c1c1;
+}
+
+.modal-confirm .btn-secondary:hover,
+.modal-confirm .btn-secondary:focus {
+  background: #a8a8a8;
+}
+
+.modal-confirm .btn-danger {
+  background: #f15e5e;
+}
+
+.modal-confirm .btn-danger:hover,
+.modal-confirm .btn-danger:focus {
+  background: #ee3535;
+}
+
+.trigger-btn {
+  display: inline-block;
+  margin: 100px auto;
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  z-index: 10000 !important;
+}
+
+.modal-xl {
+  max-width: 95% !important;
+}
+
+
+
+
+.login-block {
+  float: left;
+  width: 100%;
+  padding: 50px 0;
+}
+
+/*.container {
+  !* background: #D3D3D3; *!
+  border: 0;
+  box-shadow: 5px 10px 18px #b2b2b2;
+  border-radius: 10px;
+  width: 40%;
+  height: 40%;
+}*/
+
+.login-sec {
+  padding: 50px 30px;
+  position: relative;
+}
+
+.login-sec h2 {
+  margin-bottom: 30px;
+  font-weight: 300;
+  font-size: 30px;
+  color: #0069c0;
+}
+
+.login-sec h2:after {
+  content: " ";
+  width: 100px;
+  height: 5px;
+  background: #6ec6ff;
+  display: block;
+  margin-top: 20px;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.btn-login {
+  background: #0069c0;
+  color: #fff;
+  font-weight: 300;
+  width: 160px;
+  padding: 10px;
+  font-size: 16px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.label {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.span_error {
+  color: red;
+  font-weight: 300;
+}
+
+/*html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+
+.mat-expansion-panel-header-title {
+  color: #0069c0;
+}
+
+.checklist .mat-tab-label.mat-tab-disabled {
+  color: black;
+}
+
+.blue {
+  color: blue !important;
+}
+
+.font-16 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.radius-0 {
+  border-radius: 0px;
+}
+
+.font-13 {
+  font-size: 13px;
+}
+
+
+.prom_reg_in .mat-tab-body {
+  background: white;
+  border: 1px solid #064bb6;
+  padding: 10px;
+}
+
+.prom_reg_in .mat-tab-label.mat-tab-label-active {
+  border-top: 4px solid #064bb6;
+  border-left: 1px solid #064bb6;
+  border-right: 1px solid #064bb6;
+  border-bottom: 1px solid white;
+  margin-bottom: -1px !important;
+}
+
+.mat-tab-label {
+  background: white;
+  margin-right: 5px;
+}
+
+.mat-ink-bar {
+  width: 0 !important;
+}
+
+.border-group {
+  border: 1px solid black;
+  padding-top: 5px;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.proj_dtl_preview .form-group p {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+}
+
+.personal_view_page .form-group p {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Project Extension */
+.radio_buildng {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.radio_buildng_rdo {
+  margin-right: 10px;
+  border: 0;
+  padding: 10px;
+  border-radius: 3px;
+  background: #ee810c;
+  color: #fff;
+  position: relative;
+}
+
+.radio_buildng .mat-radio-button {
+  margin-right: 10px;
+  border: 0;
+  padding: 10px;
+  border-radius: 3px;
+  background: #ee810c;
+  color: #fff;
+  position: relative;
+}
+
+.radio_buildng .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #000 !important;
+}
+
+
+.radio_buildng .mat-radio-checked .mat-radio-inner-circle {
+  background-color: #000 !important;
+}
+
+.radio_buildng .mat-radio-container {
+  background: white !important;
+  border-radius: 15px !important;
+}
+
+.radio_buildng .mat-radio-label {
+  margin-bottom: 0 !important;
+}
+
+/* Project Extension End */
+
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  float: right;
+}

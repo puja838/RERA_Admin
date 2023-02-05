@@ -1,0 +1,86 @@
+.card-folders .card-body>.breadcrumb {
+    margin-left: -1.25em;
+    margin-right: -1.25em;
+    margin-top: -1.25em;
+    border-radius: 0;
+}
+
+.folder-container {
+    text-align: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100px;
+    padding: 0;
+    align-self: start;
+    background: none;
+    border: none;
+    outline-color: transparent !important;
+    cursor: pointer;
+}
+
+.folder-icon {
+    font-size: 3em;
+    line-height: 1.25em;
+}
+
+.folder-icon-color {
+    color: #ffc107;
+    text-shadow: 1px 1px 0px #e0a800;
+}
+
+.folder-name {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.flex-column .folder-container {
+    display: flex;
+    width: auto;
+    min-width: 100px;
+    text-align: left;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.flex-column .folder-icon,
+.flex-column .folder-name {
+    display: inline-flex;
+}
+
+.flex-column .folder-icon {
+    font-size: 1.4em;
+    margin-right: 1rem;
+}
+
+.file-icon-color {
+    color: #999;
+}
+
+.gal_sec h4 {
+    background: #eee;
+    padding: 10px;
+    font-size: 16px;
+    margin: 20px 0 10px;
+}
+
+.gal_sec.top section {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    column-gap: 7px;
+}
+
+.gal_sec section {
+    -moz-column-width: 289px;
+    column-width: 289px;
+    -moz-column-gap: 5px;
+    column-gap: 5px;
+    padding: 0;
+}
+
+section img {
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 6px;
+}

@@ -1,0 +1,75 @@
+<div class="main-body">
+    <div class="promot_regs">
+        <div class="container">
+            <div class="prom_reg_in">
+                <h3>{{rolename}}</h3>
+                <div class="prom_reg_frm">
+                    <div class="scru_level">
+                        <div class="tabletab mar-top-15">
+                            <div class="table-responsive">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                    class="table  table-hover">
+                                    <tr>
+                                        <th align="left" valign="middle">Sr No.</th>
+                                        <th align="left" valign="middle" *ngIf="tiletype == 4 || tiletype == 6">Project
+                                            Name</th>
+                                        <th align="left" valign="middle" *ngIf="tiletype == 5">Agent Name</th>
+                                        <th align="left" valign="middle">Registration Number</th>
+                                        <th align="left" valign="middle" *ngIf="tiletype == 4 || tiletype == 5">
+                                            Certificate</th>
+                                        <th align="left" valign="middle" *ngIf="tiletype == 4 || tiletype == 5">Approved
+                                            Date</th>
+                                        <th align="left" valign="middle" *ngIf="tiletype == 6">Quater</th>
+                                    </tr>
+                                    <tr *ngFor="let l of listData | paginate: { itemsPerPage: 10, currentPage: p }, let i = index;"
+                                        [ngStyle]="{'color':l.fontColor}">
+                                        <td align="left" valign="middle">{{i+1}}</td>
+                                        <td align="left" valign="middle" *ngIf="tiletype == 5">{{l.username}}</td>
+                                        <td align="left" valign="middle" *ngIf="tiletype == 4 || tiletype == 6">
+                                            {{l.projectfieldvalue}}</td>
+                                        <td align="left" valign="middle">{{l.registrationno}}</td>
+                                        <td align="left" valign="middle" *ngIf="tiletype == 4 || tiletype == 5"
+                                            style="color: blue;" (click)="viewCertificate(l.certificate)"
+                                            [ngStyle]="{'cursor':  l.certificate !=''? 'pointer':'text'}">
+                                            {{l.certificate }}</td>
+                                        <td align="left" valign="middle" *ngIf="tiletype == 4 || tiletype == 5">
+                                            {{l.approvaltime | date:'dd/MM/yyyy'}}</td>
+                                        <td align="left" valign="middle" *ngIf="tiletype == 6">{{l.name}}</td>
+
+                                    </tr>
+                                    <tr *ngIf="listData.length === 0">
+                                        <td colspan="7" class="text-center">No data found.</td>
+                                    </tr>
+                                </table>
+                                <!-- <ul *ngIf="listData.length > 0" class="pagination">
+                                    <li class="page-item" *ngFor="let obj of pages">
+                                        <a class="page-link" *ngIf="obj<=pageLimit" (click)="pageChange(obj)"
+                                            [ngStyle]="{'color':obj == selectedPage? isCurrentPageFont:isPageFont,
+                                            'background': obj == selectedPage? isCurrentPageBackground:isPageBackground}">{{obj}}</a>
+                                    </li>
+
+                                    <li class="page-item" *ngIf="pages.length>11">
+                                        <a class="page-link">...</a>
+                                    </li>
+
+                                    <li class="page-item" *ngIf="pages.length>11">
+                                        <a class="page-link" (click)="pageChange(pages[pages.length-1])"
+                                            [ngStyle]="{'color':pages[pages.length-1] == selectedPage? isCurrentPageFont:isPageFont,
+                                            'background': pages[pages.length-1] == selectedPage? isCurrentPageBackground:isPageBackground}">{{pages[pages.length-1]}}</a>
+                                    </li>
+                                </ul> -->
+
+
+                                <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<notifier-container></notifier-container>
